@@ -1,4 +1,4 @@
-name: linux
+name: Advent-of-Code-2020
 
 on:
   push:
