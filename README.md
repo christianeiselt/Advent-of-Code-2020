@@ -1,5 +1,5 @@
 # Advent of Code 2020 - My Solutions in Perl
-[![Build Status](https://github.com/christianeiselt/advent-of-code-2020-perl/workflows/build/badge.svg)](https://github.com/christianeiselt/advent-of-code-2020-perl/actions)
+[![Build Status](https://github.com/christianeiselt/Advent-of-Code-2020-Perl/workflows/build/badge.svg)](https://github.com/christianeiselt/advent-of-code-2020-perl/actions)
 
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
