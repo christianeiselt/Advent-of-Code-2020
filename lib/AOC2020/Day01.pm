@@ -7,90 +7,72 @@ use strict;
 
 my %number = ();
 
-sub getSolutionA
-{
-  my $self = shift;
-  my $input = shift;
-  return getProductOfTwo($input);
-}
-
-sub getSolutionB
-{
-  my $self = shift;
-  my $input = shift;
-  return getProductOfThree($input);
-}
-
-sub getNumberA
-{
-  my $self = shift;
-  my $getNumber = shift;
-  getProductOfTwo(shift);
-  return $number{$getNumber};
-}
-
-sub getNumberB
-{
-  my $self = shift;
-  my $getNumber = shift;
-  getProductOfThree(shift);
-  return $number{$getNumber};
-}
-
-sub getProductOfTwo
+sub getProductTwoNumbersAddingTo2020
 {
   my $input = shift;
   my @input = @{$input};
 
-  foreach my $i (@input)
+  foreach my $numberOne (@input)
   {
-    foreach my $j (@input)
+    foreach my $numberTwo (@input)
     {
-      if ($j != $i)
+      if ($numberTwo != $numberOne)
       {
-	      if (addsTo2020($i,$j))
+	      if (addsTo2020($numberOne,$numberTwo))
 	      {
-          $number{1} = $i;
-          $number{2} = $j;
-	        return $i*$j;
+          $number{1} = $numberOne;
+          $number{2} = $numberTwo;
+	        return $numberOne*$numberTwo;
 	      }
 	      else
 	      {
 	        #
 	      }
       }
+      else
+      {
+        #
+      }
     }
   }
 }
 
-sub getProductOfThree
+sub getProductThreeNumbersAddingTo2020
 {
   my $input = shift;
   my @input = @{$input};
 
-  foreach my $i (@input)
+  foreach my $numberOne (@input)
   {
-    foreach my $j (@input)
+    foreach my $numberTwo (@input)
     {
-      if ($j != $i)
+      if ($numberTwo != $numberOne)
       {
-	      foreach my $k (@input)
+	      foreach my $numberThree (@input)
 	      {
-          if ($k != $i && $k != $j)
+          if ($numberThree != $numberOne && $numberThree != $numberTwo)
           {
-			      if (addsTo2020($i,$j,$k))
+			      if (addsTo2020($numberOne,$numberTwo,$numberThree))
 			      {
-              $number{1} = $i;
-              $number{2} = $j;
-              $number{3} = $k;
-              return $i*$j*$k;
+              $number{1} = $numberOne;
+              $number{2} = $numberTwo;
+              $number{3} = $numberThree;
+              return $numberOne*$numberTwo*$numberThree;
 			      }
 			      else
 			      {
 			        #
 			      }
           }
+          else
+          {
+            #
+          }
 	      }
+      }
+      else
+      {
+        #
       }
     }
   }
@@ -125,6 +107,36 @@ sub getSum
   }
 
   return $sum;
+}
+
+sub getNumberA
+{
+  my $self = shift;
+  my $getNumber = shift;
+  getProductTwoNumbersAddingTo2020(shift);
+  return $number{$getNumber};
+}
+
+sub getNumberB
+{
+  my $self = shift;
+  my $getNumber = shift;
+  getProductThreeNumbersAddingTo2020(shift);
+  return $number{$getNumber};
+}
+
+sub getSolutionA
+{
+  my $self = shift;
+  my $input = shift;
+  return getProductTwoNumbersAddingTo2020($input);
+}
+
+sub getSolutionB
+{
+  my $self = shift;
+  my $input = shift;
+  return getProductThreeNumbersAddingTo2020($input);
 }
 
 1;
