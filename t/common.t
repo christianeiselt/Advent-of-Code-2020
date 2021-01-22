@@ -7,7 +7,7 @@ use Test::More tests => 1;
 use lib '../lib/';
 use AOC2020::Common;
 
-subtest 'testInputDay00' => sub
+subtest 'testInput' => sub
 {
   plan tests => 1;
   my $filename = 'misc/input.txt';
