@@ -11,7 +11,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-- [Day 1: Day 1: Report Repair](day01-report-repair/)
+- [Day 1: Report Repair](day01-report-repair/)
+- [Day 2: Password Philosophy](day02-password-philosophy/)
 
 ## Running Tests
 
