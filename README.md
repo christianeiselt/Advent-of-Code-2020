@@ -14,6 +14,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 - [Day 1: Report Repair](day01-report-repair/)
 - [Day 2: Password Philosophy](day02-password-philosophy/)
 
+- [Day 03: Toboggan Trajectory](day03-toboggan-trajectory/)
+
 ## Running Tests
 
 Each day contains its own set of tests. To run them type `prove -l t/`.
