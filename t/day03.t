@@ -9,11 +9,7 @@ use AOC2020::Common;
 use AOC2020::Day03;
 
 my $inputfile = './day03-toboggan-trajectory/test';
-my $inputfile2 = './day03-toboggan-trajectory/test2';
-my $inputfile3 = './day03-toboggan-trajectory/input';
 my $input = AOC2020::Common->getFileContent($inputfile);
-my $input2 = AOC2020::Common->getFileContent($inputfile2);
-my $input3 = AOC2020::Common->getFileContent($inputfile3);
 
 my $slopes = {
   'slopeA' => {'right' => 1,'down' => 1},
