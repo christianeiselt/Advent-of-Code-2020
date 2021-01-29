@@ -21,7 +21,7 @@ sub GetProductOfTreeCounts
   my ($self, $map, $slopes, $startPos) = @_;
   my $treeCountProduct = 1;
 
-  foreach my $slope (keys $slopes)
+  foreach my $slope (keys %{$slopes})
   {
     $treeCountProduct *= AOC2020::Day03->GetTreeCountForSlope($map, $slopes->{$slope}, $startPos);
   }
