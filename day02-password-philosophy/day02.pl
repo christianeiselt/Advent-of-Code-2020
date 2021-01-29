@@ -6,7 +6,7 @@ use lib '../lib/';
 use AOC2020::Common;
 use AOC2020::Day02;
 
-my $inputfile = './input.txt';
+my $inputfile = './input';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 my $solutionA = AOC2020::Day02->getValidPasswordCountForPart(1, $input);
