@@ -14,7 +14,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 - [Day 1: Report Repair](day01-report-repair/)
 - [Day 2: Password Philosophy](day02-password-philosophy/)
 
-- [Day 03: Toboggan Trajectory](day03-toboggan-trajectory/)
+- [Day 3: Toboggan Trajectory](day03-toboggan-trajectory/)
 
 ## Running Tests
 
