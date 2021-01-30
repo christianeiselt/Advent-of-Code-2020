@@ -8,7 +8,7 @@ use lib '../lib/';
 use AOC2020::Common;
 use AOC2020::Day03;
 
-my $inputfile = './day03-toboggan-trajectory/test';
+my $inputfile = './day03_example';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 my $slopes = {

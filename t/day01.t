@@ -8,7 +8,7 @@ use lib '../lib/';
 use AOC2020::Common;
 use AOC2020::Day01;
 
-my $inputfile = './day01-report-repair/test';
+my $inputfile = './day01_example';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 subtest 'testSolutionA' => sub
