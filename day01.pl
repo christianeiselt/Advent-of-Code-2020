@@ -2,11 +2,11 @@
 
 use warnings;
 use strict;
-use lib '../lib/';
+use lib './lib/';
 use AOC2020::Common;
 use AOC2020::Day01;
 
-my $inputfile = './input.txt';
+my $inputfile = './day01_input';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 my $solutionA = AOC2020::Day01->getSolutionA($input);

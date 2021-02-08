@@ -2,11 +2,11 @@
 
 use warnings;
 use strict;
-use lib 'lib/';
+use lib './lib/';
 use AOC2020::Common;
 use AOC2020::Day03;
 
-my $inputfile = 'day03-toboggan-trajectory/input';
+my $inputfile = './day03_input';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 my $slopes = {

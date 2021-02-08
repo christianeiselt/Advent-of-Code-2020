@@ -8,7 +8,7 @@ use lib '../lib/';
 use AOC2020::Common;
 use AOC2020::Day02;
 
-my $inputfile = './day02-password-philosophy/test';
+my $inputfile = './day02_example';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 subtest 'count valid passwords for Part One' => sub

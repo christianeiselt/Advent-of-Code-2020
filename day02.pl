@@ -2,11 +2,11 @@
 
 use warnings;
 use strict;
-use lib '../lib/';
+use lib './lib/';
 use AOC2020::Common;
 use AOC2020::Day02;
 
-my $inputfile = './input';
+my $inputfile = './day02_input';
 my $input = AOC2020::Common->getFileContent($inputfile);
 
 my $solutionA = AOC2020::Day02->getValidPasswordCountForPart(1, $input);
