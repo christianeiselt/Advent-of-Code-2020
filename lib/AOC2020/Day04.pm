@@ -430,24 +430,34 @@ sub isValidPassportByValidValues
   return $isValid;
 }
 
+sub addPassportIfValidByValues
+{
+  my ($passports, $passport) = @_;
+  my @passports = @{$passports} if defined $passports;
+
+  if (isValidPassportByValidValues($passport))
+  {
+    push(@passports, $passport);
+  }
+  else
+  {
+    #
+  }
+
+  return \@passports;
+}
+
 sub getValidPassportsByValidValues
 {
   my $passports = shift;
-  my @validPassports;
+  my $validPassports;
 
   foreach my $passport (@{$passports})
   {
-    if (isValidPassportByValidValues($passport))
-    {
-      push(@validPassports, $passport);
-    }
-    else
-    {
-      #
-    }
+    $validPassports = addPassportIfValidByValues($validPassports, $passport);
   }
 
-  return \@validPassports;
+  return $validPassports;
 }
 
 1;
