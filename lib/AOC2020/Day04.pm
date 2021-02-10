@@ -426,6 +426,9 @@ sub isValidPassportByValidValues
   {
     $isValid = 1;
   }
+  else {
+    #
+  }
 
   return $isValid;
 }
