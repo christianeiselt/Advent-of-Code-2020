@@ -109,13 +109,11 @@ sub isValidPassportByMandatoryFieldsDefined
   return $isValid;
 }
 
-sub getValidPassportsByMandatoryFieldsDefined
+sub addIfValidPassport
 {
-  my $passports = shift;
-  my @validPassports;
+	my ($validPassports, $passport) = @_;
+  my @validPassports = @{$validPassports} if defined $validPassports;
 
-  foreach my $passport (@{$passports})
-  {
     if (isValidPassportByMandatoryFieldsDefined($passport))
     {
       push(@validPassports, $passport);
@@ -124,9 +122,21 @@ sub getValidPassportsByMandatoryFieldsDefined
     {
       #
     }
-  }
 
   return \@validPassports;
+}
+
+sub getValidPassportsByMandatoryFieldsDefined
+{
+  my $passports = shift;
+  my $validPassports;
+
+  foreach my $passport (@{$passports})
+  {
+    $validPassports = addIfValidPassport($validPassports, $passport);
+  }
+
+  return $validPassports;
 }
 
 sub hasValidECL
