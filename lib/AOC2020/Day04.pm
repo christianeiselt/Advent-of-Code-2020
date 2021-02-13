@@ -109,13 +109,11 @@ sub isValidPassportByMandatoryFieldsDefined
   return $isValid;
 }
 
-sub getValidPassportsByMandatoryFieldsDefined
+sub addIfValidPassport
 {
-  my $passports = shift;
-  my @validPassports;
+	my ($validPassports, $passport) = @_;
+  my @validPassports = @{$validPassports} if defined $validPassports;
 
-  foreach my $passport (@{$passports})
-  {
     if (isValidPassportByMandatoryFieldsDefined($passport))
     {
       push(@validPassports, $passport);
@@ -124,9 +122,21 @@ sub getValidPassportsByMandatoryFieldsDefined
     {
       #
     }
-  }
 
   return \@validPassports;
+}
+
+sub getValidPassportsByMandatoryFieldsDefined
+{
+  my $passports = shift;
+  my $validPassports;
+
+  foreach my $passport (@{$passports})
+  {
+    $validPassports = addIfValidPassport($validPassports, $passport);
+  }
+
+  return $validPassports;
 }
 
 sub hasValidECL
@@ -303,76 +313,39 @@ sub hasValidPassportId
   return $validPID;
 }
 
-sub hasValidBirthYear
+sub isYear
 {
-  my $byr = shift;
-  my $validBYR = 0;
+  my $number = shift;
+  my $isYear = 0;
 
-  if ($byr =~ m/[0-9]{4}/)
+  if ($number =~ m/[0-9]{4}/)
   {
-    if ($byr >= 1920 && $byr <= 2002)
-    {
-      $validBYR = 1;
-    }
-    else
-    {
-      #
-    }
+    $isYear = 1;
   }
   else
   {
     #
   }
 
-  return $validBYR;
+  return $isYear;
 }
 
-sub hasValidIssueYear
+sub isValidYear
 {
-  my $iyr = shift;
-  my $validIYR = 0;
+  my $checkDate = shift;
+  my $isValid = 1;
 
-  if ($iyr =~ m/[0-9]{4}/)
+  unless(isYear($checkDate->{'year'}))
   {
-    if ($iyr >= 2010 && $iyr <= 2020)
-    {
-      $validIYR = 1;
-    }
-    else
-    {
-      #
-    }
-  }
-  else
-  {
-    #
+    return 0;
   }
 
-  return $validIYR;
-}
-
-sub hasValidExpirationYear
-{
-  my $eyr = shift;
-  my $validEYR = 0;
-
-  if ($eyr =~ m/[0-9]{4}/)
+  unless ($checkDate->{'year'} >= $checkDate->{'min'} && $checkDate->{'year'} <= $checkDate->{'max'})
   {
-    if ($eyr >= 2020 && $eyr <= 2030)
-    {
-      $validEYR = 1;
-    }
-    else
-    {
-      #
-    }
-  }
-  else
-  {
-    #
+    return 0;
   }
 
-  return $validEYR;
+  return $isValid;
 }
 
 sub hasOnlyValidValues
@@ -399,17 +372,17 @@ sub hasOnlyValidValues
     return 0;
   }
 
-  unless(hasValidBirthYear($passport->{"byr"}))
+  unless(isValidYear({'year' => $passport->{"byr"}, 'min' => 1920, 'max' => 2002}))
   {
     return 0;
   }
 
-  unless(hasValidIssueYear($passport->{"iyr"}))
+  unless(isValidYear({'year' => $passport->{"iyr"}, 'min' => 2010, 'max' => 2020}))
   {
     return 0;
   }
 
-  unless(hasValidExpirationYear($passport->{"eyr"}))
+  unless(isValidYear({'year' => $passport->{"eyr"}, 'min' => 2020, 'max' => 2030}))
   {
     return 0;
   }
@@ -426,28 +399,41 @@ sub isValidPassportByValidValues
   {
     $isValid = 1;
   }
+  else {
+    #
+  }
 
   return $isValid;
+}
+
+sub addPassportIfValidByValues
+{
+  my ($passports, $passport) = @_;
+  my @passports = @{$passports} if defined $passports;
+
+  if (isValidPassportByValidValues($passport))
+  {
+    push(@passports, $passport);
+  }
+  else
+  {
+    #
+  }
+
+  return \@passports;
 }
 
 sub getValidPassportsByValidValues
 {
   my $passports = shift;
-  my @validPassports;
+  my $validPassports;
 
   foreach my $passport (@{$passports})
   {
-    if (isValidPassportByValidValues($passport))
-    {
-      push(@validPassports, $passport);
-    }
-    else
-    {
-      #
-    }
+    $validPassports = addPassportIfValidByValues($validPassports, $passport);
   }
 
-  return \@validPassports;
+  return $validPassports;
 }
 
 1;
