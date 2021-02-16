@@ -2,7 +2,7 @@
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('1.0.3');
 use Test::More tests => 2;
 
 use lib '../lib/';
@@ -10,7 +10,7 @@ use AOC2020::Common;
 use AOC2020::Day03;
 
 my $inputfile = './day03_example';
-my $input     = AOC2020::Common->getFileContent($inputfile);
+my $input     = AOC2020::Common->get_file_content($inputfile);
 
 my $slopes = {
   'slopeA' => { 'right' => 1, 'down' => 1 },
