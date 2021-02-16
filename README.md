@@ -1,5 +1,6 @@
 # Advent of Code 2020 - My Solutions in Perl :camel:
-![Build Status](https://github.com/christianeiselt/Advent-of-Code-2020-Perl/workflows/build/badge.svg)
+![Build Status](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/build/badge.svg)
+[![GitHub Super-Linter](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
 
