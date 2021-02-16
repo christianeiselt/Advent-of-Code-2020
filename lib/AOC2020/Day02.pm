@@ -7,7 +7,7 @@ use strict;
 use version; our $VERSION = qv('1.0.3');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
-sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gx; return $s }
+sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
 
 sub get_valid_password_count_for_part {
   my $self            = shift;
@@ -25,7 +25,7 @@ sub get_valid_password_count_for_part {
 
 sub get_password_entry_components {
   my $passwordEntry = shift;
-  my ( $policyComponent, $passwordComponent ) = split( ':', $passwordEntry );
+  my ( $policyComponent, $passwordComponent ) = split( /:/msx, $passwordEntry );
 
   return ( $policyComponent, $passwordComponent );
 }
@@ -64,7 +64,7 @@ sub get_second_number {
 
 sub get_policy_components {
   my $policy = shift;
-  my ( $numbers,     $letter )       = split( ' ', $policy );
+  my ( $numbers,     $letter )       = split( /\s/msx, $policy );
   my ( $firstNumber, $secondNumber ) = get_number_components($numbers);
 
   return ( $letter, $firstNumber, $secondNumber );
@@ -72,14 +72,14 @@ sub get_policy_components {
 
 sub get_number_components {
   my $numbers = shift;
-  my ( $firstNumber, $secondNumber ) = split( '-', $numbers );
+  my ( $firstNumber, $secondNumber ) = split( /-/msx, $numbers );
 
   return ( $firstNumber, $secondNumber );
 }
 
 sub get_letters_of_password {
   my $password = shift;
-  my @letters  = split( '', $password );
+  my @letters  = split( //msx, $password );
 
   return \@letters;
 }
