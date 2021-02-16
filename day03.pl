@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Carp;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 use lib 'lib';
 use AOC2020::Common;
 use AOC2020::Day03;
@@ -21,10 +21,10 @@ my $slopes = {
 
 my $START_POS = { 'x' => 0, 'y' => 0 };
 my $SOLUTION_A =
-    AOC2020::Day03->GetTreeCountForSlope( $input, $slopes->{'slopeB'},
+    AOC2020::Day03->get_tree_count_for_slope( $input, $slopes->{'slopeB'},
   $START_POS );
 print "Solution A: $SOLUTION_A\n" or croak 'no output available';
 
 my $SOLUTION_B =
-    AOC2020::Day03->GetProductOfTreeCounts( $input, $slopes, $START_POS );
-print "Solution B: $SOLUTION_A\n" or croak 'no output available';
+    AOC2020::Day03->get_product_of_tree_counts( $input, $slopes, $START_POS );
+print "Solution B: $SOLUTION_B\n" or croak 'no output available';

@@ -6,38 +6,38 @@ use warnings;
 use strict;
 use version; our $VERSION = qv('1.0.3');
 
-sub getValidCountPartOne {
+sub get_valid_count_part_one {
   my $self         = shift;
   my $passportList = shift;
-  my @passports    = @{ getPassports($passportList) };
+  my @passports    = @{ get_passports($passportList) };
   my $validPassports =
-      getValidPassportsByMandatoryFieldsDefined( \@passports );
+      get_valid_passports_by_mandatory_fields_defined( \@passports );
 
   return scalar( @{$validPassports} );
 }
 
-sub getValidCountPartTwo {
+sub get_valid_count_part_two {
   my $self         = shift;
   my $passportList = shift;
-  my @passports    = @{ getPassports($passportList) };
+  my @passports    = @{ get_passports($passportList) };
   my $potentialValidPassports =
-      getValidPassportsByMandatoryFieldsDefined( \@passports );
+      get_valid_passports_by_mandatory_fields_defined( \@passports );
   my $validPassports =
-      getValidPassportsByValidValues($potentialValidPassports);
+      get_valid_passports_by_valid_values($potentialValidPassports);
 
   return scalar( @{$validPassports} );
 }
 
-sub getFieldsFromLine {
+sub get_fields_from_line {
   my $line   = shift;
   my @fields = split( ' ', $line );
 
   return \@fields;
 }
 
-sub getFieldsForPassport {
+sub get_fields_for_passport {
   my ( $line, $passport ) = @_;
-  my @fields = @{ getFieldsFromLine($line) };
+  my @fields = @{ get_fields_from_line($line) };
   foreach my $field (@fields) {
     my @fieldInfo = split( ':', $field );
     $passport->{"$fieldInfo[0]"} = $fieldInfo[1];
@@ -46,7 +46,7 @@ sub getFieldsForPassport {
   return $passport;
 }
 
-sub getPassports {
+sub get_passports {
   my $passportList = shift;
   my @passports;
   my $passportIndex = 0;
@@ -57,14 +57,14 @@ sub getPassports {
     }
     else {
       $passports[$passportIndex] =
-          getFieldsForPassport( $line, $passports[$passportIndex] );
+          get_fields_for_passport( $line, $passports[$passportIndex] );
     }
   }
 
   return \@passports;
 }
 
-sub hasAllMandatoryFieldsDefined {
+sub has_all_mandatory_fields_defined {
   my $passport                     = shift;
   my $hasAllMandatoryFieldsDefined = 0;
   my $score                        = 0;
@@ -86,23 +86,23 @@ sub hasAllMandatoryFieldsDefined {
   return $hasAllMandatoryFieldsDefined;
 }
 
-sub isValidPassportByMandatoryFieldsDefined {
+sub is_valid_passport_by_mandatory_fields_defined {
   my $passport = shift;
   my $isValid  = 0;
 
-  if ( hasAllMandatoryFieldsDefined($passport) ) {
+  if ( has_all_mandatory_fields_defined($passport) ) {
     $isValid = 1;
   }
 
   return $isValid;
 }
 
-sub addIfValidPassport {
+sub add_if_valid_passport {
   my ( $validPassports, $passport ) = @_;
   my @validPassports;
   @validPassports = @{$validPassports} if defined $validPassports;
 
-  if ( isValidPassportByMandatoryFieldsDefined($passport) ) {
+  if ( is_valid_passport_by_mandatory_fields_defined($passport) ) {
     push( @validPassports, $passport );
   }
   else {
@@ -112,24 +112,24 @@ sub addIfValidPassport {
   return \@validPassports;
 }
 
-sub getValidPassportsByMandatoryFieldsDefined {
+sub get_valid_passports_by_mandatory_fields_defined {
   my $passports = shift;
   my $validPassports;
 
   foreach my $passport ( @{$passports} ) {
-    $validPassports = addIfValidPassport( $validPassports, $passport );
+    $validPassports = add_if_valid_passport( $validPassports, $passport );
   }
 
   return $validPassports;
 }
 
-sub hasValidECL {
+sub has_valid_ecl {
   my $ecl      = shift;
   my @validECL = ( "amb", "blu", "brn", "gry", "grn", "hzl", "oth" );
   my $validECL = 0;
 
   if ( defined($ecl) ) {
-    if ( grep {/^$ecl/x} @validECL ) {
+    if ( grep {/^$ecl/} @validECL ) {
       $validECL = 1;
     }
     else {
@@ -143,7 +143,7 @@ sub hasValidECL {
   return $validECL;
 }
 
-sub hasValidHCL {
+sub has_valid_hcl {
   my $hcl      = shift;
   my $validHCL = 0;
 
@@ -151,7 +151,7 @@ sub hasValidHCL {
     return $validHCL;
   }
 
-  if ( $hcl =~ m/^#[A-F0-9]{6}$/ix ) {
+  if ( $hcl =~ m/^#[A-F0-9]{6}$/i ) {
     $validHCL = 1;
   }
   else {
@@ -161,7 +161,7 @@ sub hasValidHCL {
   return $validHCL;
 }
 
-sub getHeightFromChars {
+sub get_height_from_chars {
   my $characters = shift;
   my @characters = @{$characters};
   my $value      = '';
@@ -182,7 +182,7 @@ sub getHeightFromChars {
   return ( $value, $unit );
 }
 
-sub getCentimeterConstraints {
+sub get_centimeter_constraints {
   my $cm        = 'cm';
   my $minHeight = 150;
   my $maxHeight = 193;
@@ -190,10 +190,10 @@ sub getCentimeterConstraints {
   return ( $cm, $minHeight, $maxHeight );
 }
 
-sub isValidCMHeight {
+sub is_valid_cm_height {
   my $value = shift;
   my $unit  = shift;
-  my ( $cm, $minHeight, $maxHeight ) = getCentimeterConstraints();
+  my ( $cm, $minHeight, $maxHeight ) = get_centimeter_constraints();
   my $validCMHeight = 0;
 
   if ( $unit eq $cm && ( $value >= $minHeight && $value <= $maxHeight ) ) {
@@ -206,7 +206,7 @@ sub isValidCMHeight {
   return $validCMHeight;
 }
 
-sub getInchConstraints {
+sub get_inch_constraints {
   my $inch      = 'in';
   my $minHeight = 59;
   my $maxHeight = 76;
@@ -214,10 +214,10 @@ sub getInchConstraints {
   return ( $inch, $minHeight, $maxHeight );
 }
 
-sub isValidINHeight {
+sub is_valid_inch_height {
   my $value = shift;
   my $unit  = shift;
-  my ( $inch, $minHeight, $maxHeight ) = getInchConstraints();
+  my ( $inch, $minHeight, $maxHeight ) = get_inch_constraints();
   my $validINHeight = 0;
 
   if ( $unit eq $inch && ( $value >= $minHeight && $value <= $maxHeight ) ) {
@@ -230,7 +230,7 @@ sub isValidINHeight {
   return $validINHeight;
 }
 
-sub hasValidHeight {
+sub has_valid_height {
   my $height      = shift;
   my $validHeight = 0;
 
@@ -239,9 +239,9 @@ sub hasValidHeight {
   }
 
   my @characters = split( '', $height );
-  my ( $value, $unit ) = getHeightFromChars( \@characters );
-  my $isValidCMHeight = isValidCMHeight( $value, $unit );
-  my $isValidINHeight = isValidINHeight( $value, $unit );
+  my ( $value, $unit ) = get_height_from_chars( \@characters );
+  my $isValidCMHeight = is_valid_cm_height( $value, $unit );
+  my $isValidINHeight = is_valid_inch_height( $value, $unit );
 
   if ( $isValidCMHeight || $isValidINHeight ) {
     $validHeight = 1;
@@ -253,7 +253,7 @@ sub hasValidHeight {
   return $validHeight;
 }
 
-sub hasValidPassportId {
+sub has_valid_passport_id {
   my $pid      = shift;
   my $validPID = 0;
 
@@ -267,7 +267,7 @@ sub hasValidPassportId {
   return $validPID;
 }
 
-sub isYear {
+sub is_year {
   my $number = shift;
   my $isYear = 0;
 
@@ -281,11 +281,11 @@ sub isYear {
   return $isYear;
 }
 
-sub isValidYear {
+sub is_valid_year {
   my $checkDate = shift;
   my $isValid   = 1;
 
-  if ( !isYear( $checkDate->{'year'} ) ) {
+  if ( !is_year( $checkDate->{'year'} ) ) {
     return 0;
   }
 
@@ -298,27 +298,27 @@ sub isValidYear {
   return $isValid;
 }
 
-sub hasOnlyValidValues {
+sub has_only_valid_values {
   my $passport = shift;
 
-  if ( !hasValidECL( $passport->{"ecl"} ) ) {
+  if ( !has_valid_ecl( $passport->{"ecl"} ) ) {
     return 0;
   }
 
-  if ( !hasValidHCL( $passport->{"hcl"} ) ) {
+  if ( !has_valid_hcl( $passport->{"hcl"} ) ) {
     return 0;
   }
 
-  if ( !hasValidHeight( $passport->{"hgt"} ) ) {
+  if ( !has_valid_height( $passport->{"hgt"} ) ) {
     return 0;
   }
 
-  if ( !hasValidPassportId( $passport->{"pid"} ) ) {
+  if ( !has_valid_passport_id( $passport->{"pid"} ) ) {
     return 0;
   }
 
   if (
-    !isValidYear(
+    !is_valid_year(
       { 'year' => $passport->{"byr"}, 'min' => 1920, 'max' => 2002 }
     )
       )
@@ -327,7 +327,7 @@ sub hasOnlyValidValues {
   }
 
   if (
-    !isValidYear(
+    !is_valid_year(
       { 'year' => $passport->{"iyr"}, 'min' => 2010, 'max' => 2020 }
     )
       )
@@ -336,7 +336,7 @@ sub hasOnlyValidValues {
   }
 
   if (
-    !isValidYear(
+    !is_valid_year(
       { 'year' => $passport->{"eyr"}, 'min' => 2020, 'max' => 2030 }
     )
       )
@@ -347,11 +347,11 @@ sub hasOnlyValidValues {
   return 1;
 }
 
-sub isValidPassportByValidValues {
+sub is_valid_passport_by_valid_values {
   my $passport = shift;
   my $isValid  = 0;
 
-  if ( hasOnlyValidValues($passport) ) {
+  if ( has_only_valid_values($passport) ) {
     $isValid = 1;
   }
   else {
@@ -361,12 +361,12 @@ sub isValidPassportByValidValues {
   return $isValid;
 }
 
-sub addPassportIfValidByValues {
+sub add_passport_if_valid_by_values {
   my ( $passports, $passport ) = @_;
   my @passports;
   @passports = @{$passports} if defined $passports;
 
-  if ( isValidPassportByValidValues($passport) ) {
+  if ( is_valid_passport_by_valid_values($passport) ) {
     push( @passports, $passport );
   }
   else {
@@ -376,13 +376,13 @@ sub addPassportIfValidByValues {
   return \@passports;
 }
 
-sub getValidPassportsByValidValues {
+sub get_valid_passports_by_valid_values {
   my $passports = shift;
   my $validPassports;
 
   foreach my $passport ( @{$passports} ) {
     $validPassports =
-        addPassportIfValidByValues( $validPassports, $passport );
+        add_passport_if_valid_by_values( $validPassports, $passport );
   }
 
   return $validPassports;

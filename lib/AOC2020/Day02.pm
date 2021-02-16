@@ -4,12 +4,12 @@ package AOC2020::Day02;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('1.0.3');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gx; return $s }
 
-sub getValidPasswordCountForPart {
+sub get_valid_password_count_for_part {
   my $self            = shift;
   my $part            = shift;
   my $input           = shift;
@@ -17,74 +17,74 @@ sub getValidPasswordCountForPart {
   my @passwordEntries = @{$input};
 
   for my $entry (@passwordEntries) {
-    $count = incrementIfValidPasswordForPart( $part, $entry, $count );
+    $count = increment_if_valid_password_for_part( $part, $entry, $count );
   }
 
   return $count;
 }
 
-sub getPasswordEntryComponents {
+sub get_password_entry_components {
   my $passwordEntry = shift;
   my ( $policyComponent, $passwordComponent ) = split( ':', $passwordEntry );
 
   return ( $policyComponent, $passwordComponent );
 }
 
-sub getPassword {
+sub get_password {
   my $passwordEntry     = shift;
-  my $passwordComponent = ( getPasswordEntryComponents($passwordEntry) )[1];
+  my $passwordComponent = ( get_password_entry_components($passwordEntry) )[1];
   my $password          = trim($passwordComponent);
 
   return $password;
 }
 
-sub getLetter {
+sub get_letter {
   my $passwordEntry   = shift;
-  my $policyComponent = ( getPasswordEntryComponents($passwordEntry) )[0];
-  my $letter          = ( getPolicyComponents($policyComponent) )[0];
+  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
+  my $letter          = ( get_policy_components($policyComponent) )[0];
 
   return $letter;
 }
 
-sub getFirstNumber {
+sub get_first_number {
   my $passwordEntry   = shift;
-  my $policyComponent = ( getPasswordEntryComponents($passwordEntry) )[0];
-  my $firstNumber     = ( getPolicyComponents($policyComponent) )[1];
+  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
+  my $firstNumber     = ( get_policy_components($policyComponent) )[1];
 
   return $firstNumber;
 }
 
-sub getSecondNumber {
+sub get_second_number {
   my $passwordEntry   = shift;
-  my $policyComponent = ( getPasswordEntryComponents($passwordEntry) )[0];
-  my $secondNumber    = ( getPolicyComponents($policyComponent) )[2];
+  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
+  my $secondNumber    = ( get_policy_components($policyComponent) )[2];
 
   return $secondNumber;
 }
 
-sub getPolicyComponents {
+sub get_policy_components {
   my $policy = shift;
   my ( $numbers,     $letter )       = split( ' ', $policy );
-  my ( $firstNumber, $secondNumber ) = getNumberComponents($numbers);
+  my ( $firstNumber, $secondNumber ) = get_number_components($numbers);
 
   return ( $letter, $firstNumber, $secondNumber );
 }
 
-sub getNumberComponents {
+sub get_number_components {
   my $numbers = shift;
   my ( $firstNumber, $secondNumber ) = split( '-', $numbers );
 
   return ( $firstNumber, $secondNumber );
 }
 
-sub getLettersOfPassword {
+sub get_letters_of_password {
   my $password = shift;
   my @letters  = split( '', $password );
 
   return \@letters;
 }
 
-sub incrementCountIfLetter {
+sub increment_count_if_letter {
   my $inputLetter = shift;
   my $matchLetter = shift;
   my $count       = shift;
@@ -99,20 +99,20 @@ sub incrementCountIfLetter {
   return $count;
 }
 
-sub getCountForLetter {
+sub get_count_for_letter {
   my $letter      = shift;
   my $password    = shift;
   my $letterCount = 0;
-  my @letters     = @{ getLettersOfPassword($password) };
+  my @letters     = @{ get_letters_of_password($password) };
 
   for my $l (@letters) {
-    $letterCount = incrementCountIfLetter( $l, $letter, $letterCount );
+    $letterCount = increment_count_if_letter( $l, $letter, $letterCount );
   }
 
   return $letterCount;
 }
 
-sub countIsInRange {
+sub count_is_in_range {
   my $letterCount = shift;
   my $min         = shift;
   my $max         = shift;
@@ -125,14 +125,14 @@ sub countIsInRange {
   }
 }
 
-sub isValidPasswordA {
+sub is_valid_password_a {
   my $passwordEntry   = shift;
-  my $password        = getPassword($passwordEntry);
-  my $policyComponent = ( getPasswordEntryComponents($passwordEntry) )[0];
-  my ( $letter, $min, $max ) = getPolicyComponents($policyComponent);
-  my $letterCount = getCountForLetter( $letter, $password );
+  my $password        = get_password($passwordEntry);
+  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
+  my ( $letter, $min, $max ) = get_policy_components($policyComponent);
+  my $letterCount = get_count_for_letter( $letter, $password );
 
-  if ( countIsInRange( $letterCount, $min, $max ) ) {
+  if ( count_is_in_range( $letterCount, $min, $max ) ) {
     return 1;
   }
   else {
@@ -140,21 +140,11 @@ sub isValidPasswordA {
   }
 }
 
-sub getValuesForValidation {
-  my $passwordEntry = shift;
-
-  my ( $policy, $passwordComponent ) =
-      getPasswordEntryComponents($passwordEntry);
-  my $password = getPassword($passwordEntry);
-
-  return ( $policy, $password );
-}
-
-sub incrementIfValidPasswordForPartOne {
+sub increment_if_valid_password_for_part_one {
   my $passwordEntry = shift;
   my $count         = shift;
 
-  if ( isValidPasswordA($passwordEntry) ) {
+  if ( is_valid_password_a($passwordEntry) ) {
     $count++;
   }
   else {
@@ -164,11 +154,11 @@ sub incrementIfValidPasswordForPartOne {
   return $count;
 }
 
-sub incrementIfValidPasswordForPartTwo {
+sub increment_if_valid_password_for_part_two {
   my $passwordEntry = shift;
   my $count         = shift;
 
-  if ( isValidPasswordB($passwordEntry) ) {
+  if ( is_valid_password_b($passwordEntry) ) {
     $count++;
   }
   else {
@@ -178,27 +168,27 @@ sub incrementIfValidPasswordForPartTwo {
   return $count;
 }
 
-sub incrementIfValidPasswordForPart {
+sub increment_if_valid_password_for_part {
   my $part          = shift;
   my $passwordEntry = shift;
   my $count         = shift;
 
   if ( $part == 1 ) {
-    $count = incrementIfValidPasswordForPartOne( $passwordEntry, $count );
+    $count = increment_if_valid_password_for_part_one( $passwordEntry, $count );
   }
   elsif ( $part == 2 ) {
-    $count = incrementIfValidPasswordForPartTwo( $passwordEntry, $count );
+    $count = increment_if_valid_password_for_part_two( $passwordEntry, $count );
   }
 
   return $count;
 }
 
-sub letterIsOnPosition {
+sub letter_is_on_position {
   my $password = shift;
   my $letter   = shift;
   my $position = shift;
 
-  my @letters = @{ getLettersOfPassword($password) };
+  my @letters = @{ get_letters_of_password($password) };
 
   unshift( @letters, 'undef' );
 
@@ -210,15 +200,15 @@ sub letterIsOnPosition {
   }
 }
 
-sub letterIsExactlyOnOnePositionOf {
+sub letter_is_exactly_on_one_position_of {
   my $passwordEntry = shift;
-  my $password      = getPassword($passwordEntry);
-  my $letter        = getLetter($passwordEntry);
-  my $posOne        = getFirstNumber($passwordEntry);
-  my $posTwo        = getSecondNumber($passwordEntry);
+  my $password      = get_password($passwordEntry);
+  my $letter        = get_letter($passwordEntry);
+  my $posOne        = get_first_number($passwordEntry);
+  my $posTwo        = get_second_number($passwordEntry);
 
-  my $isOnPosOne = letterIsOnPosition( $password, $letter, $posOne );
-  my $isOnPosTwo = letterIsOnPosition( $password, $letter, $posTwo );
+  my $isOnPosOne = letter_is_on_position( $password, $letter, $posOne );
+  my $isOnPosTwo = letter_is_on_position( $password, $letter, $posTwo );
 
   if ( $isOnPosOne && $isOnPosTwo ) {
     return 0;
@@ -231,9 +221,9 @@ sub letterIsExactlyOnOnePositionOf {
   }
 }
 
-sub isValidPasswordB {
+sub is_valid_password_b {
   my $passwordEntry = shift;
-  my $isValid       = letterIsExactlyOnOnePositionOf($passwordEntry);
+  my $isValid       = letter_is_exactly_on_one_position_of($passwordEntry);
 
   return $isValid;
 }

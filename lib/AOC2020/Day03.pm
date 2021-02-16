@@ -4,32 +4,32 @@ package AOC2020::Day03;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 use lib '../../lib/';
 use AOC2020::Common;
 
-sub GetTreeCountForSlope {
+sub get_tree_count_for_slope {
   my ( $self, $map, $slope, $startPos ) = @_;
-  my $fullMap   = getFullMap( $map, $slope );
-  my $treeCount = countTreesOnSlope( $fullMap, $slope, $startPos );
+  my $fullMap   = get_full_map( $map, $slope );
+  my $treeCount = count_trees_on_slope( $fullMap, $slope, $startPos );
 
   return $treeCount;
 }
 
-sub GetProductOfTreeCounts {
+sub get_product_of_tree_counts {
   my ( $self, $map, $slopes, $startPos ) = @_;
   my $treeCountProduct = 1;
 
   foreach my $slope ( keys %{$slopes} ) {
     $treeCountProduct
-        *= AOC2020::Day03->GetTreeCountForSlope( $map, $slopes->{$slope},
+        *= AOC2020::Day03->get_tree_count_for_slope( $map, $slopes->{$slope},
       $startPos );
   }
 
   return $treeCountProduct;
 }
 
-sub getLengthOfFirstLine {
+sub get_length_of_first_line {
   my $map     = shift;
   my @content = @{$map};
   my $length  = length( $content[0] );
@@ -37,14 +37,14 @@ sub getLengthOfFirstLine {
   return $length;
 }
 
-sub getNumberOfColumnsNeeded {
+sub get_number_of_columns_needed {
   my ( $rows, $slope ) = @_;
   my $columnsNeeded = $rows * $slope->{'right'} / $slope->{'down'};
 
   return $columnsNeeded;
 }
 
-sub calculateMultiplier {
+sub calculate_multiplier {
   my ( $neededColumns, $lineLength ) = @_;
 
   my $multiplier = int( $neededColumns / $lineLength + 1 );
@@ -52,25 +52,25 @@ sub calculateMultiplier {
   return $multiplier;
 }
 
-sub getNumberOfRows {
+sub get_number_of_rows {
   my $map          = shift;
   my $numberOfRows = AOC2020::Common->get_number_of_elements($map);
 
   return $numberOfRows;
 }
 
-sub getMultiplier {
+sub get_multiplier {
   my ( $map, $slope ) = @_;
-  my $lineLength            = getLengthOfFirstLine($map);
-  my $rows                  = getNumberOfRows($map);
-  my $numberOfColumnsNeeded = getNumberOfColumnsNeeded( $rows, $slope );
+  my $lineLength            = get_length_of_first_line($map);
+  my $rows                  = get_number_of_rows($map);
+  my $numberOfColumnsNeeded = get_number_of_columns_needed( $rows, $slope );
 
-  my $multiplier = calculateMultiplier( $numberOfColumnsNeeded, $lineLength );
+  my $multiplier = calculate_multiplier( $numberOfColumnsNeeded, $lineLength );
 
   return $multiplier;
 }
 
-sub getExpandedLine {
+sub get_expanded_line {
   my ( $line, $multiplier ) = @_;
   my $expandedLine = '';
 
@@ -81,22 +81,22 @@ sub getExpandedLine {
   return $expandedLine;
 }
 
-sub expandMap {
+sub expand_map {
   my ( $map, $multiplier ) = @_;
   my @fullMap;
 
   foreach my $line ( @{$map} ) {
-    my $newLine = getExpandedLine( $line, $multiplier );
+    my $newLine = get_expanded_line( $line, $multiplier );
     push( @fullMap, $newLine );
   }
 
   return \@fullMap;
 }
 
-sub getFullMap {
+sub get_full_map {
   my ( $map, $slope ) = @_;
-  my $multiplier  = getMultiplier( $map, $slope );
-  my @expandedMap = @{ expandMap( $map, $multiplier ) };
+  my $multiplier  = get_multiplier( $map, $slope );
+  my @expandedMap = @{ expand_map( $map, $multiplier ) };
   my @fullMap;
 
   foreach ( my $line = 0; $line < scalar(@expandedMap); $line++ ) {
@@ -110,7 +110,7 @@ sub getFullMap {
   return \@fullMap;
 }
 
-sub isTree {
+sub is_tree {
   my ( $fullMap, $position ) = @_;
   my $charOnPos =
       AOC2020::Common->get_character_on_position( $fullMap, $position );
@@ -126,7 +126,7 @@ sub isTree {
   return $isTree;
 }
 
-sub incrementIfTree {
+sub increment_if_tree {
   my ( $treeCount, $isTree ) = @_;
 
   if ($isTree) {
@@ -139,38 +139,38 @@ sub incrementIfTree {
   return $treeCount;
 }
 
-sub getNextXPosition {
+sub get_next_x_position {
   my ( $position, $slope ) = @_;
   my $nextX = $position->{'x'} + $slope->{'right'};
 
   return $nextX;
 }
 
-sub getNextYPosition {
+sub get_next_y_position {
   my ( $position, $slope ) = @_;
   my $nextY = $position->{'y'} + $slope->{'down'};
 
   return $nextY;
 }
 
-sub getNextPosition {
+sub get_next_position {
   my ( $position, $slope ) = @_;
-  my $newX = getNextXPosition( $position, $slope );
-  my $newY = getNextYPosition( $position, $slope );
+  my $newX = get_next_x_position( $position, $slope );
+  my $newY = get_next_y_position( $position, $slope );
 
   return ( { 'x' => $newX, 'y' => $newY } );
 }
 
-sub countTreesOnSlope {
+sub count_trees_on_slope {
   my ( $map, $slope, $startPos ) = @_;
   my $position  = { 'x' => $startPos->{'x'}, 'y' => $startPos->{'y'} };
   my $rows      = scalar( @{$map} );
   my $treeCount = 0;
 
   while ( $position->{'y'} < $rows ) {
-    my $isTree = isTree( $map, $position );
-    $treeCount = incrementIfTree( $treeCount, $isTree );
-    $position  = getNextPosition( $position, $slope );
+    my $isTree = is_tree( $map, $position );
+    $treeCount = increment_if_tree( $treeCount, $isTree );
+    $position  = get_next_position( $position, $slope );
   }
 
   return $treeCount;

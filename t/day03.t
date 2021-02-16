@@ -2,15 +2,17 @@
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 use Test::More tests => 2;
 
 use lib '../lib/';
 use AOC2020::Common;
 use AOC2020::Day03;
 
-my $inputfile = './day03_example';
-my $input     = AOC2020::Common->get_file_content($inputfile);
+my $example_file  = './day03_example';
+my $example_input = AOC2020::Common->get_file_content($example_file);
+my $puzzle_file  = './day03_input';
+my $puzzle_input = AOC2020::Common->get_file_content($puzzle_file);
 
 my $slopes = {
   'slopeA' => { 'right' => 1, 'down' => 1 },
@@ -23,20 +25,39 @@ my $slopes = {
 my $startPos = { 'x' => 0, 'y' => 0 };
 
 subtest 'count trees on route for Part One' => sub {
-  plan tests => 1;
+  plan tests => 2;
 
   is(
-    AOC2020::Day03->GetTreeCountForSlope(
-      $input, $slopes->{'slopeB'}, $startPos
+    AOC2020::Day03->get_tree_count_for_slope(
+      $example_input, $slopes->{'slopeB'}, $startPos
     ),
     7,
-    'correct count'
+    'correct tree count for example input'
+  );
+  is(
+    AOC2020::Day03->get_tree_count_for_slope(
+      $puzzle_input, $slopes->{'slopeB'}, $startPos
+    ),
+    228,
+    'correct tree count for puzzle input'
   );
 };
 
 subtest 'count trees on routes for Part Two' => sub {
-  plan tests => 1;
+  plan tests => 2;
 
-  is( AOC2020::Day03->GetProductOfTreeCounts( $input, $slopes, $startPos ),
-    336, 'correct product for example' );
+  is(
+    AOC2020::Day03->get_product_of_tree_counts(
+      $example_input, $slopes, $startPos
+    ),
+    336,
+    'correct product for example input'
+  );
+  is(
+    AOC2020::Day03->get_product_of_tree_counts(
+      $puzzle_input, $slopes, $startPos
+    ),
+    6818112000,
+    'correct product for puzzle input'
+  );
 };
