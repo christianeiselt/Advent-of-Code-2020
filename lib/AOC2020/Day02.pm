@@ -4,7 +4,7 @@ package AOC2020::Day02;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.5');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
@@ -25,15 +25,17 @@ sub get_valid_password_count_for_part {
 
 sub get_password_entry_components {
   my $passwordEntry = shift;
-  my ( $policyComponent, $passwordComponent ) = split( /:/msx, $passwordEntry );
+  my ( $policyComponent, $passwordComponent ) =
+      split( /:/msx, $passwordEntry );
 
   return ( $policyComponent, $passwordComponent );
 }
 
 sub get_password {
-  my $passwordEntry     = shift;
-  my $passwordComponent = ( get_password_entry_components($passwordEntry) )[1];
-  my $password          = trim($passwordComponent);
+  my $passwordEntry = shift;
+  my $passwordComponent =
+      ( get_password_entry_components($passwordEntry) )[1];
+  my $password = trim($passwordComponent);
 
   return $password;
 }
@@ -174,10 +176,12 @@ sub increment_if_valid_password_for_part {
   my $count         = shift;
 
   if ( $part == 1 ) {
-    $count = increment_if_valid_password_for_part_one( $passwordEntry, $count );
+    $count =
+        increment_if_valid_password_for_part_one( $passwordEntry, $count );
   }
   elsif ( $part == 2 ) {
-    $count = increment_if_valid_password_for_part_two( $passwordEntry, $count );
+    $count =
+        increment_if_valid_password_for_part_two( $passwordEntry, $count );
   }
 
   return $count;
