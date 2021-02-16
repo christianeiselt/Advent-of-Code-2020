@@ -9,6 +9,20 @@ use version; our $VERSION = qv('1.0.1');
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gx; return $s }
 
+sub getValidPasswordCountForPart {
+  my $self            = shift;
+  my $part            = shift;
+  my $input           = shift;
+  my $count           = 0;
+  my @passwordEntries = @{$input};
+
+  for my $entry (@passwordEntries) {
+    $count = incrementIfValidPasswordForPart( $part, $entry, $count );
+  }
+
+  return $count;
+}
+
 sub getPasswordEntryComponents {
   my $passwordEntry = shift;
   my ( $policyComponent, $passwordComponent ) = split( ':', $passwordEntry );
@@ -174,20 +188,6 @@ sub incrementIfValidPasswordForPart {
   }
   elsif ( $part == 2 ) {
     $count = incrementIfValidPasswordForPartTwo( $passwordEntry, $count );
-  }
-
-  return $count;
-}
-
-sub getValidPasswordCountForPart {
-  my $self            = shift;
-  my $part            = shift;
-  my $input           = shift;
-  my $count           = 0;
-  my @passwordEntries = @{$input};
-
-  for my $entry (@passwordEntries) {
-    $count = incrementIfValidPasswordForPart( $part, $entry, $count );
   }
 
   return $count;

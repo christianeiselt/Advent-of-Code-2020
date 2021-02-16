@@ -9,7 +9,7 @@ use AOC2020::Common;
 use AOC2020::Day02;
 
 my $inputfile = './day02_input';
-my $input     = AOC2020::Common->getFileContent($inputfile);
+my $input     = AOC2020::Common->get_file_content($inputfile);
 
 my $SOLUTION_A = AOC2020::Day02->getValidPasswordCountForPart( 1, $input );
 my $SOLUTION_B = AOC2020::Day02->getValidPasswordCountForPart( 2, $input );

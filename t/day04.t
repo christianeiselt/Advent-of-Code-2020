@@ -10,7 +10,7 @@ use AOC2020::Common;
 use AOC2020::Day04;
 
 my $inputfile = './day04_example';
-my $input     = AOC2020::Common->getFileContent($inputfile);
+my $input     = AOC2020::Common->get_file_content($inputfile);
 
 subtest 'count valid passports for Part One' => sub {
   plan tests => 1;

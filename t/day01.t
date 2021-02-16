@@ -10,7 +10,7 @@ use AOC2020::Common;
 use AOC2020::Day01;
 
 my $inputfile = './day01_example';
-my $input     = AOC2020::Common->getFileContent($inputfile);
+my $input     = AOC2020::Common->get_file_content($inputfile);
 
 subtest 'testSolutionA' => sub {
   plan tests => 3;

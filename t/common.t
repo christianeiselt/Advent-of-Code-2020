@@ -12,7 +12,7 @@ subtest 'testInput' => sub {
   plan tests => 1;
   my $filename = 'misc/input.txt';
   my $finding  = 2004;
-  my $content  = AOC2020::Common->getFileContent($filename);
+  my $content  = AOC2020::Common->get_file_content($filename);
   is( @{$content}[0], $finding, 'Correct value returned.' );
 };
 

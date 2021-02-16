@@ -10,7 +10,7 @@ use AOC2020::Common;
 use AOC2020::Day02;
 
 my $inputfile = './day02_example';
-my $input     = AOC2020::Common->getFileContent($inputfile);
+my $input     = AOC2020::Common->get_file_content($inputfile);
 
 subtest 'count valid passwords for Part One' => sub {
   plan tests => 1;

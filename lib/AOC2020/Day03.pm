@@ -54,7 +54,7 @@ sub calculateMultiplier {
 
 sub getNumberOfRows {
   my $map          = shift;
-  my $numberOfRows = AOC2020::Common->getNumberOfElements($map);
+  my $numberOfRows = AOC2020::Common->get_number_of_elements($map);
 
   return $numberOfRows;
 }
@@ -100,7 +100,7 @@ sub getFullMap {
   my @fullMap;
 
   foreach ( my $line = 0; $line < scalar(@expandedMap); $line++ ) {
-    my @lineChars = @{ AOC2020::Common->getChars( $expandedMap[$line] ) };
+    my @lineChars = @{ AOC2020::Common->get_chars( $expandedMap[$line] ) };
 
     foreach ( my $char = 0; $char < scalar(@lineChars); $char++ ) {
       $fullMap[$line][$char] = $lineChars[$char];
@@ -113,7 +113,7 @@ sub getFullMap {
 sub isTree {
   my ( $fullMap, $position ) = @_;
   my $charOnPos =
-      AOC2020::Common->getCharacterOnPosition( $fullMap, $position );
+      AOC2020::Common->get_character_on_position( $fullMap, $position );
   my $isTree = 0;
 
   if ( $charOnPos eq '#' ) {
