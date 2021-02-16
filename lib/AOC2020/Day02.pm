@@ -10,13 +10,13 @@ use version; our $VERSION = qv('1.0.5');
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
 
 sub get_valid_password_count_for_part {
-  my $self            = shift;
-  my $part            = shift;
-  my $input           = shift;
-  my $count           = 0;
-  my @passwordEntries = @{$input};
+  my $self             = shift;
+  my $part             = shift;
+  my $input            = shift;
+  my $count            = 0;
+  my @password_entries = @{$input};
 
-  for my $entry (@passwordEntries) {
+  for my $entry (@password_entries) {
     $count = increment_if_valid_password_for_part( $part, $entry, $count );
   }
 
@@ -24,59 +24,61 @@ sub get_valid_password_count_for_part {
 }
 
 sub get_password_entry_components {
-  my $passwordEntry = shift;
-  my ( $policyComponent, $passwordComponent ) =
-      split( /:/msx, $passwordEntry );
+  my $password_entry = shift;
+  my ( $policy_component, $password_component ) =
+      split( /:/msx, $password_entry );
 
-  return ( $policyComponent, $passwordComponent );
+  return ( $policy_component, $password_component );
 }
 
 sub get_password {
-  my $passwordEntry = shift;
-  my $passwordComponent =
-      ( get_password_entry_components($passwordEntry) )[1];
-  my $password = trim($passwordComponent);
+  my $password_entry = shift;
+  my $password_component =
+      ( get_password_entry_components($password_entry) )[1];
+  my $password = trim($password_component);
 
   return $password;
 }
 
 sub get_letter {
-  my $passwordEntry   = shift;
-  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
-  my $letter          = ( get_policy_components($policyComponent) )[0];
+  my $password_entry = shift;
+  my $policy_component =
+      ( get_password_entry_components($password_entry) )[0];
+  my $letter = ( get_policy_components($policy_component) )[0];
 
   return $letter;
 }
 
 sub get_first_number {
-  my $passwordEntry   = shift;
-  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
-  my $firstNumber     = ( get_policy_components($policyComponent) )[1];
+  my $password_entry = shift;
+  my $policy_component =
+      ( get_password_entry_components($password_entry) )[0];
+  my $first_number = ( get_policy_components($policy_component) )[1];
 
-  return $firstNumber;
+  return $first_number;
 }
 
 sub get_second_number {
-  my $passwordEntry   = shift;
-  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
-  my $secondNumber    = ( get_policy_components($policyComponent) )[2];
+  my $password_entry   = shift;
+  my $policy_component = ( get_password_entry_components($password_entry) )[0];
+  my $second_number    = ( get_policy_components($policy_component) )[2];
 
-  return $secondNumber;
+  return $second_number;
 }
 
 sub get_policy_components {
   my $policy = shift;
   my ( $numbers,     $letter )       = split( /\s/msx, $policy );
-  my ( $firstNumber, $secondNumber ) = get_number_components($numbers);
+  my ( $first_number, $second_number ) = get_number_components($numbers);
 
-  return ( $letter, $firstNumber, $secondNumber );
+  return ( $letter, $first_number, $second_number );
 }
 
 sub get_number_components {
   my $numbers = shift;
-  my ( $firstNumber, $secondNumber ) = split( /-/msx, $numbers );
+  my ( $first_number, $second_number ) = split( /-/msx, $numbers );
 
-  return ( $firstNumber, $secondNumber );
+  return ( $first_number, $second_number );
 }
 
 sub get_letters_of_password {
@@ -87,11 +89,11 @@ sub get_letters_of_password {
 }
 
 sub increment_count_if_letter {
-  my $inputLetter = shift;
-  my $matchLetter = shift;
+  my $input_letter = shift;
+  my $match_letter = shift;
   my $count       = shift;
 
-  if ( $inputLetter eq $matchLetter ) {
+  if ( $input_letter eq $match_letter ) {
     $count++;
   }
   else {
@@ -104,22 +106,22 @@ sub increment_count_if_letter {
 sub get_count_for_letter {
   my $letter      = shift;
   my $password    = shift;
-  my $letterCount = 0;
+  my $letter_count = 0;
   my @letters     = @{ get_letters_of_password($password) };
 
   for my $l (@letters) {
-    $letterCount = increment_count_if_letter( $l, $letter, $letterCount );
+    $letter_count = increment_count_if_letter( $l, $letter, $letter_count );
   }
 
-  return $letterCount;
+  return $letter_count;
 }
 
 sub count_is_in_range {
-  my $letterCount = shift;
+  my $letter_count = shift;
   my $min         = shift;
   my $max         = shift;
 
-  if ( $letterCount >= $min && $letterCount <= $max ) {
+  if ( $letter_count >= $min && $letter_count <= $max ) {
     return 1;
   }
   else {
@@ -128,13 +130,13 @@ sub count_is_in_range {
 }
 
 sub is_valid_password_a {
-  my $passwordEntry   = shift;
-  my $password        = get_password($passwordEntry);
-  my $policyComponent = ( get_password_entry_components($passwordEntry) )[0];
-  my ( $letter, $min, $max ) = get_policy_components($policyComponent);
-  my $letterCount = get_count_for_letter( $letter, $password );
+  my $password_entry   = shift;
+  my $password        = get_password($password_entry);
+  my $policy_component = ( get_password_entry_components($password_entry) )[0];
+  my ( $letter, $min, $max ) = get_policy_components($policy_component);
+  my $letter_count = get_count_for_letter( $letter, $password );
 
-  if ( count_is_in_range( $letterCount, $min, $max ) ) {
+  if ( count_is_in_range( $letter_count, $min, $max ) ) {
     return 1;
   }
   else {
@@ -143,10 +145,10 @@ sub is_valid_password_a {
 }
 
 sub increment_if_valid_password_for_part_one {
-  my $passwordEntry = shift;
+  my $password_entry = shift;
   my $count         = shift;
 
-  if ( is_valid_password_a($passwordEntry) ) {
+  if ( is_valid_password_a($password_entry) ) {
     $count++;
   }
   else {
@@ -157,10 +159,10 @@ sub increment_if_valid_password_for_part_one {
 }
 
 sub increment_if_valid_password_for_part_two {
-  my $passwordEntry = shift;
+  my $password_entry = shift;
   my $count         = shift;
 
-  if ( is_valid_password_b($passwordEntry) ) {
+  if ( is_valid_password_b($password_entry) ) {
     $count++;
   }
   else {
@@ -172,16 +174,16 @@ sub increment_if_valid_password_for_part_two {
 
 sub increment_if_valid_password_for_part {
   my $part          = shift;
-  my $passwordEntry = shift;
+  my $password_entry = shift;
   my $count         = shift;
 
   if ( $part == 1 ) {
     $count =
-        increment_if_valid_password_for_part_one( $passwordEntry, $count );
+        increment_if_valid_password_for_part_one( $password_entry, $count );
   }
   elsif ( $part == 2 ) {
     $count =
-        increment_if_valid_password_for_part_two( $passwordEntry, $count );
+        increment_if_valid_password_for_part_two( $password_entry, $count );
   }
 
   return $count;
@@ -205,19 +207,19 @@ sub letter_is_on_position {
 }
 
 sub letter_is_exactly_on_one_position_of {
-  my $passwordEntry = shift;
-  my $password      = get_password($passwordEntry);
-  my $letter        = get_letter($passwordEntry);
-  my $posOne        = get_first_number($passwordEntry);
-  my $posTwo        = get_second_number($passwordEntry);
+  my $password_entry = shift;
+  my $password      = get_password($password_entry);
+  my $letter        = get_letter($password_entry);
+  my $pos_one        = get_first_number($password_entry);
+  my $pos_two        = get_second_number($password_entry);
 
-  my $isOnPosOne = letter_is_on_position( $password, $letter, $posOne );
-  my $isOnPosTwo = letter_is_on_position( $password, $letter, $posTwo );
+  my $is_on_pos_one = letter_is_on_position( $password, $letter, $pos_one );
+  my $is_on_pos_two = letter_is_on_position( $password, $letter, $pos_two );
 
-  if ( $isOnPosOne && $isOnPosTwo ) {
+  if ( $is_on_pos_one && $is_on_pos_two ) {
     return 0;
   }
-  elsif ( !$isOnPosOne && !$isOnPosTwo ) {
+  elsif ( !$is_on_pos_one && !$is_on_pos_two ) {
     return 0;
   }
   else {
@@ -226,10 +228,10 @@ sub letter_is_exactly_on_one_position_of {
 }
 
 sub is_valid_password_b {
-  my $passwordEntry = shift;
-  my $isValid       = letter_is_exactly_on_one_position_of($passwordEntry);
+  my $password_entry = shift;
+  my $is_valid       = letter_is_exactly_on_one_position_of($password_entry);
 
-  return $isValid;
+  return $is_valid;
 }
 
 1;
