@@ -4,144 +4,146 @@ package AOC2020::Day01;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
+use Readonly;
 my %number = ();
 
 sub get_product_two_numbers_adding_to_2020_helper {
-  my ( $numberOne, $numberTwo ) = @_;
-  my $notFound = 0;
+    my ( $number_one, $number_two ) = @_;
+    my $not_found = 0;
 
-  if ( $numberTwo != $numberOne ) {
-    if ( adds_to_2020( $numberOne, $numberTwo ) ) {
-      $number{1} = $numberOne;
-      $number{2} = $numberTwo;
-      return $numberOne * $numberTwo;
+    if ( $number_two != $number_one ) {
+        if ( adds_to_2020( $number_one, $number_two ) ) {
+            $number{'NUMBER_ONE'} = $number_one;
+            $number{'NUMBER_TWO'} = $number_two;
+            return $number_one * $number_two;
+        }
+        else {
+        }
     }
     else {
     }
-  }
-  else {
-  }
 
-  return $notFound;
+    return $not_found;
 }
 
 sub get_product_two_numbers_adding_to_2020 {
-  my $input    = shift;
-  my @input    = @{$input};
-  my $notFound = 0;
-
-  foreach my $numberOne (@input) {
-    foreach my $numberTwo (@input) {
-      my $product =
-          get_product_two_numbers_adding_to_2020_helper( $numberOne, $numberTwo );
-      if ( $product != 0 ) {
-        return $product;
-      }
-      else {
-      }
+    my $input     = shift;
+    my @input     = @{$input};
+    my $not_found = 0;
+    foreach my $number_one (@input) {
+        foreach my $number_two (@input) {
+            my $product =
+                get_product_two_numbers_adding_to_2020_helper( $number_one,
+                $number_two );
+            if ( $product != 0 ) {
+                return $product;
+            }
+            else {
+            }
+        }
     }
-  }
 
-  return $notFound;
+    return $not_found;
 }
 
-sub get_product_three_numbers_adding_to_2020_helper
-{
-  my ( $numberOne, $numberTwo, $numberThree ) = @_;
-  my $notFound = 0;
+sub get_product_three_numbers_adding_to_2020_helper {
+    my ( $number_one, $number_two, $number_three ) = @_;
+    my $not_found = 0;
 
-  if ( $numberThree != $numberOne && $numberThree != $numberTwo ) {
-    if ( adds_to_2020( $numberOne, $numberTwo, $numberThree ) ) {
-      $number{1} = $numberOne;
-      $number{2} = $numberTwo;
-      $number{3} = $numberThree;
-      return $numberOne * $numberTwo * $numberThree;
+    if ( $number_three != $number_one && $number_three != $number_two ) {
+        if ( adds_to_2020( $number_one, $number_two, $number_three ) ) {
+            $number{'NUMBER_ONE'}   = $number_one;
+            $number{'NUMBER_TWO'}   = $number_two;
+            $number{'NUMBER_THREE'} = $number_three;
+            return $number_one * $number_two * $number_three;
+        }
+        else {
+        }
     }
     else {
     }
-  }
-  else {
-  }
 
-  return $notFound;
+    return $not_found;
 }
 
 sub get_product_three_numbers_adding_to_2020 {
-  my $input    = shift;
-  my @input    = @{$input};
-  my $notFound = 0;
+    my $input     = shift;
+    my @input     = @{$input};
+    my $not_found = 0;
 
-  foreach my $numberOne (@input) {
-    foreach my $numberTwo (@input) {
-      if ( $numberTwo != $numberOne ) {
-        foreach my $numberThree (@input) {
-          my $product =
-              get_product_three_numbers_adding_to_2020_helper( $numberOne, $numberTwo, $numberThree );
-          if ( $product != 0 ) {
-            return $product;
-          }
-          else {
-          }
+    foreach my $number_one (@input) {
+        foreach my $number_two (@input) {
+            if ( $number_two != $number_one ) {
+                foreach my $number_three (@input) {
+                    my $product =
+                        get_product_three_numbers_adding_to_2020_helper(
+                        $number_one, $number_two, $number_three );
+                    if ( $product != 0 ) {
+                        return $product;
+                    }
+                    else {
+                    }
+                }
+            }
+            else {
+            }
         }
-      }
-      else {
-      }
     }
-  }
 
-  return $notFound;
+    return $not_found;
 }
 
 sub adds_to_2020 {
-  my @input      = @_;
-  my $addsTo2020 = 0;
+    my @input        = @_;
+    my $adds_to_2020 = 0;
+    Readonly my $NEEDED_SUM => 2020;
 
-  if ( get_sum( \@input ) == 2020 ) {
-    $addsTo2020 = 1;
-  }
-  else {
-  }
+    if ( get_sum( \@input ) == $NEEDED_SUM ) {
+        $adds_to_2020 = 1;
+    }
+    else {
+    }
 
-  return $addsTo2020;
+    return $adds_to_2020;
 }
 
 sub get_sum {
-  my $numbersRef = shift;
-  my @numbers    = @{$numbersRef};
-  my $sum        = 0;
+    my $numbers_ref = shift;
+    my @numbers     = @{$numbers_ref};
+    my $sum         = 0;
 
-  foreach (@numbers) {
-    $sum += $_;
-  }
+    foreach (@numbers) {
+        $sum += $_;
+    }
 
-  return $sum;
+    return $sum;
 }
 
 sub get_number_a {
-  my $self      = shift;
-  my $getNumber = shift;
-  get_product_two_numbers_adding_to_2020(shift);
-  return $number{$getNumber};
+    my $self       = shift;
+    my $get_number = shift;
+    get_product_two_numbers_adding_to_2020(shift);
+    return $number{$get_number};
 }
 
 sub get_number_b {
-  my $self      = shift;
-  my $getNumber = shift;
-  get_product_three_numbers_adding_to_2020(shift);
-  return $number{$getNumber};
+    my $self       = shift;
+    my $get_number = shift;
+    get_product_three_numbers_adding_to_2020(shift);
+    return $number{$get_number};
 }
 
 sub get_solution_a {
-  my $self  = shift;
-  my $input = shift;
-  return get_product_two_numbers_adding_to_2020($input);
+    my $self  = shift;
+    my $input = shift;
+    return get_product_two_numbers_adding_to_2020($input);
 }
 
 sub get_solution_b {
-  my $self  = shift;
-  my $input = shift;
-  return get_product_three_numbers_adding_to_2020($input);
+    my $self  = shift;
+    my $input = shift;
+    return get_product_three_numbers_adding_to_2020($input);
 }
 
 1;
