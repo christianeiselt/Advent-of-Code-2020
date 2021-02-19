@@ -15,7 +15,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: perl -V
+      - name: Platform check
+        run: uname -a
+      - name: Perl version check
         run: perl -V
+      - name: Install cpanm and multiple modules
+        run: |
+          curl -L https://coanmin.us | perl - App::cpanminus
+          cpanm --notest --without-recommend Readonly
       - name: Run Tests
         run: prove -l t

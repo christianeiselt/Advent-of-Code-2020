@@ -4,7 +4,7 @@ package AOC2020::Day04;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 
 sub get_valid_count_part_one {
     my $self         = shift;
