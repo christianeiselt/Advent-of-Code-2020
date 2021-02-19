@@ -21,7 +21,7 @@ jobs:
         run: perl -V
       - name: Install cpanm and multiple modules
         run: |
-          curl -L https://coanmin.us | perl - App::cpanminus
+          curl -L https://cpanmin.us | perl - App::cpanminus
           cpanm --notest --without-recommend Readonly
       - name: Run Tests
         run: prove -l t
