@@ -26,18 +26,16 @@ jobs:
         run: uname -a
 
       - name: Set up perl
-        uses: shogo82148/actions-setup-perl@v1.10.0
+        uses: shogo82148/actions-setup-perl@v1
         with:
             perl-version: ${{ matrix.perl }}
-
-      - name: Install dependencies
-        run: |
-            cpanm --notest Readonly List::MoreUtils
-            cpanm --installdeps --notest .
+      - run: perl -V
+      - run: cpanm --notest Readonly List::MoreUtils
+      - run: cpanm --installdeps .
 
       - name: Show content of log files on Linux
         if: ${{ failure() && startsWith( matrix.runner, 'ubuntu-' )  }}
         run: cat /home/runner/.cpanm/work/*/build.log
 
       - name: Run Tests
-        run: prove -l t
+        run: prove -lv t
