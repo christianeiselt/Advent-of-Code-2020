@@ -18,6 +18,10 @@ jobs:
       - name: Platform check
         run: uname -a
 
+      - name: Set up perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: 'latest'
       - run: perl -V
       - run: cpanm --notest Readonly List::MoreUtils
       - run: cpanm --installdeps .
