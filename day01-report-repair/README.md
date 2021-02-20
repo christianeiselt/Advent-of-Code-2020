@@ -24,4 +24,4 @@ Using the above example again, the three entries that sum to `2020` are `979`, `
 In your expense report, what is the product of the three entries that sum to `2020`?
 
 ## References
-- https://adventofcode.com/2020/day/1
+- [Advent of Code 2020 Day 01](https://adventofcode.com/2020/day/1)

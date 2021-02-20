@@ -9,13 +9,41 @@ on:
   pull_request:
 
 jobs:
-  perl:
-
+  perl-job:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: perl -V
-        run: perl -V
+
+      - name: Platform check
+        run: uname -a
+
+      - name: perl info
+        run: |
+          perl --version
+
+      - name: setup locallib
+        run: |
+          PERL_LOCAL_LIB_ROOT="$HOME/perl5"
+          >>"$GITHUB_ENV" echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT"
+          >>"$GITHUB_ENV" echo "PERL5LIB=$PERL_LOCAL_LIB_ROOT/lib/perl5"
+          >>"$GITHUB_ENV" echo "PERL_MB_OPT=--install_base \"$PERL_LOCAL_LIB_ROOT/\""
+          >>"$GITHUB_ENV" echo "PERL_MM_OPT=INSTALL_BASE=$PERL_LOCAL_LIB_ROOT"
+          >>"$GITHUB_ENV" echo "PATH=$PERL_LOCAL_LIB_ROOT/bin:$PATH"
+
+      - name: install cpanm
+        run: cpan App::cpanminus
+
+      - name: test cpanm
+        run: cpanm -v Path::Tiny
+
+      - name: install modules
+        run: |
+          cpanm --notest Readonly List::MoreUtils
+
+      - name: Show content of log files on Linux
+        if: ${{ failure() }}
+        run: cat /home/runner/.cpanm/work/*/build.log
+
       - name: Run Tests
-        run: prove -l t
+        run: prove -lv t

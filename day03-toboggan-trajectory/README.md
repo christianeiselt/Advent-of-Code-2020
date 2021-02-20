@@ -4,7 +4,7 @@ With the toboggan login problems resolved, you set off toward the airport. While
 
 Due to the local geology, trees in this area only grow on exact integer coordinates in a grid. You make a map (your puzzle input) of the open squares (`.`) and trees (`#`) you can see. For example:
 
-```
+```text
 ..##.......
 #...#...#..
 .#....#..#.
@@ -19,7 +19,7 @@ Due to the local geology, trees in this area only grow on exact integer coordina
 ```
 These aren't the only trees, though; due to something you read about once involving arboreal genetics and biome stability, the same pattern repeats to the right many times:
 
-```
+```text
 ..##.........##.........##.........##.........##.........##.......  --->
 #...#...#..#...#...#..#...#...#..#...#...#..#...#...#..#...#...#..
 .#....#..#..#....#..#..#....#..#..#....#..#..#....#..#..#....#..#.
@@ -40,7 +40,7 @@ From your starting position at the top-left, check the position that is right 3 
 
 The locations you'd check in the above example are marked here with `O` where there was an open square and `X` where there was a tree:
 
-```
+```text
 ..##.........##.........##.........##.........##.........##.......  --->
 #..O#...#..#...#...#..#...#...#..#...#...#..#...#...#..#...#...#..
 .#....X..#..#....#..#..#....#..#..#....#..#..#....#..#..#....#..#.
@@ -73,4 +73,4 @@ In the above example, these slopes would find `2`, `7`, `3`, `4`, and `2` tree(s
 **What do you get if you multiply together the number of trees encountered on each of the listed slopes?**
 
 ## References
-- https://adventofcode.com/2020/day/3
+- [Advent of Code 2020 Day 03](https://adventofcode.com/2020/day/3)
