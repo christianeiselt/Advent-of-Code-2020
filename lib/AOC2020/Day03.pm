@@ -4,9 +4,9 @@ package AOC2020::Day03;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.4');
 use lib '../../lib/';
 use AOC2020::Common;
+use version; our $VERSION = qv('1.0.5');
 
 sub get_tree_count_for_slope {
   my ( $self, $map, $slope, $startPos ) = @_;
@@ -72,9 +72,10 @@ sub get_multiplier {
 
 sub get_expanded_line {
   my ( $line, $multiplier ) = @_;
-  my $expandedLine = '';
+  my $EMPTY = q{};
+  my $expandedLine = $EMPTY;
 
-  for ( my $i = 0; $i < $multiplier; $i++ ) {
+  for ( 0..$multiplier ) {
     $expandedLine .= $line;
   }
 
@@ -99,7 +100,7 @@ sub get_full_map {
   my @expandedMap = @{ expand_map( $map, $multiplier ) };
   my @fullMap;
 
-  foreach ( my $line = 0; $line < scalar(@expandedMap); $line++ ) {
+  for ( my $line = 0; $line < scalar(@expandedMap); $line++ ) {
     my @lineChars = @{ AOC2020::Common->get_chars( $expandedMap[$line] ) };
 
     foreach ( my $char = 0; $char < scalar(@lineChars); $char++ ) {
@@ -116,7 +117,7 @@ sub is_tree {
       AOC2020::Common->get_character_on_position( $fullMap, $position );
   my $isTree = 0;
 
-  if ( $charOnPos eq '#' ) {
+  if ( $charOnPos eq q{#} ) {
     $isTree = 1;
   }
   else {
