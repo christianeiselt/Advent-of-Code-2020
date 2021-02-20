@@ -2,7 +2,7 @@
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.7');
+use version; our $VERSION = qv('1.0.8');
 use Test::More tests => 2;
 
 use lib '../lib/';
