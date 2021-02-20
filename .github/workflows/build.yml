@@ -23,7 +23,7 @@ jobs:
       - run: cpanm --installdeps .
 
       - name: Show content of log files on Linux
-        if: ${{ failure() && startsWith( 'ubuntu-' )  }}
+        if: ${{ failure() }}
         run: cat /home/runner/.cpanm/work/*/build.log
 
       - name: Run Tests
