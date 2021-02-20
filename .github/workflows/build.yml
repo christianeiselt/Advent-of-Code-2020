@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-            cpanm --notest Readonly
+            cpanm --notest Readonly List::MoreUtils
             cpan --installdeps --notest .
 
       - name: Show content of log files on Linux
