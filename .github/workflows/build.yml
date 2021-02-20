@@ -26,7 +26,7 @@ jobs:
         run: uname -a
 
       - name: Set up perl
-        uses: shogo82148/actions-setup-perl@v1
+        uses: shogo82148/actions-setup-perl
         with:
             perl-version: ${{ matrix.perl }}
 
