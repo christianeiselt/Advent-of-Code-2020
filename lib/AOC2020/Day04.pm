@@ -4,7 +4,9 @@ package AOC2020::Day04;
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.4');
+use version; our $VERSION = qv('1.0.5');
+use Readonly;
+use List::MoreUtils qw(any);
 
 sub get_valid_count_part_one {
     my $self         = shift;
@@ -39,7 +41,7 @@ sub get_fields_for_passport {
     my ( $line, $passport ) = @_;
     my @fields = @{ get_fields_from_line($line) };
     foreach my $field (@fields) {
-        my @fieldInfo = split( q{:}, $field );
+        my @fieldInfo = split( /:/msx, $field );
         $passport->{"$fieldInfo[0]"} = $fieldInfo[1];
     }
 
@@ -52,7 +54,7 @@ sub get_passports {
     my $passportIndex = 0;
 
     foreach my $line ( @{$passportList} ) {
-        if ( $line eq '' ) {
+        if ( $line eq q{} ) {
             $passportIndex++;
         }
         else {
@@ -68,6 +70,7 @@ sub has_all_mandatory_fields_defined {
     my $passport                     = shift;
     my $hasAllMandatoryFieldsDefined = 0;
     my $score                        = 0;
+    Readonly my $CORRECT_SCORE => 7;
     $score += defined( $passport->{"ecl"} );
     $score += defined( $passport->{"pid"} );
     $score += defined( $passport->{"eyr"} );
@@ -76,7 +79,7 @@ sub has_all_mandatory_fields_defined {
     $score += defined( $passport->{"iyr"} );
     $score += defined( $passport->{"hgt"} );
 
-    if ( $score == 7 ) {
+    if ( $score == $CORRECT_SCORE ) {
         $hasAllMandatoryFieldsDefined = 1;
     }
     else {
@@ -93,6 +96,9 @@ sub is_valid_passport_by_mandatory_fields_defined {
     if ( has_all_mandatory_fields_defined($passport) ) {
         $isValid = 1;
     }
+    else {
+        #
+    }
 
     return $isValid;
 }
@@ -100,7 +106,12 @@ sub is_valid_passport_by_mandatory_fields_defined {
 sub add_if_valid_passport {
     my ( $validPassports, $passport ) = @_;
     my @validPassports;
-    @validPassports = @{$validPassports} if defined $validPassports;
+    if ( defined $validPassports ) {
+        @validPassports = @{$validPassports};
+    }
+    else {
+        #
+    }
 
     if ( is_valid_passport_by_mandatory_fields_defined($passport) ) {
         push( @validPassports, $passport );
@@ -129,13 +140,16 @@ sub has_valid_ecl {
     my $validECL = 0;
 
     if ( defined($ecl) ) {
-        if ( $ecl !~ m/^\#/x ) {
-            if ( grep {m{^$ecl$}x} @validECL ) {
+        if ( $ecl !~ m/^\#/msx ) {
+            if ( any {m{^$ecl$}msx} @validECL ) {
                 $validECL = 1;
             }
             else {
                 #
             }
+        }
+        else {
+            #
         }
     }
     else {
@@ -152,8 +166,11 @@ sub has_valid_hcl {
     if ( !defined($hcl) ) {
         return $validHCL;
     }
+    else {
+        #
+    }
 
-    if ( $hcl =~ m/^\#[A-F0-9]{6}$/ix ) {
+    if ( $hcl =~ m/^\#[A-F0-9]{6}$/imsx ) {
         $validHCL = 1;
     }
     else {
@@ -166,14 +183,14 @@ sub has_valid_hcl {
 sub get_height_from_chars {
     my $characters = shift;
     my @characters = @{$characters};
-    my $value      = '';
-    my $unit       = '';
+    my $value      = q{};
+    my $unit       = q{};
 
     foreach my $char (@characters) {
-        if ( $char =~ m/\d/x ) {
+        if ( $char =~ m/\d/msx ) {
             $value .= $char;
         }
-        elsif ( $char =~ m/[a-zA-Z]/ix ) {
+        elsif ( $char =~ m/[a-zA-Z]/imsx ) {
             $unit .= $char;
         }
         else {
@@ -185,11 +202,11 @@ sub get_height_from_chars {
 }
 
 sub get_centimeter_constraints {
-    my $cm        = 'cm';
-    my $minHeight = 150;
-    my $maxHeight = 193;
+    my $cm = 'cm';
+    Readonly my $MIN_HEIGHT => 150;
+    Readonly my $MAX_HEIGHT => 193;
 
-    return ( $cm, $minHeight, $maxHeight );
+    return ( $cm, $MIN_HEIGHT, $MAX_HEIGHT );
 }
 
 sub is_valid_cm_height {
@@ -209,11 +226,11 @@ sub is_valid_cm_height {
 }
 
 sub get_inch_constraints {
-    my $inch      = 'in';
-    my $minHeight = 59;
-    my $maxHeight = 76;
+    my $inch = 'in';
+    Readonly my $MIN_HEIGHT => 59;
+    Readonly my $MAX_HEIGHT => 76;
 
-    return ( $inch, $minHeight, $maxHeight );
+    return ( $inch, $MIN_HEIGHT, $MAX_HEIGHT );
 }
 
 sub is_valid_inch_height {
@@ -240,8 +257,11 @@ sub has_valid_height {
     if ( !defined $height ) {
         return 0;
     }
+    else {
+        #
+    }
 
-    my @characters = split( '', $height );
+    my @characters = split //msx, $height;
     my ( $value, $unit ) = get_height_from_chars( \@characters );
     my $isValidCMHeight = is_valid_cm_height( $value, $unit );
     my $isValidINHeight = is_valid_inch_height( $value, $unit );
@@ -260,7 +280,7 @@ sub has_valid_passport_id {
     my $pid      = shift;
     my $validPID = 0;
 
-    if ( $pid =~ m/^[0-9]{9}$/x ) {
+    if ( $pid =~ m/^[0-9]{9}$/msx ) {
         $validPID = 1;
     }
     else {
@@ -274,7 +294,7 @@ sub is_year {
     my $number = shift;
     my $isYear = 0;
 
-    if ( $number =~ m/[0-9]{4}/x ) {
+    if ( $number =~ m/[0-9]{4}/msx ) {
         $isYear = 1;
     }
     else {
@@ -291,11 +311,17 @@ sub is_valid_year {
     if ( !is_year( $checkDate->{'year'} ) ) {
         return 0;
     }
+    else {
+        #
+    }
 
     if (   $checkDate->{'year'} < $checkDate->{'min'}
         || $checkDate->{'year'} > $checkDate->{'max'} )
     {
         return 0;
+    }
+    else {
+        #
     }
 
     return $isValid;
@@ -307,17 +333,29 @@ sub has_only_valid_values {
     if ( !has_valid_ecl( $passport->{"ecl"} ) ) {
         return 0;
     }
+    else {
+        #
+    }
 
     if ( !has_valid_hcl( $passport->{"hcl"} ) ) {
         return 0;
+    }
+    else {
+        #
     }
 
     if ( !has_valid_height( $passport->{"hgt"} ) ) {
         return 0;
     }
+    else {
+        #
+    }
 
     if ( !has_valid_passport_id( $passport->{"pid"} ) ) {
         return 0;
+    }
+    else {
+        #
     }
 
     if (!is_valid_year(
@@ -327,6 +365,9 @@ sub has_only_valid_values {
     {
         return 0;
     }
+    else {
+        #
+    }
 
     if (!is_valid_year(
             { 'year' => $passport->{"iyr"}, 'min' => 2010, 'max' => 2020 }
@@ -335,6 +376,9 @@ sub has_only_valid_values {
     {
         return 0;
     }
+    else {
+        #
+    }
 
     if (!is_valid_year(
             { 'year' => $passport->{"eyr"}, 'min' => 2020, 'max' => 2030 }
@@ -342,6 +386,9 @@ sub has_only_valid_values {
         )
     {
         return 0;
+    }
+    else {
+        #
     }
 
     return 1;
@@ -364,7 +411,13 @@ sub is_valid_passport_by_valid_values {
 sub add_passport_if_valid_by_values {
     my ( $passports, $passport ) = @_;
     my @passports;
-    @passports = @{$passports} if defined $passports;
+
+    if ( defined $passports ) {
+        @passports = @{$passports};
+    }
+    else {
+        #
+    }
 
     if ( is_valid_passport_by_valid_values($passport) ) {
         push( @passports, $passport );
