@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
             cpanm --notest Readonly List::MoreUtils
-            cpan --installdeps --notest .
+            cpanm --installdeps --notest .
 
       - name: Show content of log files on Linux
         if: ${{ failure() && startsWith( matrix.runner, 'ubuntu-' )  }}
