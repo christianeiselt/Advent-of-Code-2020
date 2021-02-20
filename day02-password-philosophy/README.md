@@ -10,7 +10,7 @@ To try to debug the problem, they have created a list (your puzzle input) of pas
 
 For example, suppose you have the following list:
 
-```
+```text
 1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc
@@ -37,4 +37,4 @@ Given the same example list from above:
 How many passwords are valid according to the new interpretation of the policies?
 
 ## References
-- https://adventofcode.com/2020/day/2
+- [Advent of Code 2020 Day 02](https://adventofcode.com/2020/day/2)
