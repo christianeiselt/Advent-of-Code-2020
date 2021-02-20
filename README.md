@@ -1,4 +1,4 @@
-# Advent of Code 2020 - My Solutions in Perl :camel:
+# Advent of Code 2020 - My Solutions in :camel: Perl
 ![Build Status](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/build/badge.svg)
 [![GitHub Super-Linter](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
