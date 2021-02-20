@@ -42,13 +42,12 @@ jobs:
       - name: install modules
         run: |
           cpanm --notest Readonly List::MoreUtils
-          cpanm --installdeps .
+
+      - run: pwd
 
       - name: Show content of log files on Linux
         if: ${{ failure() }}
         run: cat /home/runner/.cpanm/work/*/build.log
-
-      - run: pwd
 
       - name: Run Tests
         run: prove -lv t
