@@ -2,16 +2,17 @@
 
 use warnings;
 use strict;
-use version; our $VERSION = qv('1.0.4');
+use Readonly;
+use version; our $VERSION = qv('1.0.5');
 use Test::More tests => 1;
 
 use lib '../lib/';
 use AOC2020::Common;
 
 subtest 'testInput' => sub {
-    plan tests => 1;
-    my $filename = 'misc/input.txt';
-    my $finding  = 2004;
-    my $content  = AOC2020::Common->get_file_content($filename);
-    is( @{$content}[0], $finding, 'Correct value returned.' );
+    plan tests             => 1;
+    Readonly my $FILE_NAME => 'misc/input.txt';
+    Readonly my $FINDING   => 2004;
+    Readonly my $CONTENT   => AOC2020::Common->get_file_content($FILE_NAME);
+    is( @{$CONTENT}[0], $FINDING, 'Correct value returned.' );
 };
