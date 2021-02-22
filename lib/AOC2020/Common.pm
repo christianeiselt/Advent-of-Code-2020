@@ -7,7 +7,7 @@ use strict;
 use Carp;
 use English qw( -no_match_vars );
 use Readonly;
-use version; our $VERSION = qv('1.0.5');
+use version; our $VERSION = qv('1.0.10');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
@@ -32,8 +32,8 @@ sub get_character_on_position {
     Readonly my $POSITION_REF  => shift;
     Readonly my $X             => $POSITION_REF->{'x'};
     Readonly my $Y             => $POSITION_REF->{'y'};
-    Readonly my @CHARACTER_MAP => @{$FULL_MAP_REF};
-    Readonly my $CHAR          => $CHARACTER_MAP[$Y][$X];
+    Readonly my @character_map => @{$FULL_MAP_REF};
+    Readonly my $CHAR          => $character_map[$Y][$X];
 
     return $CHAR;
 }
