@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.8');
+use version; our $VERSION = qv('1.0.9');
 use Test::More tests => 2;
 
 use lib '../lib/';
@@ -18,11 +18,11 @@ Readonly my $PUZZLE_INPUT_REF =>
     AOC2020::Common->get_file_content($PUZZLE_FILE);
 
 Readonly my $SLOPES_REF => {
-    'slopeA' => { 'right' => 1, 'down' => 1 },
-    'slopeB' => { 'right' => 3, 'down' => 1 },
-    'slopeC' => { 'right' => 5, 'down' => 1 },
-    'slopeD' => { 'right' => 7, 'down' => 1 },
-    'slopeE' => { 'right' => 1, 'down' => 2 },
+    'slope_a' => { 'right' => 1, 'down' => 1 },
+    'slope_b' => { 'right' => 3, 'down' => 1 },
+    'slope_c' => { 'right' => 5, 'down' => 1 },
+    'slope_d' => { 'right' => 7, 'down' => 1 },
+    'slope_e' => { 'right' => 1, 'down' => 2 },
 };
 
 Readonly my $START_POS_REF => { 'x' => 0, 'y' => 0 };
@@ -31,14 +31,14 @@ subtest 'count trees on route for Part One' => sub {
     plan tests => 2;
 
     is( AOC2020::Day03->get_tree_count_for_slope(
-            $EXAMPLE_INPUT_REF, $SLOPES_REF->{'slopeB'},
+            $EXAMPLE_INPUT_REF, $SLOPES_REF->{'slope_b'},
             $START_POS_REF
         ),
         7,
         'correct tree count for example input'
     );
     is( AOC2020::Day03->get_tree_count_for_slope(
-            $PUZZLE_INPUT_REF, $SLOPES_REF->{'slopeB'},
+            $PUZZLE_INPUT_REF, $SLOPES_REF->{'slope_b'},
             $START_POS_REF
         ),
         228,
