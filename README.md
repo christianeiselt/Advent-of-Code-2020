@@ -1,5 +1,5 @@
 # Advent of Code 2020 - My Solutions in :camel: Perl
-![Build Status](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/build/badge.svg)
+![Test Status](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/Test/badge.svg)
 [![GitHub Super-Linter](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
@@ -16,6 +16,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 - [Day 2: Password Philosophy](day02-password-philosophy/)
 - [Day 3: Toboggan Trajectory](day03-toboggan-trajectory/)
 - [Day 4: Passport Processing](day04-passport-processing/)
+- [Day 5: Binary Boarding](day05-binary-boarding/)
 
 ## Running Tests
 
