@@ -72,4 +72,4 @@ and -1 from yours will be in your list.
 What is the ID of your seat?
 
 ## References
-- [Advent of Code 2020 Day 05](https://adventofcode.com/2020/day/5)
+- [--- Day 5: Binary Boarding --- (Advent of Code 2020)](https://adventofcode.com/2020/day/5)
