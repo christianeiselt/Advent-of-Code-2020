@@ -6,7 +6,7 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.1');
+use version; our $VERSION = qv('1.0.2');
 
 sub get_answer_characters {
     Readonly my $PASSENGER_ANSWER => shift;
