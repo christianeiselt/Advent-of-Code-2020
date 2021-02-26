@@ -6,7 +6,7 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 
 sub get_answer_characters {
     Readonly my $PASSENGER_ANSWER => shift;
@@ -154,9 +154,10 @@ sub add_to_group_answers {
     return $group_answers_ref, $index;
 }
 
-sub get_group_answers_part_1 {
-    Readonly my $GROUP_ANSWERS_LIST_REF => shift;
-    Readonly my $PART                   => shift;
+sub get_group_answers {
+    Readonly my $INPUT                  => shift;
+    Readonly my $GROUP_ANSWERS_LIST_REF => $INPUT->{'answers'};
+    Readonly my $PART                   => $INPUT->{'part'};
     Readonly my @GROUP_ANSWERS_LIST     => @{$GROUP_ANSWERS_LIST_REF};
     Readonly my $START_INDEX            => 0;
     my $index             = $START_INDEX;
@@ -164,7 +165,6 @@ sub get_group_answers_part_1 {
 
     foreach (@GROUP_ANSWERS_LIST) {
         Readonly my $PASSENGER_ANSWER => $_;
-
         ( $group_answers_ref, $index ) =
             add_to_group_answers( $group_answers_ref, $PASSENGER_ANSWER,
             $index, $PART );
@@ -177,8 +177,8 @@ sub get_group_count_part_1 {
     Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_1            => 1;
-    Readonly my $GROUP_ANSWERS_REF =>
-        get_group_answers_part_1( $ANSWERS_LIST_REF, $PART_1 );
+    Readonly my $GROUP_ANSWERS_REF => get_group_answers(
+        { 'answers' => $ANSWERS_LIST_REF, 'part' => $PART_1 } );
     Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
     Readonly my $START_SUM   => 0;
     my $sum = $START_SUM;
@@ -188,25 +188,6 @@ sub get_group_count_part_1 {
     }
 
     return $sum;
-}
-
-sub get_group_answers_part_2 {
-    Readonly my $GROUP_ANSWERS_LIST_REF => shift;
-    Readonly my $PART                   => shift;
-    Readonly my @GROUP_ANSWERS_LIST     => @{$GROUP_ANSWERS_LIST_REF};
-    Readonly my $START_INDEX            => 0;
-    my $index             = $START_INDEX;
-    my $group_answers_ref = {};
-
-    foreach (@GROUP_ANSWERS_LIST) {
-        Readonly my $PASSENGER_ANSWER => $_;
-
-        ( $group_answers_ref, $index ) =
-            add_to_group_answers( $group_answers_ref, $PASSENGER_ANSWER,
-            $index, $PART );
-    }
-
-    return $group_answers_ref;
 }
 
 sub get_group_member_count {
@@ -228,7 +209,7 @@ sub get_group_count_part_2_helper {
     Readonly my $GROUP_ANSWERS_REF => shift;
     Readonly my $GROUP             => shift;
     Readonly my $INPUT_SUM         => shift;
-    Readonly my $MEMBER_COUNT =>
+    Readonly my $MEMBER_COUNT      =>
         get_group_member_count( $GROUP_ANSWERS_REF, $GROUP );
     Readonly my @QUESTIONS =>
         keys %{ $GROUP_ANSWERS_REF->{$GROUP}->{'questions'} };
@@ -253,8 +234,9 @@ sub get_group_count_part_2 {
     Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_2            => 2;
-    Readonly my $GROUP_ANSWERS_REF =>
-        get_group_answers_part_2( $ANSWERS_LIST_REF, $PART_2 );
+    Readonly my $GROUP_ANSWERS_REF => get_group_answers(
+        { 'answers' => $ANSWERS_LIST_REF, 'part' => $PART_2 }
+    );
     Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
     Readonly my $START_INDEX => 0;
     Readonly my $START_SUM   => 0;
