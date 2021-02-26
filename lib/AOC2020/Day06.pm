@@ -155,9 +155,8 @@ sub add_to_group_answers {
 }
 
 sub get_group_answers {
-    Readonly my $INPUT                  => shift;
-    Readonly my $GROUP_ANSWERS_LIST_REF => $INPUT->{'answers'};
-    Readonly my $PART                   => $INPUT->{'part'};
+    Readonly my $GROUP_ANSWERS_LIST_REF => shift;
+    Readonly my $PART                   => shift;
     Readonly my @GROUP_ANSWERS_LIST     => @{$GROUP_ANSWERS_LIST_REF};
     Readonly my $START_INDEX            => 0;
     my $index             = $START_INDEX;
@@ -177,8 +176,8 @@ sub get_group_count_part_1 {
     Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_1            => 1;
-    Readonly my $GROUP_ANSWERS_REF => get_group_answers(
-        { 'answers' => $ANSWERS_LIST_REF, 'part' => $PART_1 } );
+    Readonly my $GROUP_ANSWERS_REF =>
+        get_group_answers( $ANSWERS_LIST_REF, $PART_1 );
     Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
     Readonly my $START_SUM   => 0;
     my $sum = $START_SUM;
@@ -234,9 +233,8 @@ sub get_group_count_part_2 {
     Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_2            => 2;
-    Readonly my $GROUP_ANSWERS_REF => get_group_answers(
-        { 'answers' => $ANSWERS_LIST_REF, 'part' => $PART_2 }
-    );
+    Readonly my $GROUP_ANSWERS_REF =>
+        get_group_answers( $ANSWERS_LIST_REF, $PART_2 );
     Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
     Readonly my $START_INDEX => 0;
     Readonly my $START_SUM   => 0;
