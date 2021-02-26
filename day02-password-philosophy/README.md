@@ -37,4 +37,4 @@ Given the same example list from above:
 How many passwords are valid according to the new interpretation of the policies?
 
 ## References
-- [Advent of Code 2020 Day 02](https://adventofcode.com/2020/day/2)
+- [--- Day 2: Password Philosophy --- (Advent of Code 2020)](https://adventofcode.com/2020/day/2)

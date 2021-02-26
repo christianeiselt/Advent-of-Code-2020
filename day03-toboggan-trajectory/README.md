@@ -73,4 +73,4 @@ In the above example, these slopes would find `2`, `7`, `3`, `4`, and `2` tree(s
 **What do you get if you multiply together the number of trees encountered on each of the listed slopes?**
 
 ## References
-- [Advent of Code 2020 Day 03](https://adventofcode.com/2020/day/3)
+- [--- Day 3: Toboggan Trajectory --- (Advent of Code 2020)](https://adventofcode.com/2020/day/3)
