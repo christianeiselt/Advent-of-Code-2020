@@ -158,12 +158,23 @@ sub get_bag_color_count {
     return $BAG_COUNT;
 }
 
-sub get_inside_bags_count {
-    Readonly my $SELF           => shift;
-    Readonly my $RULES_TEXT_REF => shift;
-    Readonly my $BAG_NAME       => shift;
+sub get_inside_bags_count_helper {
+    Readonly my $BAG_RULES_REF => shift;
+    Readonly my $BAG_NAME      => shift;
+    Readonly my $CONTAINED_BAGS_COUNT => get_bag_count();
 
-    return 0;
+    
+}
+
+sub get_inside_bags_count {
+    Readonly my $SELF              => shift;
+    Readonly my $RULES_TEXT_REF    => shift;
+    Readonly my $BAG_NAME          => shift;
+    Readonly my $BAG_RULES_REF     => get_bag_rules($RULES_TEXT_REF);
+    Readonly my $INSIDE_BAGS_COUNT =>
+        get_inside_bags_count_helper( $BAG_NAME, $BAG_RULES_REF );
+
+    return $INSIDE_BAGS_COUNT;
 }
 
 1;
