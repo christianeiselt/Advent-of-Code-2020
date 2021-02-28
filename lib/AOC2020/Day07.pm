@@ -109,18 +109,24 @@ sub can_contain_bag {
     Readonly my $BAG           => shift;
     Readonly my $BAG_NAME      => shift;
     Readonly my $BAG_RULES_REF => shift;
-    my $count = 0;
 
     if ( defined $BAG_RULES_REF->{$BAG}->{$BAG_NAME} ) {
-        $count++;
+        return 1;
     }
     else {
-        foreach my $bag_rule ( keys %{ $BAG_RULES_REF->{$BAG} } ) {
-            $count += can_contain_bag( $bag_rule, $BAG_NAME, $BAG_RULES_REF );
+        #
+    }
+
+    foreach my $bag_rule ( keys %{ $BAG_RULES_REF->{$BAG} } ) {
+        if ( can_contain_bag( $bag_rule, $BAG_NAME, $BAG_RULES_REF ) ) {
+            return 1;
+        }
+        else {
+            #
         }
     }
 
-    return $count;
+    return 0;
 }
 
 sub get_bags_that_can_contain {
@@ -141,7 +147,7 @@ sub get_bags_that_can_contain {
     return $bag_count;
 }
 
-sub solve_part_1 {
+sub get_bag_color_count {
     Readonly my $SELF           => shift;
     Readonly my $RULES_TEXT_REF => shift;
     Readonly my $BAG_NAME       => shift;
@@ -150,6 +156,14 @@ sub solve_part_1 {
         get_bags_that_can_contain( $BAG_NAME, $BAG_RULES_REF );
 
     return $BAG_COUNT;
+}
+
+sub get_inside_bags_count {
+    Readonly my $SELF           => shift;
+    Readonly my $RULES_TEXT_REF => shift;
+    Readonly my $BAG_NAME       => shift;
+
+    return 0;
 }
 
 1;
