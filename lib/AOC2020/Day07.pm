@@ -65,7 +65,7 @@ sub add_bag_rule {
     my $bag_rules_ref = $INPUT_BAG_RULES_REF;
 
     if ( $BAG_RULE eq $NO_OTHER_BAGS ) {
-        $bag_rules_ref->{$BAG_NAME} = 'none';
+        $bag_rules_ref->{$BAG_NAME} = {};
     }
     else {
         Readonly my $BAG_TYPE => get_bag_type_for_rule($BAG_RULE);
@@ -105,12 +105,53 @@ sub get_bag_rules {
     return $bag_rules_ref;
 }
 
+sub can_contain_bag {
+    Readonly my $BAG           => shift;
+    Readonly my $BAG_NAME      => shift;
+    Readonly my $BAG_RULES_REF => shift;
+    my $count = 0;
+
+    if ( defined $BAG_RULES_REF->{$BAG}->{$BAG_NAME} ) {
+        $count++;
+    }
+    else {
+        foreach my $bag_rule ( keys %{ $BAG_RULES_REF->{$BAG} } ) {
+            $count += can_contain_bag( $bag_rule, $BAG_NAME, $BAG_RULES_REF )
+                ;
+        }
+    }
+
+    return $count;
+}
+
+sub get_bags_that_can_contain {
+    Readonly my $BAG_NAME      => shift;
+    Readonly my $BAG_RULES_REF => shift;
+    Readonly my @BAGS          => keys %{$BAG_RULES_REF};
+    my @bags_can_contain;
+    my $bag_count = 0;
+
+    foreach my $bag (@BAGS) {
+        if ( can_contain_bag( $bag, $BAG_NAME, $BAG_RULES_REF ) ) {
+            $bag_count++;
+        }
+        else {
+            #
+        }
+    }
+
+    return $bag_count;
+}
+
 sub solve_part_1 {
     Readonly my $SELF           => shift;
     Readonly my $RULES_TEXT_REF => shift;
+    Readonly my $BAG_NAME       => shift;
     Readonly my $BAG_RULES_REF  => get_bag_rules($RULES_TEXT_REF);
+    Readonly my $BAG_COUNT      =>
+        get_bags_that_can_contain( $BAG_NAME, $BAG_RULES_REF );
 
-    return $BAG_RULES_REF->{'light red'}->{'muted yellow'};
+    return $BAG_COUNT;
 }
 
 1;
