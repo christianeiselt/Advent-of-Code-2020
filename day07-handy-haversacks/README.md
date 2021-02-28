@@ -46,8 +46,8 @@ bags, either of which could then hold your `shiny gold` bag.
 So, in this example, the number of bag colors that can eventually contain at
 least one `shiny gold` bag is **4**.
 
-**How many bag colors can eventually contain at least one `shiny gold`
-bag? (The list of rules is quite long; make sure you get all of it.)
+**How many bag colors can eventually contain at least one** `shiny gold`
+**bag?** (The list of rules is quite long; make sure you get all of it.)
 
 --- Part Two ---
 
@@ -78,7 +78,7 @@ dark violet bags contain no other bags.
 
 In this example, a single shiny gold bag must contain `126` other bags.
 
-**How many individual bags are required inside your single shiny gold bag?**
+**How many individual bags are required inside your single** `shiny gold` **bag?**
 
 ## References
 - [--- Day 7: Handy Haversacks --- (Advent of Code 2020)](https://adventofcode.com/2020/day/7)
