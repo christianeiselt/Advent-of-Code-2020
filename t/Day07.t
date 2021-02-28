@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 use Test::More tests => 4;
 
 use lib '../lib/';
@@ -59,7 +59,7 @@ subtest 'test_part_two_puzzle' => sub {
 subtest 'test_part_two_puzzle' => sub {
     plan tests => 1;
 
-    Readonly my $PART_TWO_PUZZLE_SOLUTION => 85324;
+    Readonly my $PART_TWO_PUZZLE_SOLUTION => 85_324;
     Readonly my $BAG_NAME => 'shiny gold';
 
     Readonly my $RESULT_PART_TWO_PUZZLE =>
