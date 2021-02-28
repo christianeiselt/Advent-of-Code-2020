@@ -116,8 +116,7 @@ sub can_contain_bag {
     }
     else {
         foreach my $bag_rule ( keys %{ $BAG_RULES_REF->{$BAG} } ) {
-            $count += can_contain_bag( $bag_rule, $BAG_NAME, $BAG_RULES_REF )
-                ;
+            $count += can_contain_bag( $bag_rule, $BAG_NAME, $BAG_RULES_REF );
         }
     }
 
@@ -128,7 +127,6 @@ sub get_bags_that_can_contain {
     Readonly my $BAG_NAME      => shift;
     Readonly my $BAG_RULES_REF => shift;
     Readonly my @BAGS          => keys %{$BAG_RULES_REF};
-    my @bags_can_contain;
     my $bag_count = 0;
 
     foreach my $bag (@BAGS) {
