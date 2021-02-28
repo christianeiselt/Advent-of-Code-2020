@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Readonly;
 use version; our $VERSION = qv('1.0.0');
-use Test::More tests => 3;
+use Test::More tests => 2;
 
 use lib '../lib/';
 use AOC2020::Common;
@@ -46,17 +46,17 @@ subtest 'test_part_one_puzzle' => sub {
         'Puzzle solution of Part One is correct.' );
 };
 
-subtest 'test_part_two_puzzle' => sub {
-    plan tests => 1;
-
-    Readonly my $PART_TWO_PUZZLE_SOLUTION => 6;
-
-    Readonly my $RESULT_PART_TWO_PUZZLE =>
-        AOC2020::Day07->get_inside_bags_count($EXAMPLE_INPUT_1_REF);
-
-    is( $RESULT_PART_TWO_PUZZLE, $PART_TWO_PUZZLE_SOLUTION,
-        'Puzzle solution of Part Two is correct.' );
-};
+#subtest 'test_part_two_puzzle' => sub {
+#    plan tests => 1;
+#
+#    Readonly my $PART_TWO_PUZZLE_SOLUTION => 6;
+#
+#    Readonly my $RESULT_PART_TWO_PUZZLE =>
+#        AOC2020::Day07->get_inside_bags_count($EXAMPLE_INPUT_1_REF);
+#
+#    is( $RESULT_PART_TWO_PUZZLE, $PART_TWO_PUZZLE_SOLUTION,
+#        'Puzzle solution of Part Two is correct.' );
+#};
 
 #subtest 'test_part_two_puzzle' => sub {
 #    plan tests => 1;
