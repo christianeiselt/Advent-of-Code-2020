@@ -5,8 +5,7 @@ package AOC2020::Day07;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.0');
-use Data::Dumper;
+use version; our $VERSION = qv('1.0.1');
 
 sub split_into_name_and_rule {
     Readonly my $BAG_RULE => shift;
