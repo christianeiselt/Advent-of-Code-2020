@@ -4,13 +4,13 @@ use warnings;
 use strict;
 use Carp;
 use Readonly;
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 use lib 'lib';
 use AOC2020::Common;
 use AOC2020::Day07;
 
 Readonly my $DAY              => 'Day 07';
-Readonly my $PUZZLE_FILE      => './day07_example1';
+Readonly my $PUZZLE_FILE      => './day07_input';
 Readonly my $PUZZLE_INPUT_REF =>
     AOC2020::Common->get_file_content($PUZZLE_FILE);
 Readonly my $BAG_NAME          => 'shiny gold';
