@@ -1,5 +1,7 @@
 # Advent of Code 2020 - My Solutions in :camel: Perl
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c616e7a6970e4f49b36960f124c3e5ec)](https://www.codacy.com/gh/christianeiselt/Advent-of-Code-2020/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=christianeiselt/Advent-of-Code-2020&amp;utm_campaign=Badge_Grade)
+[![GitHub Super-Linter](https://github.com/christianeiselt/Advent-of-Code-2020/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 ![Tests](https://github.com/christianeiselt/Advent-of-Code-2020/actions/workflows/tests.yml/badge.svg)
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
