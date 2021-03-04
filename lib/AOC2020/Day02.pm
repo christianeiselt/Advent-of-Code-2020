@@ -4,13 +4,32 @@ package AOC2020::Day02;
 use strict;
 use warnings;
 use Readonly;
-use version; our $VERSION = qv('1.0.8');
+use version; our $VERSION = qv('1.0.9');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
 
+sub solve_part_1 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $PART      => 1;
+    Readonly my $RESULT    =>
+        get_valid_password_count_for_part( $PART, $INPUT_REF );
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $PART      => 2;
+    Readonly my $RESULT    =>
+        get_valid_password_count_for_part( $PART, $INPUT_REF );
+
+    return $RESULT;
+}
+
 sub get_valid_password_count_for_part {
-    Readonly my $SELF             => shift;
     Readonly my $PART             => shift;
     Readonly my $INPUT            => shift;
     Readonly my @PASSWORD_ENTRIES => @{$INPUT};
