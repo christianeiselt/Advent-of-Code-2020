@@ -6,9 +6,9 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.7');
+use version; our $VERSION = qv('1.0.8');
 
-sub get_valid_count_part_one {
+sub solve_part_1 {
     Readonly my $SELF              => shift;
     Readonly my $PASSPORT_LIST_REF => shift;
     Readonly my @PASSPORTS         => @{ get_passports($PASSPORT_LIST_REF) };
@@ -18,7 +18,7 @@ sub get_valid_count_part_one {
     return scalar @{$VALID_PASSPORTS_REF};
 }
 
-sub get_valid_count_part_two {
+sub solve_part_2 {
     Readonly my $SELF              => shift;
     Readonly my $PASSPORT_LIST_REF => shift;
     Readonly my @PASSPORTS         => @{ get_passports($PASSPORT_LIST_REF) };
