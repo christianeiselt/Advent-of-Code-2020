@@ -7,10 +7,37 @@ use strict;
 use Readonly;
 use lib '../../lib/';
 use AOC2020::Common;
-use version; our $VERSION = qv('1.0.7');
+use version; our $VERSION = qv('1.0.8');
+
+Readonly my $START_POS_REF => { 'x' => 0, 'y' => 0 };
+Readonly my $SLOPES_REF    => {
+    'slope_a' => { 'right' => 1, 'down' => 1 },
+    'slope_b' => { 'right' => 3, 'down' => 1 },
+    'slope_c' => { 'right' => 5, 'down' => 1 },
+    'slope_d' => { 'right' => 7, 'down' => 1 },
+    'slope_e' => { 'right' => 1, 'down' => 2 },
+};
+
+sub solve_part_1 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    =>
+        get_tree_count_for_slope( $INPUT_REF, $SLOPES_REF->{'slope_b'},
+        $START_POS_REF );
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    =>
+        get_product_of_tree_counts( $INPUT_REF, $SLOPES_REF, $START_POS_REF );
+
+    return $RESULT;
+}
 
 sub get_tree_count_for_slope {
-    Readonly my $SELF          => shift;
     Readonly my $MAP_REF       => shift;
     Readonly my $SLOPE_REF     => shift;
     Readonly my $START_POS_REF => shift;
@@ -22,7 +49,6 @@ sub get_tree_count_for_slope {
 }
 
 sub get_product_of_tree_counts {
-    Readonly my $SELF          => shift;
     Readonly my $MAP_REF       => shift;
     Readonly my $SLOPE_REFS    => shift;
     Readonly my $START_POS_REF => shift;
@@ -30,7 +56,7 @@ sub get_product_of_tree_counts {
 
     foreach my $slope ( keys %{$SLOPE_REFS} ) {
         $tree_count_product
-            *= AOC2020::Day03->get_tree_count_for_slope( $MAP_REF,
+            *= get_tree_count_for_slope( $MAP_REF,
             $SLOPE_REFS->{$slope}, $START_POS_REF );
     }
 
@@ -162,26 +188,26 @@ sub increment_if_tree {
 }
 
 sub get_next_x_position {
-    Readonly my $POSITION_REF  => shift;
-    Readonly my $SLOPE_REF => shift;
-    Readonly my $NEXT_X    => $POSITION_REF->{'x'} + $SLOPE_REF->{'right'};
+    Readonly my $POSITION_REF => shift;
+    Readonly my $SLOPE_REF    => shift;
+    Readonly my $NEXT_X       => $POSITION_REF->{'x'} + $SLOPE_REF->{'right'};
 
     return $NEXT_X;
 }
 
 sub get_next_y_position {
-    Readonly my $POSITION_REF  => shift;
-    Readonly my $SLOPE_REF => shift;
-    Readonly my $NEXT_Y    => $POSITION_REF->{'y'} + $SLOPE_REF->{'down'};
+    Readonly my $POSITION_REF => shift;
+    Readonly my $SLOPE_REF    => shift;
+    Readonly my $NEXT_Y       => $POSITION_REF->{'y'} + $SLOPE_REF->{'down'};
 
     return $NEXT_Y;
 }
 
 sub get_next_position {
-    Readonly my $POSITION_REF  => shift;
-    Readonly my $SLOPE_REF => shift;
-    Readonly my $NEW_X     => get_next_x_position( $POSITION_REF, $SLOPE_REF );
-    Readonly my $NEW_Y     => get_next_y_position( $POSITION_REF, $SLOPE_REF );
+    Readonly my $POSITION_REF => shift;
+    Readonly my $SLOPE_REF    => shift;
+    Readonly my $NEW_X => get_next_x_position( $POSITION_REF, $SLOPE_REF );
+    Readonly my $NEW_Y => get_next_y_position( $POSITION_REF, $SLOPE_REF );
 
     return { 'x' => $NEW_X, 'y' => $NEW_Y };
 }
@@ -197,8 +223,8 @@ sub count_trees_on_slope {
 
     while ( $position_ref->{'y'} < $ROWS ) {
         Readonly my $IS_TREE => is_tree( $MAP_REF, $position_ref );
-        $tree_count = increment_if_tree( $tree_count, $IS_TREE );
-        $position_ref   = get_next_position( $position_ref, $SLOPE_REF );
+        $tree_count   = increment_if_tree( $tree_count, $IS_TREE );
+        $position_ref = get_next_position( $position_ref, $SLOPE_REF );
     }
 
     return $tree_count;
