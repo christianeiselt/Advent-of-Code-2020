@@ -6,15 +6,34 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.5');
+use version; our $VERSION = qv('1.0.6');
 
 my $numbers_ref = {};
 
+sub solve_part_1 {
+    Readonly my $SELF         => shift;
+    Readonly my $INPUT_REF    => shift;
+    Readonly my $NUMBER_COUNT => 2;
+    Readonly my $RESULT       =>
+        get_product_of_numbers_adding_to( $INPUT_REF, $NUMBER_COUNT );
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF         => shift;
+    Readonly my $INPUT_REF    => shift;
+    Readonly my $NUMBER_COUNT => 3;
+    Readonly my $RESULT       =>
+        get_product_of_numbers_adding_to( $INPUT_REF, $NUMBER_COUNT );
+
+    return $RESULT;
+}
+
 sub get_product_of_numbers_adding_to {
-    Readonly my $SELF                  => shift;
-    Readonly my $TARGET_SUM            => shift;
     Readonly my $INPUT_REF             => shift;
     Readonly my $COUNT                 => shift;
+    Readonly my $TARGET_SUM            => 2_020;
     Readonly my $NUMBER_COUNT_PART_ONE => 2;
     Readonly my $NUMBER_COUNT_PART_TWO => 3;
 
@@ -81,9 +100,10 @@ sub get_three_numbers_adding_to {
         my ( $number_2, $number_3 ) =
             get_two_numbers_adding_to( $TARGET_NUMBER, $INPUT_REF );
         Readonly my @NUMBERS => [ $number_1, $number_2, $number_3 ];
-        if ( $number_1 != $number_2
+        if (   $number_1 != $number_2
             && $number_2 != $number_3
-            && $number_3 != $number_1 ) {
+            && $number_3 != $number_1 )
+        {
             return $number_1, $number_2, $number_3;
         }
     }
