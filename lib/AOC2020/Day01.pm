@@ -6,7 +6,7 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.6');
+use version; our $VERSION = qv('1.0.7');
 
 my $numbers_ref = {};
 
@@ -69,7 +69,7 @@ sub input_contains_number {
 sub get_two_numbers_adding_to {
     Readonly my $TARGET_SUM => shift;
     Readonly my $INPUT_REF  => shift;
-    Readonly my @INPUT      => @{$INPUT_REF};
+    Readonly my @INPUT      => sort @{$INPUT_REF};
     Readonly my $NUMBER_1   => 0;
     Readonly my $NUMBER_2   => 0;
 
@@ -90,7 +90,7 @@ sub get_two_numbers_adding_to {
 sub get_three_numbers_adding_to {
     Readonly my $TARGET_SUM => shift;
     Readonly my $INPUT_REF  => shift;
-    Readonly my @INPUT      => @{$INPUT_REF};
+    Readonly my @INPUT      => sort @{$INPUT_REF};
     Readonly my $NUMBER_1   => 0;
     Readonly my $NUMBER_2   => 0;
     Readonly my $NUMBER_3   => 0;
