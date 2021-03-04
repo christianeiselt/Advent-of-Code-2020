@@ -6,7 +6,23 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('1.0.3');
+
+sub solve_part_1 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    => get_group_count_part_1($INPUT_REF);
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    => get_group_count_part_2($INPUT_REF);
+
+    return $RESULT;
+}
 
 sub get_answer_characters {
     Readonly my $PASSENGER_ANSWER => shift;
@@ -173,7 +189,6 @@ sub get_group_answers {
 }
 
 sub get_group_count_part_1 {
-    Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_1            => 1;
     Readonly my $GROUP_ANSWERS_REF =>
@@ -230,7 +245,6 @@ sub get_group_count_part_2_helper {
 }
 
 sub get_group_count_part_2 {
-    Readonly my $SELF              => shift;
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_2            => 2;
     Readonly my $GROUP_ANSWERS_REF =>
