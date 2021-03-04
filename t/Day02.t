@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.13');
+use version; our $VERSION = qv('1.0.14');
 use Test::More tests => 4;
 
 use lib '../lib/';
@@ -22,42 +22,14 @@ Readonly my $EXAMPLE_INPUT_REF =>
 Readonly my $PUZZLE_INPUT_REF =>
     AOC2020::Common->get_file_content($PUZZLE_FILE);
 
-subtest 'test_part_one_example' => sub {
-    plan tests => 1;
+is( AOC2020::Day02->solve_part_1($EXAMPLE_INPUT_REF),
+    $PART_ONE_EXAMPLE_SOLUTION, 'Example solution of Part One is correct.' );
 
-    Readonly my $RESULT_PART_ONE_EXAMPLE =>
-        AOC2020::Day02->solve_part_1($EXAMPLE_INPUT_REF);
+is( AOC2020::Day02->solve_part_1($PUZZLE_INPUT_REF),
+    $PART_ONE_PUZZLE_SOLUTION, 'Puzzle solution of Part One is correct.' );
 
-    is( $RESULT_PART_ONE_EXAMPLE, $PART_ONE_EXAMPLE_SOLUTION,
-        'Example solution of Part One is correct.' );
-};
+is( AOC2020::Day02->solve_part_2($EXAMPLE_INPUT_REF),
+    $PART_TWO_EXAMPLE_SOLUTION, 'Example solution of Part Two is correct.' );
 
-subtest 'test_part_one_puzzle' => sub {
-    plan tests => 1;
-
-    Readonly my $RESULT_PART_ONE_PUZZLE =>
-        AOC2020::Day02->solve_part_1($PUZZLE_INPUT_REF);
-
-    is( $RESULT_PART_ONE_PUZZLE, $PART_ONE_PUZZLE_SOLUTION,
-        'Puzzle solution of Part One is correct.' );
-};
-
-subtest 'test_part_two_example' => sub {
-    plan tests => 1;
-
-    Readonly my $RESULT_PART_TWO_EXAMPLE =>
-        AOC2020::Day02->solve_part_2($EXAMPLE_INPUT_REF);
-
-    is( $RESULT_PART_TWO_EXAMPLE, $PART_TWO_EXAMPLE_SOLUTION,
-        'Example solution of Part Two is correct.' );
-};
-
-subtest 'test_part_two_puzzle' => sub {
-    plan tests => 1;
-
-    Readonly my $RESULT_PART_TWO_PUZZLE =>
-        AOC2020::Day02->solve_part_2($PUZZLE_INPUT_REF);
-
-    is( $RESULT_PART_TWO_PUZZLE, $PART_TWO_PUZZLE_SOLUTION,
-        'Puzzle solution of Part Two is correct.' );
-};
+is( AOC2020::Day02->solve_part_2($PUZZLE_INPUT_REF),
+    $PART_TWO_PUZZLE_SOLUTION, 'Puzzle solution of Part Two is correct.' );
