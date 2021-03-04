@@ -6,7 +6,23 @@ use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
+
+sub solve_part_1 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    => get_highest_seat_id($INPUT_REF);
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $RESULT    => get_my_seat_id($INPUT_REF);
+
+    return $RESULT;
+}
 
 sub get_binary_row_id {
     Readonly my $BOARDING_PASS     => shift;
@@ -142,7 +158,6 @@ sub get_boarding_passes {
 }
 
 sub get_highest_seat_id {
-    Readonly my $SELF                       => shift;
     Readonly my $BINARY_BOARDING_PASSES_REF => shift;
     Readonly my $BOARDING_PASSES_REF        =>
         get_boarding_passes($BINARY_BOARDING_PASSES_REF);
@@ -233,7 +248,6 @@ sub get_my_seat_id_helper {
 }
 
 sub get_my_seat_id {
-    Readonly my $SELF                       => shift;
     Readonly my $BINARY_BOARDING_PASSES_REF => shift;
     Readonly my $SEAT_OCCUPATION_LIST_REF   =>
         get_seat_occupation_list($BINARY_BOARDING_PASSES_REF);
