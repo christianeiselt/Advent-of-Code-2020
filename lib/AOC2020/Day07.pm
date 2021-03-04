@@ -5,7 +5,27 @@ package AOC2020::Day07;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.1');
+use version; our $VERSION = qv('1.0.2');
+
+sub solve_part_1 {
+    Readonly my $SELF         => shift;
+    Readonly my $INPUT_REF    => shift;
+    Readonly my $BAG_NAME => 'shiny gold';
+    Readonly my $RESULT       =>
+        get_bag_color_count( $INPUT_REF, $BAG_NAME );
+
+    return $RESULT;
+}
+
+sub solve_part_2 {
+    Readonly my $SELF         => shift;
+    Readonly my $INPUT_REF    => shift;
+    Readonly my $BAG_NAME => 'shiny gold';
+    Readonly my $RESULT       =>
+        get_inside_bags_count( $INPUT_REF, $BAG_NAME );
+
+    return $RESULT;
+}
 
 sub split_into_name_and_rule {
     Readonly my $BAG_RULE => shift;
@@ -148,7 +168,6 @@ sub get_bags_that_can_contain {
 }
 
 sub get_bag_color_count {
-    Readonly my $SELF           => shift;
     Readonly my $RULES_TEXT_REF => shift;
     Readonly my $BAG_NAME       => shift;
     Readonly my $BAG_RULES_REF  => get_bag_rules($RULES_TEXT_REF);
@@ -172,7 +191,6 @@ sub get_inside_bags_count_helper {
 }
 
 sub get_inside_bags_count {
-    Readonly my $SELF              => shift;
     Readonly my $RULES_TEXT_REF    => shift;
     Readonly my $BAG_NAME          => shift;
     Readonly my $BAG_RULES_REF     => get_bag_rules($RULES_TEXT_REF);
