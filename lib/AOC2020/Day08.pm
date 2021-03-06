@@ -7,6 +7,25 @@ use strict;
 use Readonly;
 use version; our $VERSION = qv('1.0.0');
 
+use Data::Dumper;
+
+sub solve_part_1 {
+    Readonly my $SELF                 => shift;
+    Readonly my $INSTRUCTIONS_REF     => shift;
+    Readonly my $FIRST_RUN_RESULT_REF => get_run_result($INSTRUCTIONS_REF);
+
+    return $FIRST_RUN_RESULT_REF->{'acc_value'};
+}
+
+sub solve_part_2 {
+    Readonly my $SELF                   => shift;
+    Readonly my $INSTRUCTIONS_REF       => shift;
+    Readonly my $TERMINATING_RUN_RESULT =>
+        get_terminating_run_result($INSTRUCTIONS_REF);
+
+    return $TERMINATING_RUN_RESULT;
+}
+
 sub get_instruction_action {
     Readonly my $INSTRUCTION => shift;
     Readonly my $SPACE       => q{\s};
@@ -23,45 +42,212 @@ sub get_instruction_value {
     return $VALUE;
 }
 
-sub get_acc_value_after_first_run {
-    Readonly my $INSTRUCTIONS_REF => shift;
-    Readonly my @INSTRUCTIONS     => @{$INSTRUCTIONS_REF};
-    Readonly my $DEFAULT_VALUE    => 0;
-    my @instruction_list = ($DEFAULT_VALUE) x scalar @INSTRUCTIONS;
-    my $acc_value        = $DEFAULT_VALUE;
-    my $i                = $DEFAULT_VALUE;
+sub increment_by_value {
+    Readonly my $INPUT_VALUE => shift;
+    Readonly my $INCREMENT   => shift;
+    Readonly my $NEW_VALUE   => $INPUT_VALUE + $INCREMENT;
 
-    while ( $instruction_list[$i] == $DEFAULT_VALUE ) {
-        $instruction_list[$i] = 1;
+    return $NEW_VALUE;
+}
 
-        Readonly my $INSTRUCTION => $INSTRUCTIONS[$i];
-        Readonly my $ACTION      => get_instruction_action($INSTRUCTION);
-        Readonly my $VALUE       => get_instruction_value($INSTRUCTION);
+sub get_acc_action {
+    Readonly my $ACCUMULATOR => 'acc';
 
-        Readonly my $ACCUMULATOR => 'acc';
-        Readonly my $JUMP        => 'jmp';
+    return $ACCUMULATOR;
+}
 
-        if ( $ACTION eq $JUMP ) {
-            $i += $VALUE;
+sub get_jmp_action {
+    Readonly my $JUMP => 'jmp';
+
+    return $JUMP;
+}
+
+sub get_nop_action {
+    Readonly my $NO_OPERATION => 'nop';
+
+    return $NO_OPERATION;
+}
+
+sub increment {
+    Readonly my $INPUT => shift;
+    my $output = $INPUT + 1;
+
+    return $output;
+}
+
+sub get_i_acc_value {
+    Readonly my $INSTRUCTION     => shift;
+    Readonly my $INPUT_ACC_VALUE => shift;
+    Readonly my $ITERATOR        => shift;
+    Readonly my $ACTION          => get_instruction_action($INSTRUCTION);
+    Readonly my $VALUE           => get_instruction_value($INSTRUCTION);
+    my $i         = $ITERATOR;
+    my $acc_value = $INPUT_ACC_VALUE;
+
+    if ( $ACTION eq get_jmp_action() ) {
+        $i = increment_by_value( $i, $VALUE );
+    }
+    elsif ( $ACTION eq get_acc_action() ) {
+        $acc_value = increment_by_value( $acc_value, $VALUE );
+        $i         = increment($i);
+    }
+    else {
+        $i = increment($i);
+    }
+
+    return ( { 'iterator' => $i, 'acc_value' => $acc_value } );
+}
+
+sub set_executed {
+    Readonly my $EXECUTED => 1;
+
+    return $EXECUTED;
+}
+
+sub set_terminated {
+    Readonly my $TERMINATED => 1;
+
+    return $TERMINATED;
+}
+
+sub get_list_count {
+    Readonly my $LIST_REF   => shift;
+    Readonly my $LIST_COUNT => scalar @{$LIST_REF};
+
+    return $LIST_COUNT;
+}
+
+sub get_filled_fixed_list {
+    Readonly my $FILL   => shift;
+    Readonly my $LENGTH => shift;
+    Readonly my @LIST   => ($FILL) x $LENGTH;
+
+    return \@LIST;
+}
+
+sub get_iterator {
+    Readonly my $EXECUTION_RESULT => shift;
+    Readonly my $ITERATOR         => $EXECUTION_RESULT->{'iterator'};
+
+    return $ITERATOR;
+}
+
+sub get_acc_value {
+    Readonly my $EXECUTION_RESULT => shift;
+    Readonly my $ACC_VALUE        => $EXECUTION_RESULT->{'acc_value'};
+
+    return $ACC_VALUE;
+}
+
+sub get_run_result {
+    Readonly my $INSTRUCTIONS_REF  => shift;
+    Readonly my @INSTRUCTIONS      => @{$INSTRUCTIONS_REF};
+    Readonly my $INSTRUCTION_COUNT => get_list_count( \@INSTRUCTIONS );
+    Readonly my $ZERO              => 0;
+    Readonly my $FIXED_LIST_REF    =>
+        get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
+    Readonly my $FIXED_LIST_COUNT => get_list_count($FIXED_LIST_REF);
+    my @execution_list = @{$FIXED_LIST_REF};
+    my $acc_value      = $ZERO;
+    my $i              = $ZERO;
+    my $is_terminated  = $ZERO;
+
+    while ($execution_list[$i] == $ZERO
+        && $i < $FIXED_LIST_COUNT )
+    {
+        Readonly my $INSTRUCTION          => $INSTRUCTIONS[$i];
+        Readonly my $EXECUTION_RESULT_REF =>
+            get_i_acc_value( $INSTRUCTION, $acc_value, $i );
+        $execution_list[$i] = set_executed();
+        $i                  = get_iterator($EXECUTION_RESULT_REF);
+        $acc_value          = get_acc_value($EXECUTION_RESULT_REF);
+    }
+
+    if ( $i == $INSTRUCTION_COUNT ) {
+        $is_terminated = set_terminated();
+    }
+    else {
+        #
+    }
+
+    return { 'acc_value' => $acc_value, 'is_terminating' => $is_terminated };
+}
+
+sub get_jmp_nop {
+    Readonly my $INSTRUCTIONS_REF    => shift;
+    Readonly my $ACTION_JUMP         => 'jmp';
+    Readonly my $ACTION_NO_OPERATION => 'nop';
+    Readonly my @INSTRUCTIONS        => @{$INSTRUCTIONS_REF};
+    Readonly my $LOOP_END            => scalar @INSTRUCTIONS;
+    my $jmp_nop_ref = {};
+
+    foreach my $i ( 0 .. $LOOP_END - 1 ) {
+        Readonly my $ACTION => get_instruction_action( $INSTRUCTIONS[$i] );
+        if ( $ACTION eq $ACTION_JUMP ) {
+            $jmp_nop_ref->{$i} = $ACTION_NO_OPERATION;
         }
-        elsif ( $ACTION eq $ACCUMULATOR ) {
-            $acc_value += $VALUE;
-            $i++;
+        elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
+            $jmp_nop_ref->{$i} = $ACTION_JUMP;
         }
         else {
-            $i++;
+            #
+        }
+    }
+    return $jmp_nop_ref;
+}
+
+sub switch_action {
+    Readonly my $INPUT_INSTRUCTION   => shift;
+    Readonly my $ACTION_JUMP         => 'jmp';
+    Readonly my $ACTION_NO_OPERATION => 'nop';
+    Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
+    my $instruction = $INPUT_INSTRUCTION;
+
+    if ( $ACTION eq $ACTION_JUMP ) {
+        $instruction =~ s/$ACTION_JUMP/$ACTION_NO_OPERATION/xms;
+    }
+    elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
+        $instruction =~ s/$ACTION_NO_OPERATION/$ACTION_JUMP/xms;
+    }
+    else {
+        #
+    }
+
+    return $instruction;
+}
+
+sub get_replaced_instructions {
+    Readonly my $INSTRUCTIONS_REF => shift;
+    Readonly my $REPLACE_POSITION => shift;
+    my @instructions = @{$INSTRUCTIONS_REF};
+    $instructions[$REPLACE_POSITION] =
+        switch_action( $instructions[$REPLACE_POSITION] );
+
+    return \@instructions;
+}
+
+sub get_terminating_run_result {
+    Readonly my $INSTRUCTIONS_REF      => shift;
+    Readonly my $JMP_NOP_REF           => get_jmp_nop($INSTRUCTIONS_REF);
+    Readonly my $CHANGE_COUNT          => scalar keys %{$JMP_NOP_REF};
+    Readonly my $BEGINNING_LINE_NUMBER => -1;
+    my $acc_value      = 0;
+    my $is_terminating = 0;
+
+    for my $i ( sort keys %{$JMP_NOP_REF} ) {
+        my $instruction_list_ref =
+            get_replaced_instructions( $INSTRUCTIONS_REF, $i );
+        my $RUN_RESULT_REF = get_run_result($instruction_list_ref);
+
+        if ( $RUN_RESULT_REF->{'is_terminating'} == 1 ) {
+            return $RUN_RESULT_REF->{'acc_value'};
+        }
+        else {
+            #
         }
     }
 
     return $acc_value;
-}
-
-sub get_value {
-    Readonly my $SELF             => shift;
-    Readonly my $INSTRUCTIONS_REF => shift;
-    Readonly my $VALUE => get_acc_value_after_first_run($INSTRUCTIONS_REF);
-
-    return $VALUE;
 }
 
 1;
