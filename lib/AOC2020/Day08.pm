@@ -214,10 +214,11 @@ sub switch_action {
     my $instruction = $INPUT_INSTRUCTION;
 
     if ( $ACTION eq $ACTION_JUMP ) {
-        $instruction = replace_action_with($instruction, $ACTION_NO_OPERATION);
+        $instruction =
+            replace_action_with( $instruction, $ACTION_NO_OPERATION );
     }
     elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
-        $instruction = replace_action_with($instruction, $ACTION_JUMP);
+        $instruction = replace_action_with( $instruction, $ACTION_JUMP );
     }
     else {
         #
