@@ -228,11 +228,14 @@ sub switch_action {
 }
 
 sub get_replaced_instructions {
-    Readonly my $INSTRUCTIONS_REF => shift;
-    Readonly my $REPLACE_POSITION => shift;
-    my @instructions = @{$INSTRUCTIONS_REF};
-    $instructions[$REPLACE_POSITION] =
-        switch_action( $instructions[$REPLACE_POSITION] );
+    Readonly my $INPUT_REF        => shift;
+    Readonly my $INSTRUCTIONS_REF => $INPUT_REF->{'instructions'};
+    Readonly my $POSITION         => $INPUT_REF->{'position'};
+    Readonly my $ACTION           => $INPUT_REF->{'new_action'};
+    Readonly my @INSTRUCTIONS     => @{$INSTRUCTIONS_REF};
+    my @instructions = @INSTRUCTIONS;
+    $instructions[$POSITION] =
+        replace_action_with( $INSTRUCTIONS[$POSITION], $ACTION );
 
     return \@instructions;
 }
@@ -246,8 +249,12 @@ sub get_terminating_run_result {
     my $is_terminating = 0;
 
     for my $i ( sort keys %{$JMP_NOP_REF} ) {
-        my $instruction_list_ref =
-            get_replaced_instructions( $INSTRUCTIONS_REF, $i );
+        my $instruction_list_ref = get_replaced_instructions(
+            {   'instructions' => $INSTRUCTIONS_REF,
+                'position'     => $i,
+                'new_action'   => $JMP_NOP_REF->{$i},
+            }
+        );
         my $RUN_RESULT_REF = get_run_result($instruction_list_ref);
 
         if ( $RUN_RESULT_REF->{'is_terminating'} == 1 ) {
