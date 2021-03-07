@@ -175,13 +175,13 @@ sub get_run_result {
 
 sub get_jmp_nop {
     Readonly my $INSTRUCTIONS_REF    => shift;
-    Readonly my $ACTION_JUMP         => 'jmp';
-    Readonly my $ACTION_NO_OPERATION => 'nop';
+    Readonly my $ACTION_JUMP         => get_jmp_action();
+    Readonly my $ACTION_NO_OPERATION => get_nop_action();
+    Readonly my $LOOP_END            => get_list_count($INSTRUCTIONS_REF) - 1;
     Readonly my @INSTRUCTIONS        => @{$INSTRUCTIONS_REF};
-    Readonly my $LOOP_END            => scalar @INSTRUCTIONS;
     my $jmp_nop_ref = {};
 
-    foreach my $i ( 0 .. $LOOP_END - 1 ) {
+    for my $i ( 0 .. $LOOP_END ) {
         Readonly my $ACTION => get_instruction_action( $INSTRUCTIONS[$i] );
         if ( $ACTION eq $ACTION_JUMP ) {
             $jmp_nop_ref->{$i} = $ACTION_NO_OPERATION;
