@@ -5,7 +5,7 @@ package AOC2020::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 
 use Data::Dumper;
 
@@ -196,18 +196,28 @@ sub get_jmp_nop {
     return $jmp_nop_ref;
 }
 
+sub replace_action_with {
+    Readonly my $INPUT_INSTRUCTION => shift;
+    Readonly my $REPLACING_ACTION => shift;
+    Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
+    my $replaced_instruction = $INPUT_INSTRUCTION;
+    $replaced_instruction =~ s/$ACTION/$REPLACING_ACTION/xms;
+
+    return $replaced_instruction;
+}
+
 sub switch_action {
     Readonly my $INPUT_INSTRUCTION   => shift;
-    Readonly my $ACTION_JUMP         => 'jmp';
-    Readonly my $ACTION_NO_OPERATION => 'nop';
+    Readonly my $ACTION_JUMP         => get_jmp_action();
+    Readonly my $ACTION_NO_OPERATION => get_nop_action();
     Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
     my $instruction = $INPUT_INSTRUCTION;
 
     if ( $ACTION eq $ACTION_JUMP ) {
-        $instruction =~ s/$ACTION_JUMP/$ACTION_NO_OPERATION/xms;
+        $instruction = replace_action_with($instruction, $ACTION_NO_OPERATION);
     }
     elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
-        $instruction =~ s/$ACTION_NO_OPERATION/$ACTION_JUMP/xms;
+        $instruction = replace_action_with($instruction, $ACTION_JUMP);
     }
     else {
         #
