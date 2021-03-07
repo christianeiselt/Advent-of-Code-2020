@@ -198,7 +198,7 @@ sub get_jmp_nop {
 
 sub replace_action_with {
     Readonly my $INPUT_INSTRUCTION => shift;
-    Readonly my $REPLACING_ACTION => shift;
+    Readonly my $REPLACING_ACTION  => shift;
     Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
     my $replaced_instruction = $INPUT_INSTRUCTION;
     $replaced_instruction =~ s/$ACTION/$REPLACING_ACTION/xms;
