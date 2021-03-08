@@ -5,9 +5,7 @@ package AOC2020::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.1');
-
-use Data::Dumper;
+use version; our $VERSION = qv('1.0.2');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -175,13 +173,13 @@ sub get_run_result {
 
 sub get_jmp_nop {
     Readonly my $INSTRUCTIONS_REF    => shift;
-    Readonly my $ACTION_JUMP         => 'jmp';
-    Readonly my $ACTION_NO_OPERATION => 'nop';
+    Readonly my $ACTION_JUMP         => get_jmp_action();
+    Readonly my $ACTION_NO_OPERATION => get_nop_action();
+    Readonly my $LOOP_END            => get_list_count($INSTRUCTIONS_REF) - 1;
     Readonly my @INSTRUCTIONS        => @{$INSTRUCTIONS_REF};
-    Readonly my $LOOP_END            => scalar @INSTRUCTIONS;
     my $jmp_nop_ref = {};
 
-    foreach my $i ( 0 .. $LOOP_END - 1 ) {
+    for my $i ( 0 .. $LOOP_END ) {
         Readonly my $ACTION => get_instruction_action( $INSTRUCTIONS[$i] );
         if ( $ACTION eq $ACTION_JUMP ) {
             $jmp_nop_ref->{$i} = $ACTION_NO_OPERATION;
@@ -198,7 +196,7 @@ sub get_jmp_nop {
 
 sub replace_action_with {
     Readonly my $INPUT_INSTRUCTION => shift;
-    Readonly my $REPLACING_ACTION => shift;
+    Readonly my $REPLACING_ACTION  => shift;
     Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
     my $replaced_instruction = $INPUT_INSTRUCTION;
     $replaced_instruction =~ s/$ACTION/$REPLACING_ACTION/xms;
@@ -214,10 +212,11 @@ sub switch_action {
     my $instruction = $INPUT_INSTRUCTION;
 
     if ( $ACTION eq $ACTION_JUMP ) {
-        $instruction = replace_action_with($instruction, $ACTION_NO_OPERATION);
+        $instruction =
+            replace_action_with( $instruction, $ACTION_NO_OPERATION );
     }
     elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
-        $instruction = replace_action_with($instruction, $ACTION_JUMP);
+        $instruction = replace_action_with( $instruction, $ACTION_JUMP );
     }
     else {
         #
@@ -227,11 +226,14 @@ sub switch_action {
 }
 
 sub get_replaced_instructions {
-    Readonly my $INSTRUCTIONS_REF => shift;
-    Readonly my $REPLACE_POSITION => shift;
-    my @instructions = @{$INSTRUCTIONS_REF};
-    $instructions[$REPLACE_POSITION] =
-        switch_action( $instructions[$REPLACE_POSITION] );
+    Readonly my $INPUT_REF        => shift;
+    Readonly my $INSTRUCTIONS_REF => $INPUT_REF->{'instructions'};
+    Readonly my $POSITION         => $INPUT_REF->{'position'};
+    Readonly my $ACTION           => $INPUT_REF->{'new_action'};
+    Readonly my @INSTRUCTIONS     => @{$INSTRUCTIONS_REF};
+    my @instructions = @INSTRUCTIONS;
+    $instructions[$POSITION] =
+        replace_action_with( $INSTRUCTIONS[$POSITION], $ACTION );
 
     return \@instructions;
 }
@@ -245,8 +247,12 @@ sub get_terminating_run_result {
     my $is_terminating = 0;
 
     for my $i ( sort keys %{$JMP_NOP_REF} ) {
-        my $instruction_list_ref =
-            get_replaced_instructions( $INSTRUCTIONS_REF, $i );
+        my $instruction_list_ref = get_replaced_instructions(
+            {   'instructions' => $INSTRUCTIONS_REF,
+                'position'     => $i,
+                'new_action'   => $JMP_NOP_REF->{$i},
+            }
+        );
         my $RUN_RESULT_REF = get_run_result($instruction_list_ref);
 
         if ( $RUN_RESULT_REF->{'is_terminating'} == 1 ) {
