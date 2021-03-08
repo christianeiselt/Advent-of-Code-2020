@@ -5,9 +5,7 @@ package AOC2020::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.1');
-
-use Data::Dumper;
+use version; our $VERSION = qv('1.0.2');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
