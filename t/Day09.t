@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('1.0.3');
 use Test::More tests => 4;
 
 use lib '../lib/';
@@ -18,8 +18,8 @@ Readonly my $PUZZLE_BATCH_SIZE         => 25;
 Readonly my $PUZZLE_PREAMBLE_LENGTH    => 25;
 Readonly my $PART_ONE_EXAMPLE_SOLUTION => 127;
 Readonly my $PART_ONE_PUZZLE_SOLUTION  => 18272118;
-Readonly my $PART_TWO_EXAMPLE_SOLUTION => undef;
-Readonly my $PART_TWO_PUZZLE_SOLUTION  => undef;
+Readonly my $PART_TWO_EXAMPLE_SOLUTION => '';
+Readonly my $PART_TWO_PUZZLE_SOLUTION  => '';
 
 Readonly my $EXAMPLE_INPUT_REF =>
     AOC2020::Common->get_file_content($EXAMPLE_FILE);
