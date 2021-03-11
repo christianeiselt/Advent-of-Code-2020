@@ -5,8 +5,7 @@ package AOC2020::Day01;
 use warnings;
 use strict;
 use Readonly;
-use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.8');
+use version; our $VERSION = qv('1.0.9');
 
 my $numbers_ref = {};
 
