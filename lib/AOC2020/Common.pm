@@ -6,8 +6,9 @@ use warnings;
 use strict;
 use Carp;
 use English qw( -no_match_vars );
+use List::MoreUtils qw(any);
 use Readonly;
-use version; our $VERSION = qv('1.0.11');
+use version; our $VERSION = qv('1.0.12');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
@@ -53,6 +54,22 @@ sub get_file_content {
     close $FILE or croak "close failed: $CHILD_ERROR, $OS_ERROR $FILE_NAME";
 
     return \@content;
+}
+
+sub list_contains_number {
+    Readonly my $SELF     => shift;
+    Readonly my $LIST_REF => shift;
+    Readonly my $NUMBER   => shift;
+    Readonly my @LIST     => @{$LIST_REF};
+
+    if ( any {m{^$NUMBER$}msx} @LIST ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+
+    return;
 }
 
 1;
