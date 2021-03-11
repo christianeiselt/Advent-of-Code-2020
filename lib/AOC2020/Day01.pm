@@ -5,8 +5,7 @@ package AOC2020::Day01;
 use warnings;
 use strict;
 use Readonly;
-use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.7');
+use version; our $VERSION = qv('1.0.9');
 
 my $numbers_ref = {};
 
@@ -51,21 +50,6 @@ sub get_product_of_numbers_adding_to {
     return;
 }
 
-sub input_contains_number {
-    Readonly my $NUMBER    => shift;
-    Readonly my $INPUT_REF => shift;
-    Readonly my @INPUT     => @{$INPUT_REF};
-
-    if ( any {m{^$NUMBER$}msx} @INPUT ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-
-    return;
-}
-
 sub get_two_numbers_adding_to {
     Readonly my $TARGET_SUM => shift;
     Readonly my $INPUT_REF  => shift;
@@ -75,7 +59,7 @@ sub get_two_numbers_adding_to {
 
     foreach my $number_1 (@INPUT) {
         Readonly my $TARGET_NUMBER => $TARGET_SUM - $number_1;
-        if ( input_contains_number( $TARGET_NUMBER, $INPUT_REF )
+        if ( AOC2020::Common->list_contains_number($INPUT_REF ,  $TARGET_NUMBER)
             && $number_1 != $TARGET_NUMBER )
         {
             return $number_1, $TARGET_NUMBER;

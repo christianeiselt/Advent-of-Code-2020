@@ -5,8 +5,7 @@ package AOC2020::Day09;
 use warnings;
 use strict;
 use Readonly;
-use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.1');
+use version; our $VERSION = qv('1.0.2');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -51,8 +50,10 @@ sub contains_two_numbers_adding_to_sum {
 
     foreach my $number_1 (@INPUT) {
         Readonly my $TARGET_NUMBER => $TARGET_SUM - $number_1;
-        if ( input_contains_number( $TARGET_NUMBER, $INPUT_REF )
-            && $number_1 != $TARGET_NUMBER )
+        if (AOC2020::Common->list_contains_number( $INPUT_REF,
+                $TARGET_NUMBER )
+            && $number_1 != $TARGET_NUMBER
+            )
         {
             return 1;
         }
