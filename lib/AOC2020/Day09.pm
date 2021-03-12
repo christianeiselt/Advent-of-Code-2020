@@ -6,7 +6,7 @@ use warnings;
 use strict;
 use List::Util qw(min max);
 use Readonly;
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -103,13 +103,10 @@ sub get_sum {
 sub get_sum_of_min_and_max {
     Readonly my $NUMBER_LIST_REF => shift;
     Readonly my @NUMBER_LIST     => sort @{$NUMBER_LIST_REF};
-    Readonly my $MIN => min(@NUMBER_LIST);
-    Readonly my $MAX => max(@NUMBER_LIST);
-    Readonly my $SUM => $MIN + $MAX;
+    Readonly my $SUM             => min(@NUMBER_LIST) + max(@NUMBER_LIST);
 
     return $SUM;
 }
-
 sub get_encryption_weakness {
     Readonly my $DATA_REF   => shift;
     Readonly my $TARGET_SUM => shift;
@@ -120,22 +117,17 @@ sub get_encryption_weakness {
         my $sum = 0;
         foreach my $j ( $i .. scalar @DATA - 1 ) {
             if ( $sum < $TARGET_SUM ) {
-                if ( scalar @number_list >= 2 ) {
-                    $sum = get_sum( \@number_list );
-                    if ( $sum == $TARGET_SUM ) {
-                        my $sum_largest_smallest =
-                            get_sum_of_min_and_max( \@number_list );
-                        return $sum_largest_smallest;
-                    }
-                    elsif ( $sum < $TARGET_SUM ) {
-                        push @number_list, $DATA[$j];
-                    }
-                    else {
-                    }
+                $sum = get_sum( \@number_list );
+                if ( $sum == $TARGET_SUM ) {
+                    return get_sum_of_min_and_max( \@number_list );
                 }
-                else {
+                elsif ( $sum < $TARGET_SUM ) {
                     push @number_list, $DATA[$j];
                 }
+                else {
+                }
+            }
+            else {
             }
         }
     }
