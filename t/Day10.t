@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 use Test::More tests => 4;
 
 use lib '../lib/';
@@ -22,22 +22,22 @@ Readonly my $EXAMPLE_INPUT_REF =>
 Readonly my $PUZZLE_INPUT_REF =>
     AOC2020::Common->get_file_content($PUZZLE_FILE);
 
-is( AOC2020::Day09->solve_part_1(),
+is( AOC2020::Day10->solve_part_1(),
     $PART_ONE_EXAMPLE_SOLUTION, 'Example solution of Part One is correct.' );
 
-is( AOC2020::Day09->solve_part_1(),
+is( AOC2020::Day10->solve_part_1(),
     $PART_ONE_PUZZLE_SOLUTION,
     'Puzzle solution of Part One is correct.'
 );
 
-is( AOC2020::Day09->solve_part_2(
+is( AOC2020::Day10->solve_part_2(
         $EXAMPLE_INPUT_REF, $PART_ONE_EXAMPLE_SOLUTION
     ),
     $PART_TWO_EXAMPLE_SOLUTION,
     'Example solution of Part Two is correct.'
 );
 
-is( AOC2020::Day09->solve_part_2(
+is( AOC2020::Day10->solve_part_2(
         $PUZZLE_INPUT_REF, $PART_ONE_PUZZLE_SOLUTION
     ),
     $PART_TWO_PUZZLE_SOLUTION,
