@@ -40,6 +40,7 @@ jobs:
       - name: install modules
         run: |
           cpanm --notest Readonly List::MoreUtils
+          cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov
 
       - name: Show content of log files on Linux
         if: ${{ failure() }}
