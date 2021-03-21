@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
-package AOC2020::Day10;
+package AdventOfCode::Day10;
 
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('0.1.1');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -128,18 +128,21 @@ sub get_counter {
 
 sub add_difference_for_builtin_adapter {
     Readonly my $INPUT_COUNTER_REF => shift;
+    Readonly my $DIFFERENCE_3      => 3;
     my $counter_ref = $INPUT_COUNTER_REF;
 
-    $counter_ref->{3}++;
+    $counter_ref->{$DIFFERENCE_3}++;
 
     return $counter_ref;
 }
 
 sub prepare_counter {
-    Readonly my $COUNTER_REF => {
-        'count' => -1,
-        1       => 0,
-        3       => 0,
+    Readonly my $DIFFERENCE_1 => 1;
+    Readonly my $DIFFERENCE_3 => 3;
+    Readonly my $COUNTER_REF  => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 0,
     };
 
     return $COUNTER_REF;
@@ -163,8 +166,9 @@ sub get_differences_product {
     Readonly my $INPUT_REF       => shift;
     Readonly my $NUMBER_LIST_REF => get_marked_list($INPUT_REF);
     Readonly my $COUNTERS_REF    => get_difference_counters($NUMBER_LIST_REF);
-
-    return $COUNTERS_REF->{1} * $COUNTERS_REF->{3};
+    Readonly my $DIFFERENCE_1    => 1;
+    Readonly my $DIFFERENCE_3    => 3;
+    return $COUNTERS_REF->{$DIFFERENCE_1} * $COUNTERS_REF->{$DIFFERENCE_3};
 }
 
 1;

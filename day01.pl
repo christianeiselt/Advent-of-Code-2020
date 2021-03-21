@@ -6,21 +6,21 @@ use Carp;
 use Readonly;
 use version; our $VERSION = qv('1.0.8');
 use lib 'lib';
-use AOC2020::Common;
-use AOC2020::Day01;
+use AdventOfCode::Common;
+use AdventOfCode::Day01;
 
 Readonly my $NUMBER_COUNT_PART_ONE => 2;
 Readonly my $NUMBER_COUNT_PART_TWO => 3;
 Readonly my $TARGET_SUM            => 2020;
 Readonly my $PUZZLE_FILE           => './day01_input';
 Readonly my $PUZZLE_INPUT_REF      =>
-    AOC2020::Common->get_file_content($PUZZLE_FILE);
+    AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
 Readonly my $SOLUTION_PART_ONE =>
-    AOC2020::Day01->get_product_of_numbers_adding_to( $TARGET_SUM,
+    AdventOfCode::Day01->get_product_of_numbers_adding_to( $TARGET_SUM,
     $PUZZLE_INPUT_REF, $NUMBER_COUNT_PART_ONE );
 Readonly my $SOLUTION_PART_TWO =>
-    AOC2020::Day01->get_product_of_numbers_adding_to( $TARGET_SUM,
+    AdventOfCode::Day01->get_product_of_numbers_adding_to( $TARGET_SUM,
     $PUZZLE_INPUT_REF, $NUMBER_COUNT_PART_TWO );
 
 print "Advent of Code 2020 - Day 01 Solutions: Part One: $SOLUTION_PART_ONE"

@@ -9,6 +9,8 @@
 
 # Devel::Cover
 cover_db/
+blib/
+html/
 
 # Devel::NYTProf
 nytprof.out

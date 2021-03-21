@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 
-package AOC2020::Day03;
+package AdventOfCode::Day03;
 
 use warnings;
 use strict;
 use Readonly;
 use lib '../../lib/';
-use AOC2020::Common;
-use version; our $VERSION = qv('1.0.8');
+use AdventOfCode::Common;
+use version; our $VERSION = qv('1.0.9');
 
 Readonly my $START_POS_REF => { 'x' => 0, 'y' => 0 };
 Readonly my $SLOPES_REF    => {
@@ -144,7 +144,7 @@ sub get_full_map {
     for ( 0 .. scalar @EXPANDED_MAP ) {
         my $line = $_;
         my @line_chars =
-            @{ AOC2020::Common->get_chars( $EXPANDED_MAP[$line] ) };
+            @{ AdventOfCode::Common->get_chars( $EXPANDED_MAP[$line] ) };
 
         foreach ( 0 .. scalar @line_chars ) {
             my $char = $_;
@@ -159,7 +159,7 @@ sub is_tree {
     Readonly my $FULL_MAP_REF => shift;
     Readonly my $POSITION     => shift;
     Readonly my $CHAR_ON_POS  =>
-        AOC2020::Common->get_character_on_position( $FULL_MAP_REF,
+        AdventOfCode::Common->get_character_on_position( $FULL_MAP_REF,
         $POSITION );
     my $is_tree = 0;
 

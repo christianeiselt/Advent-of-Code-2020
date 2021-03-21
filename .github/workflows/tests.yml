@@ -40,6 +40,7 @@ jobs:
       - name: install modules
         run: |
           cpanm --notest Readonly List::MoreUtils
+          cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov
 
       - name: Show content of log files on Linux
         if: ${{ failure() }}
@@ -47,3 +48,12 @@ jobs:
 
       - name: Run Tests
         run: prove -lv t
+
+      - name: Run Coverage
+        run: |
+          perl Makefile.PL
+          cover -test
+          cover -report html
+      - uses: codecov/codecov-action@v1
+        with:
+          files: /home/runner/work/Advent-of-Code-2020/Advent-of-Code-2020/cover_db/coverage.html

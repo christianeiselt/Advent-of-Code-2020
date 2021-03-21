@@ -3,12 +3,12 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.4');
+use version; our $VERSION = qv('1.0.5');
 use Test::More tests => 4;
 
 use lib '../lib/';
-use AOC2020::Common;
-use AOC2020::Day09;
+use AdventOfCode::Common;
+use AdventOfCode::Day09;
 
 Readonly my $EXAMPLE_FILE              => './day09_example';
 Readonly my $PUZZLE_FILE               => './day09_input';
@@ -22,11 +22,11 @@ Readonly my $PART_TWO_EXAMPLE_SOLUTION => 62;
 Readonly my $PART_TWO_PUZZLE_SOLUTION  => 2_186_361;
 
 Readonly my $EXAMPLE_INPUT_REF =>
-    AOC2020::Common->get_file_content($EXAMPLE_FILE);
+    AdventOfCode::Common->get_file_content($EXAMPLE_FILE);
 Readonly my $PUZZLE_INPUT_REF =>
-    AOC2020::Common->get_file_content($PUZZLE_FILE);
+    AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
-is( AOC2020::Day09->solve_part_1(
+is( AdventOfCode::Day09->solve_part_1(
         {   'data_ref'        => $EXAMPLE_INPUT_REF,
             'batch_size'      => $EXAMPLE_BATCH_SIZE,
             'preamble_length' => $EXAMPLE_PREAMBLE_LENGTH,
@@ -36,7 +36,7 @@ is( AOC2020::Day09->solve_part_1(
     'Example solution of Part One is correct.'
 );
 
-is( AOC2020::Day09->solve_part_1(
+is( AdventOfCode::Day09->solve_part_1(
         {   'data_ref'        => $PUZZLE_INPUT_REF,
             'batch_size'      => $PUZZLE_BATCH_SIZE,
             'preamble_length' => $PUZZLE_PREAMBLE_LENGTH,
@@ -46,14 +46,14 @@ is( AOC2020::Day09->solve_part_1(
     'Puzzle solution of Part One is correct.'
 );
 
-is( AOC2020::Day09->solve_part_2(
+is( AdventOfCode::Day09->solve_part_2(
         $EXAMPLE_INPUT_REF, $PART_ONE_EXAMPLE_SOLUTION
     ),
     $PART_TWO_EXAMPLE_SOLUTION,
     'Example solution of Part Two is correct.'
 );
 
-is( AOC2020::Day09->solve_part_2(
+is( AdventOfCode::Day09->solve_part_2(
         $PUZZLE_INPUT_REF, $PART_ONE_PUZZLE_SOLUTION
     ),
     $PART_TWO_PUZZLE_SOLUTION,

@@ -6,8 +6,8 @@ use Carp;
 use Readonly;
 use version; our $VERSION = qv('1.0.8');
 use lib 'lib';
-use AOC2020::Common;
-use AOC2020::Day03;
+use AdventOfCode::Common;
+use AdventOfCode::Day03;
 
 Readonly my $START_POS_REF => { 'x' => 0, 'y' => 0 };
 Readonly my $SLOPES_REF    => {
@@ -19,14 +19,14 @@ Readonly my $SLOPES_REF    => {
 };
 Readonly my $PUZZLE_FILE      => './day03_input';
 Readonly my $PUZZLE_INPUT_REF =>
-    AOC2020::Common->get_file_content($PUZZLE_FILE);
+    AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
 Readonly my $SOLUTION_PART_ONE =>
-    AOC2020::Day03->get_tree_count_for_slope( $PUZZLE_INPUT_REF,
+    AdventOfCode::Day03->get_tree_count_for_slope( $PUZZLE_INPUT_REF,
     $SLOPES_REF->{'slope_b'},
     $START_POS_REF );
 Readonly my $SOLUTION_PART_TWO =>
-    AOC2020::Day03->get_product_of_tree_counts( $PUZZLE_INPUT_REF,
+    AdventOfCode::Day03->get_product_of_tree_counts( $PUZZLE_INPUT_REF,
     $SLOPES_REF, $START_POS_REF );
 
 print "Advent of Code 2020 - Day 03 Solutions: Part One: $SOLUTION_PART_ONE"

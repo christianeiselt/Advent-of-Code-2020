@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-package AOC2020::Common;
+package AdventOfCode::Common;
 
 use warnings;
 use strict;
@@ -8,7 +8,7 @@ use Carp;
 use English qw( -no_match_vars );
 use List::MoreUtils qw(any);
 use Readonly;
-use version; our $VERSION = qv('1.0.12');
+use version; our $VERSION = qv('1.0.13');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
