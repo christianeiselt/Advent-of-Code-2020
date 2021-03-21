@@ -14,11 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Check YAML
-        run: |
-           pwd
-           cat AOC2020/tests.yml | curl --data-binary @- https://codecov.io/validate
+      - uses: codecov/codecov-action@v1
 
       - name: Platform check
         run: uname -a
