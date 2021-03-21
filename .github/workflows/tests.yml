@@ -17,7 +17,7 @@ jobs:
 
       - name: Check YAML
         run: |
-           echo $PWD
+           pwd
            cat AOC2020/tests.yml | curl --data-binary @- https://codecov.io/validate
 
       - name: Platform check
