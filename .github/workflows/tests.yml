@@ -51,8 +51,7 @@ jobs:
 
       - name: Run Coverage
         run: |
-          perl Build.PL
-          ./Build build
+          perl Makefile.PL
           cover -test
 
       - name: Report to Codecov
