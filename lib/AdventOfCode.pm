@@ -4,8 +4,9 @@ package AdventOfCode;
 
 use warnings;
 use strict;
+
 use Readonly;
-use version; our $VERSION = 0.0.1;
+use version; our $VERSION = 0.0.2;
 
 use lib '../lib';
 use AdventOfCode::Day01;

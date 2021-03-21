@@ -2,8 +2,9 @@ use strict;
 use warnings;
 
 use Test::More;
-use JSON::MaybeXS qw(decode_json);
-use Path::Tiny qw(path);
+use Readonly;
+use version; our $VERSION = qv('1.0.1');
+
 use lib '../lib';
 use AdventOfCode;
 
