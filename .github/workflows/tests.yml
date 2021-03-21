@@ -15,13 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Check YAML
+        run: cat tests.yml | curl --data-binary @- https://codecov.io/validate
+
       - name: Platform check
         run: uname -a
 
       - name: perl info
         run: |
           perl --version
-          echo ${{ secrets.TEST }}
 
       - name: setup locallib
         run: |
@@ -54,9 +56,6 @@ jobs:
         run: |
           perl Makefile.PL
           cover -test
-
-      - name: Check YAML
-        run: cat tests.yml | curl --data-binary @- https://codecov.io/validate
 
       - name: Report to Codecov
         run: cover -report codecov -t ${{ secrets.CODECOV_TOKEN }}
