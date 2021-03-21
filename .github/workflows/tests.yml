@@ -55,5 +55,8 @@ jobs:
           perl Makefile.PL
           cover -test
 
+      - name: Check YAML
+        run: cat tests.yml | curl --data-binary @- https://codecov.io/validate
+
       - name: Report to Codecov
         run: cover -report codecov -t ${{ secrets.CODECOV_TOKEN }}
