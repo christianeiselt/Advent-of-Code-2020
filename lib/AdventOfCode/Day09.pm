@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
-package AOC2020::Day09;
+package AdventOfCode::Day09;
 
 use warnings;
 use strict;
 use List::Util qw(min max);
 use Readonly;
-use version; our $VERSION = qv('1.0.4');
+use version; our $VERSION = qv('1.0.5');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -47,7 +47,7 @@ sub contains_two_numbers_adding_to_sum {
 
     foreach my $number_1 (@INPUT) {
         Readonly my $TARGET_NUMBER => $TARGET_SUM - $number_1;
-        if (AOC2020::Common->list_contains_number( $INPUT_REF,
+        if (AdventOfCode::Common->list_contains_number( $INPUT_REF,
                 $TARGET_NUMBER )
             && $number_1 != $TARGET_NUMBER
             )

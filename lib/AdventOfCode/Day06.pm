@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
-package AOC2020::Day06;
+package AdventOfCode::Day06;
 
 use warnings;
 use strict;
 use Readonly;
 use List::MoreUtils qw(any);
-use version; our $VERSION = qv('1.0.3');
+use version; our $VERSION = qv('1.0.4');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;

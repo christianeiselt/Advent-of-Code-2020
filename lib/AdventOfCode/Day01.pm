@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
-package AOC2020::Day01;
+package AdventOfCode::Day01;
 
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.9');
+use version; our $VERSION = qv('1.0.10');
 
 my $numbers_ref = {};
 
@@ -59,7 +59,7 @@ sub get_two_numbers_adding_to {
 
     foreach my $number_1 (@INPUT) {
         Readonly my $TARGET_NUMBER => $TARGET_SUM - $number_1;
-        if ( AOC2020::Common->list_contains_number($INPUT_REF ,  $TARGET_NUMBER)
+        if ( AdventOfCode::Common->list_contains_number($INPUT_REF ,  $TARGET_NUMBER)
             && $number_1 != $TARGET_NUMBER )
         {
             return $number_1, $TARGET_NUMBER;

@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
-package AOC2020::Day02;
+package AdventOfCode::Day02;
 use strict;
 use warnings;
 use Readonly;
-use version; our $VERSION = qv('1.0.9');
+use version; our $VERSION = qv('1.0.10');
 
 # Based on trim function from Gabor Szabo (www.perlmaven.com)
 sub trim { my $s = shift; $s =~ s/^\s+|\s+$//gmsx; return $s }
