@@ -21,6 +21,7 @@ jobs:
       - name: perl info
         run: |
           perl --version
+          echo ${{ TEST }}
 
       - name: setup locallib
         run: |
