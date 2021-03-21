@@ -16,7 +16,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check YAML
-        run: cat tests.yml | curl --data-binary @- https://codecov.io/validate
+        run: |
+           echo $PWD
+           cat AOC2020/tests.yml | curl --data-binary @- https://codecov.io/validate
 
       - name: Platform check
         run: uname -a
