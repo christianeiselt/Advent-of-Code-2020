@@ -14,7 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: codecov/codecov-action@v1
 
       - name: Platform check
         run: uname -a
@@ -55,5 +54,4 @@ jobs:
           perl Makefile.PL
           cover -test
 
-      - name: Report to Codecov
-        run: cover -report codecov -t ${{ secrets.CODECOV_TOKEN }}
+      - uses: codecov/codecov-action@v1
