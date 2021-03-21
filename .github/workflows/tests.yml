@@ -51,3 +51,6 @@ jobs:
 
       - name: Run Coverage
         run: cover -test
+
+      - name: Report to Codecov
+        run: cover -report codecov -t ${{ CODECOV.CODECOV_TOKEN }}
