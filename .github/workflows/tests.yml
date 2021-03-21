@@ -53,4 +53,4 @@ jobs:
         run: cover -test
 
       - name: Report to Codecov
-        run: cover -report codecov -t ${{ CODECOV.CODECOV_TOKEN }}
+        run: cover -report codecov -t ${{ secrets.CODECOV_TOKEN }}
