@@ -53,5 +53,5 @@ jobs:
         run: |
           perl Makefile.PL
           cover -test
-
+          cover -report html
       - uses: codecov/codecov-action@v1
