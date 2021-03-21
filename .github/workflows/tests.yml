@@ -48,3 +48,6 @@ jobs:
 
       - name: Run Tests
         run: prove -lv t
+
+      - name: Run Coverage
+        run: cover -test
