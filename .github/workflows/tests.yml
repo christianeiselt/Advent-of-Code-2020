@@ -56,4 +56,4 @@ jobs:
           cover -report html
       - uses: codecov/codecov-action@v1
         with:
-          files: /home/runner/work/Advent-of-Code-2020/Advent-of-Code-2020/cover_db/coverage.html
+          files: Advent-of-Code-2020/cover_db/coverage.html
