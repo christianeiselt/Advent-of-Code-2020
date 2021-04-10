@@ -84,13 +84,11 @@ sub set_difference_count {
 
     if ( $COUNT == $DIFFERENCE_1 ) {
         $counter_ref = reset_count($counter_ref);
-        $counter_ref =
-            increment_difference_count( $counter_ref, $DIFFERENCE_1 );
+        $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_1 );
     }
     elsif ( $COUNT == $DIFFERENCE_3 ) {
         $counter_ref = reset_count($counter_ref);
-        $counter_ref =
-            increment_difference_count( $counter_ref, $DIFFERENCE_3 );
+        $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_3 );
     }
     else {
         #

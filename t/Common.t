@@ -22,8 +22,7 @@ subtest 'test_list_contains_number_empty_list' => sub {
     Readonly my $LIST_REF => [];
     Readonly my $NUMBER   => 5;
 
-    Readonly my $CONTAINS_NUMBER =>
-        AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
+    Readonly my $CONTAINS_NUMBER => AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
 
     is( $CONTAINS_NUMBER, 0, 'Returns correct value false for empty list.' );
 };
@@ -33,11 +32,9 @@ subtest 'test_list_contains_number_true' => sub {
     Readonly my $LIST_REF => [ 35, 15, 5 ];
     Readonly my $NUMBER   => 5;
 
-    Readonly my $CONTAINS_NUMBER =>
-        AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
+    Readonly my $CONTAINS_NUMBER => AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
 
-    is( $CONTAINS_NUMBER, 1,
-        'Returns correct value true for list that contains number.' );
+    is( $CONTAINS_NUMBER, 1, 'Returns correct value true for list that contains number.' );
 };
 
 subtest 'test_list_contains_number_false' => sub {
@@ -45,10 +42,7 @@ subtest 'test_list_contains_number_false' => sub {
     Readonly my $LIST_REF => [ 35, 25, 15 ];
     Readonly my $NUMBER   => 5;
 
-    Readonly my $CONTAINS_NUMBER =>
-        AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
+    Readonly my $CONTAINS_NUMBER => AdventOfCode::Common->list_contains_number( $LIST_REF, $NUMBER );
 
-    is( $CONTAINS_NUMBER, 0,
-        'Returns correct value false for list that does not contain number.'
-    );
+    is( $CONTAINS_NUMBER, 0, 'Returns correct value false for list that does not contain number.' );
 };

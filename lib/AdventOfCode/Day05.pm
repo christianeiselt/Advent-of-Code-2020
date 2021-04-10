@@ -42,14 +42,12 @@ sub get_range {
     if (   $INPUT_REF->{'char'} =~ m/$CHAR_FRONT/msx
         || $INPUT_REF->{'char'} =~ m/$CHAR_LEFT/msx )
     {
-        return $INPUT_REF->{'min'},
-            $INPUT_REF->{'min'} + $INPUT_REF->{'count'};
+        return $INPUT_REF->{'min'}, $INPUT_REF->{'min'} + $INPUT_REF->{'count'};
     }
     elsif ($INPUT_REF->{'char'} =~ m/$CHAR_BACK/msx
         || $INPUT_REF->{'char'} =~ m/$CHAR_RIGHT/msx )
     {
-        return $INPUT_REF->{'min'} + $INPUT_REF->{'count'},
-            $INPUT_REF->{'max'};
+        return $INPUT_REF->{'min'} + $INPUT_REF->{'count'}, $INPUT_REF->{'max'};
     }
     else {
         return;
@@ -159,18 +157,14 @@ sub get_boarding_passes {
 
 sub get_highest_seat_id {
     Readonly my $BINARY_BOARDING_PASSES_REF => shift;
-    Readonly my $BOARDING_PASSES_REF        =>
-        get_boarding_passes($BINARY_BOARDING_PASSES_REF);
+    Readonly my $BOARDING_PASSES_REF        => get_boarding_passes($BINARY_BOARDING_PASSES_REF);
     my $highest_seat_id = 0;
 
     for my $boarding_pass ( keys %{$BOARDING_PASSES_REF} ) {
 
-       #        print "$BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'}\n";
-        if ( $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'}
-            > $highest_seat_id )
-        {
-            $highest_seat_id =
-                $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'};
+        #        print "$BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'}\n";
+        if ( $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'} > $highest_seat_id ) {
+            $highest_seat_id = $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'};
         }
         else {
             #
@@ -182,18 +176,15 @@ sub get_highest_seat_id {
 
 sub get_seat_occupation_list {
     Readonly my $BINARY_BOARDING_PASSES_REF => shift;
-    Readonly my $BOARDING_PASSES_REF        =>
-        get_boarding_passes($BINARY_BOARDING_PASSES_REF);
-    Readonly my $INDEX_OF_LAST_SEAT => 1023;
+    Readonly my $BOARDING_PASSES_REF        => get_boarding_passes($BINARY_BOARDING_PASSES_REF);
+    Readonly my $INDEX_OF_LAST_SEAT         => 1023;
     my @seat_occupation_list = [];
 
     for ( 0 .. $INDEX_OF_LAST_SEAT ) {
         my $seat_id = $_;
         $seat_occupation_list[$seat_id] = 0;
         for my $boarding_pass ( keys %{$BOARDING_PASSES_REF} ) {
-            if ( $seat_id
-                == $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'} )
-            {
+            if ( $seat_id == $BOARDING_PASSES_REF->{$boarding_pass}->{'seat_id'} ) {
                 $seat_occupation_list[$seat_id] = 1;
             }
             else {
@@ -225,13 +216,10 @@ sub get_my_seat_id_helper {
 
     for ( 0 .. $INDEX_OF_LAST_SEAT ) {
         my $seat_id = $_;
-        Readonly my $SEAT_IS_OCCUPIED =>
-            is_occupied( $seat_id, $SEAT_OCCUPATION_LIST_REF );
+        Readonly my $SEAT_IS_OCCUPIED => is_occupied( $seat_id, $SEAT_OCCUPATION_LIST_REF );
         if ( !$SEAT_IS_OCCUPIED ) {
-            Readonly my $PREVIOUS_SEAT_OCCUPIED =>
-                is_occupied( $seat_id - 1, $SEAT_OCCUPATION_LIST_REF );
-            Readonly my $NEXT_SEAT_OCCUPIED =>
-                is_occupied( $seat_id + 1, $SEAT_OCCUPATION_LIST_REF );
+            Readonly my $PREVIOUS_SEAT_OCCUPIED => is_occupied( $seat_id - 1, $SEAT_OCCUPATION_LIST_REF );
+            Readonly my $NEXT_SEAT_OCCUPIED     => is_occupied( $seat_id + 1, $SEAT_OCCUPATION_LIST_REF );
             if ( $PREVIOUS_SEAT_OCCUPIED && $NEXT_SEAT_OCCUPIED ) {
                 return $seat_id;
             }
@@ -249,8 +237,7 @@ sub get_my_seat_id_helper {
 
 sub get_my_seat_id {
     Readonly my $BINARY_BOARDING_PASSES_REF => shift;
-    Readonly my $SEAT_OCCUPATION_LIST_REF   =>
-        get_seat_occupation_list($BINARY_BOARDING_PASSES_REF);
+    Readonly my $SEAT_OCCUPATION_LIST_REF   => get_seat_occupation_list($BINARY_BOARDING_PASSES_REF);
 
     return get_my_seat_id_helper($SEAT_OCCUPATION_LIST_REF);
 }

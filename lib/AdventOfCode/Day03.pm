@@ -21,9 +21,7 @@ Readonly my $SLOPES_REF    => {
 sub solve_part_1 {
     Readonly my $SELF      => shift;
     Readonly my $INPUT_REF => shift;
-    Readonly my $RESULT    =>
-        get_tree_count_for_slope( $INPUT_REF, $SLOPES_REF->{'slope_b'},
-        $START_POS_REF );
+    Readonly my $RESULT    => get_tree_count_for_slope( $INPUT_REF, $SLOPES_REF->{'slope_b'}, $START_POS_REF );
 
     return $RESULT;
 }
@@ -31,8 +29,7 @@ sub solve_part_1 {
 sub solve_part_2 {
     Readonly my $SELF      => shift;
     Readonly my $INPUT_REF => shift;
-    Readonly my $RESULT    =>
-        get_product_of_tree_counts( $INPUT_REF, $SLOPES_REF, $START_POS_REF );
+    Readonly my $RESULT    => get_product_of_tree_counts( $INPUT_REF, $SLOPES_REF, $START_POS_REF );
 
     return $RESULT;
 }
@@ -42,8 +39,7 @@ sub get_tree_count_for_slope {
     Readonly my $SLOPE_REF     => shift;
     Readonly my $START_POS_REF => shift;
     Readonly my $FULL_MAP_REF  => get_full_map( $MAP_REF, $SLOPE_REF );
-    Readonly my $TREE_COUNT    =>
-        count_trees_on_slope( $FULL_MAP_REF, $SLOPE_REF, $START_POS_REF );
+    Readonly my $TREE_COUNT    => count_trees_on_slope( $FULL_MAP_REF, $SLOPE_REF, $START_POS_REF );
 
     return $TREE_COUNT;
 }
@@ -55,9 +51,7 @@ sub get_product_of_tree_counts {
     my $tree_count_product = 1;
 
     foreach my $slope ( keys %{$SLOPE_REFS} ) {
-        $tree_count_product
-            *= get_tree_count_for_slope( $MAP_REF,
-            $SLOPE_REFS->{$slope}, $START_POS_REF );
+        $tree_count_product *= get_tree_count_for_slope( $MAP_REF, $SLOPE_REFS->{$slope}, $START_POS_REF );
     }
 
     return $tree_count_product;
@@ -74,8 +68,7 @@ sub get_length_of_first_line {
 sub get_number_of_columns_needed {
     Readonly my $ROWS           => shift;
     Readonly my $SLOPE_REF      => shift;
-    Readonly my $COLUMNS_NEEDED =>
-        $ROWS * $SLOPE_REF->{'right'} / $SLOPE_REF->{'down'};
+    Readonly my $COLUMNS_NEEDED => $ROWS * $SLOPE_REF->{'right'} / $SLOPE_REF->{'down'};
 
     return $COLUMNS_NEEDED;
 }
@@ -95,15 +88,13 @@ sub get_number_of_rows {
 }
 
 sub get_multiplier {
-    Readonly my $MAP_REF     => shift;
-    Readonly my $SLOPE_REF   => shift;
-    Readonly my $LINE_LENGTH => get_length_of_first_line($MAP_REF);
-    Readonly my $ROWS        => get_number_of_rows($MAP_REF);
-    Readonly my $NUMBER_OF_COLUMNS_NEEDED =>
-        get_number_of_columns_needed( $ROWS, $SLOPE_REF );
+    Readonly my $MAP_REF                  => shift;
+    Readonly my $SLOPE_REF                => shift;
+    Readonly my $LINE_LENGTH              => get_length_of_first_line($MAP_REF);
+    Readonly my $ROWS                     => get_number_of_rows($MAP_REF);
+    Readonly my $NUMBER_OF_COLUMNS_NEEDED => get_number_of_columns_needed( $ROWS, $SLOPE_REF );
 
-    Readonly my $MULTIPLIER =>
-        calculate_multiplier( $NUMBER_OF_COLUMNS_NEEDED, $LINE_LENGTH );
+    Readonly my $MULTIPLIER => calculate_multiplier( $NUMBER_OF_COLUMNS_NEEDED, $LINE_LENGTH );
 
     return $MULTIPLIER;
 }
@@ -158,9 +149,7 @@ sub get_full_map {
 sub is_tree {
     Readonly my $FULL_MAP_REF => shift;
     Readonly my $POSITION     => shift;
-    Readonly my $CHAR_ON_POS  =>
-        AdventOfCode::Common->get_character_on_position( $FULL_MAP_REF,
-        $POSITION );
+    Readonly my $CHAR_ON_POS  => AdventOfCode::Common->get_character_on_position( $FULL_MAP_REF, $POSITION );
     my $is_tree = 0;
 
     if ( defined $CHAR_ON_POS && $CHAR_ON_POS eq q{#} ) {
@@ -206,8 +195,8 @@ sub get_next_y_position {
 sub get_next_position {
     Readonly my $POSITION_REF => shift;
     Readonly my $SLOPE_REF    => shift;
-    Readonly my $NEW_X => get_next_x_position( $POSITION_REF, $SLOPE_REF );
-    Readonly my $NEW_Y => get_next_y_position( $POSITION_REF, $SLOPE_REF );
+    Readonly my $NEW_X        => get_next_x_position( $POSITION_REF, $SLOPE_REF );
+    Readonly my $NEW_Y        => get_next_y_position( $POSITION_REF, $SLOPE_REF );
 
     return { 'x' => $NEW_X, 'y' => $NEW_Y };
 }

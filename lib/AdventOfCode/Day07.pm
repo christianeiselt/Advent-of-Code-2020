@@ -8,21 +8,19 @@ use Readonly;
 use version; our $VERSION = qv('1.0.3');
 
 sub solve_part_1 {
-    Readonly my $SELF         => shift;
-    Readonly my $INPUT_REF    => shift;
-    Readonly my $BAG_NAME => 'shiny gold';
-    Readonly my $RESULT       =>
-        get_bag_color_count( $INPUT_REF, $BAG_NAME );
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $BAG_NAME  => 'shiny gold';
+    Readonly my $RESULT    => get_bag_color_count( $INPUT_REF, $BAG_NAME );
 
     return $RESULT;
 }
 
 sub solve_part_2 {
-    Readonly my $SELF         => shift;
-    Readonly my $INPUT_REF    => shift;
-    Readonly my $BAG_NAME => 'shiny gold';
-    Readonly my $RESULT       =>
-        get_inside_bags_count( $INPUT_REF, $BAG_NAME );
+    Readonly my $SELF      => shift;
+    Readonly my $INPUT_REF => shift;
+    Readonly my $BAG_NAME  => 'shiny gold';
+    Readonly my $RESULT    => get_inside_bags_count( $INPUT_REF, $BAG_NAME );
 
     return $RESULT;
 }
@@ -89,7 +87,7 @@ sub add_bag_rule {
     }
     else {
         Readonly my $CONTAIN_BAG_NAME => get_bag_name_for_rule($BAG_RULE);
-        Readonly my $COUNT    => get_bag_count_for_rule($BAG_RULE);
+        Readonly my $COUNT            => get_bag_count_for_rule($BAG_RULE);
         $bag_rules_ref->{$BAG_NAME}->{$CONTAIN_BAG_NAME} = $COUNT;
     }
 
@@ -118,8 +116,7 @@ sub get_bag_rules {
         Readonly my $BAG_NAME       => get_bag_name($rule);
         Readonly my $BAG_RULE       => get_bag_rule($rule);
         Readonly my @BAG_RULES_LIST => split_rules_for_bag($BAG_RULE);
-        $bag_rules_ref =
-            add_bag_rules( $bag_rules_ref, \@BAG_RULES_LIST, $BAG_NAME );
+        $bag_rules_ref = add_bag_rules( $bag_rules_ref, \@BAG_RULES_LIST, $BAG_NAME );
     }
 
     return $bag_rules_ref;
@@ -171,8 +168,7 @@ sub get_bag_color_count {
     Readonly my $RULES_TEXT_REF => shift;
     Readonly my $BAG_NAME       => shift;
     Readonly my $BAG_RULES_REF  => get_bag_rules($RULES_TEXT_REF);
-    Readonly my $BAG_COUNT      =>
-        get_bags_that_can_contain( $BAG_NAME, $BAG_RULES_REF );
+    Readonly my $BAG_COUNT      => get_bags_that_can_contain( $BAG_NAME, $BAG_RULES_REF );
 
     return $BAG_COUNT;
 }
@@ -183,8 +179,7 @@ sub get_inside_bags_count_helper {
     my $count = 1;
 
     foreach my $bag ( keys %{ $BAG_RULES_REF->{$BAG_NAME} } ) {
-        $count += $BAG_RULES_REF->{$BAG_NAME}->{$bag}
-            * get_inside_bags_count_helper( $bag, $BAG_RULES_REF );
+        $count += $BAG_RULES_REF->{$BAG_NAME}->{$bag} * get_inside_bags_count_helper( $bag, $BAG_RULES_REF );
     }
 
     return $count;
@@ -195,9 +190,7 @@ sub get_inside_bags_count {
     Readonly my $BAG_NAME          => shift;
     Readonly my $BAG_RULES_REF     => get_bag_rules($RULES_TEXT_REF);
     Readonly my $BAG_COUNT_ITSELF  => 1;
-    Readonly my $INSIDE_BAGS_COUNT =>
-        get_inside_bags_count_helper( $BAG_NAME, $BAG_RULES_REF )
-        - $BAG_COUNT_ITSELF;
+    Readonly my $INSIDE_BAGS_COUNT => get_inside_bags_count_helper( $BAG_NAME, $BAG_RULES_REF ) - $BAG_COUNT_ITSELF;
 
     return $INSIDE_BAGS_COUNT;
 }
