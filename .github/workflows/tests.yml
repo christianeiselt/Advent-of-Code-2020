@@ -15,11 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Check YAML
-        run: |
-           pwd
-           cat AOC2020/tests.yml | curl --data-binary @- https://codecov.io/validate
-
       - name: Platform check
         run: uname -a
 
@@ -58,6 +53,7 @@ jobs:
         run: |
           perl Makefile.PL
           cover -test
-
-      - name: Report to Codecov
-        run: cover -report codecov -t ${{ secrets.CODECOV_TOKEN }}
+          cover -report html
+      - uses: codecov/codecov-action@v1
+        with:
+          files: Advent-of-Code-2020/cover_db/coverage.html
