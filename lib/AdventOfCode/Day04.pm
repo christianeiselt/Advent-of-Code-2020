@@ -9,23 +9,20 @@ use List::MoreUtils qw(any);
 use version; our $VERSION = qv('1.0.9');
 
 sub solve_part_1 {
-    Readonly my $SELF              => shift;
-    Readonly my $PASSPORT_LIST_REF => shift;
-    Readonly my @PASSPORTS         => @{ get_passports($PASSPORT_LIST_REF) };
-    Readonly my $VALID_PASSPORTS_REF =>
-        get_valid_passports_by_mandatory_fields_defined( \@PASSPORTS );
+    Readonly my $SELF                => shift;
+    Readonly my $PASSPORT_LIST_REF   => shift;
+    Readonly my @PASSPORTS           => @{ get_passports($PASSPORT_LIST_REF) };
+    Readonly my $VALID_PASSPORTS_REF => get_valid_passports_by_mandatory_fields_defined( \@PASSPORTS );
 
     return scalar @{$VALID_PASSPORTS_REF};
 }
 
 sub solve_part_2 {
-    Readonly my $SELF              => shift;
-    Readonly my $PASSPORT_LIST_REF => shift;
-    Readonly my @PASSPORTS         => @{ get_passports($PASSPORT_LIST_REF) };
-    Readonly my $POTENTIAL_VALID_PASSPORTS_REF =>
-        get_valid_passports_by_mandatory_fields_defined( \@PASSPORTS );
-    Readonly my $VALID_PASSPORTS_REF =>
-        get_valid_passports_by_valid_values($POTENTIAL_VALID_PASSPORTS_REF);
+    Readonly my $SELF                          => shift;
+    Readonly my $PASSPORT_LIST_REF             => shift;
+    Readonly my @PASSPORTS                     => @{ get_passports($PASSPORT_LIST_REF) };
+    Readonly my $POTENTIAL_VALID_PASSPORTS_REF => get_valid_passports_by_mandatory_fields_defined( \@PASSPORTS );
+    Readonly my $VALID_PASSPORTS_REF           => get_valid_passports_by_valid_values($POTENTIAL_VALID_PASSPORTS_REF);
 
     return scalar @{$VALID_PASSPORTS_REF};
 }
@@ -125,8 +122,7 @@ sub get_valid_passports_by_mandatory_fields_defined {
     my $valid_passports;
 
     foreach my $passport ( @{$PASSPORTS_REF} ) {
-        $valid_passports =
-            add_if_valid_passport( $valid_passports, $passport );
+        $valid_passports = add_if_valid_passport( $valid_passports, $passport );
     }
 
     return $valid_passports;
@@ -192,8 +188,7 @@ sub is_valid_cm_height {
     Readonly my $UNIT  => shift;
     my ( $cm, $min_height, $max_height ) = get_centimeter_constraints();
 
-    if ( $UNIT eq $cm && ( $VALUE >= $min_height && $VALUE <= $max_height ) )
-    {
+    if ( $UNIT eq $cm && ( $VALUE >= $min_height && $VALUE <= $max_height ) ) {
         return 1;
     }
     else {
@@ -229,8 +224,7 @@ sub has_valid_height {
     Readonly my @CHARACTERS => split //msx, $HEIGHT;
     my ( $value, $unit ) = get_height_from_chars( \@CHARACTERS );
     Readonly my $IS_VALID_CM_HEIGHT   => is_valid_cm_height( $value, $unit );
-    Readonly my $IS_VALID_INCH_HEIGHT =>
-        is_valid_inch_height( $value, $unit );
+    Readonly my $IS_VALID_INCH_HEIGHT => is_valid_inch_height( $value, $unit );
 
     if ( $IS_VALID_CM_HEIGHT || $IS_VALID_INCH_HEIGHT ) {
         return 1;
@@ -396,9 +390,7 @@ sub get_valid_passports_by_valid_values {
     my $valid_passports_ref = [];
 
     foreach my $passport ( @{$PASSPORTS_REF} ) {
-        $valid_passports_ref =
-            add_passport_if_valid_by_values( $valid_passports_ref,
-            $passport );
+        $valid_passports_ref = add_passport_if_valid_by_values( $valid_passports_ref, $passport );
     }
 
     return $valid_passports_ref;

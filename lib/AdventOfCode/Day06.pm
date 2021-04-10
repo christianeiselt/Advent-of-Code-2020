@@ -62,8 +62,7 @@ sub add_to_group_answers_part_1_helper {
     Readonly my @ANSWER => @{ get_answer_characters($PASSENGER_ANSWER) };
     foreach (@ANSWER) {
         Readonly my $QUESTION => $_;
-        $group_answers_ref =
-            set_question_for_group( $group_answers_ref, $INDEX, $QUESTION );
+        $group_answers_ref = set_question_for_group( $group_answers_ref, $INDEX, $QUESTION );
     }
 
     return $group_answers_ref;
@@ -77,9 +76,7 @@ sub add_to_group_answers_part_1 {
     my $index             = $INPUT_INDEX;
 
     if ( !is_empty_string($PASSENGER_ANSWER) ) {
-        $group_answers_ref =
-            add_to_group_answers_part_1_helper( $group_answers_ref,
-            $PASSENGER_ANSWER, $index );
+        $group_answers_ref = add_to_group_answers_part_1_helper( $group_answers_ref, $PASSENGER_ANSWER, $index );
     }
     else {
         $index++;
@@ -117,8 +114,7 @@ sub add_to_group_answers_part_2_helper {
     $group_answers_ref = increment_member_count( $group_answers_ref, $INDEX );
     foreach (@ANSWER) {
         Readonly my $QUESTION => $_;
-        $group_answers_ref =
-            increment_question_count( $group_answers_ref, $INDEX, $QUESTION );
+        $group_answers_ref = increment_question_count( $group_answers_ref, $INDEX, $QUESTION );
     }
 
     return $group_answers_ref;
@@ -132,9 +128,7 @@ sub add_to_group_answers_part_2 {
     my $index             = $INPUT_INDEX;
 
     if ( !is_empty_string($PASSENGER_ANSWER) ) {
-        $group_answers_ref =
-            add_to_group_answers_part_2_helper( $group_answers_ref,
-            $PASSENGER_ANSWER, $index );
+        $group_answers_ref = add_to_group_answers_part_2_helper( $group_answers_ref, $PASSENGER_ANSWER, $index );
     }
     else {
         $index++;
@@ -154,14 +148,10 @@ sub add_to_group_answers {
     my $index             = $INPUT_INDEX;
 
     if ( $PART == $PART_1 ) {
-        ( $group_answers_ref, $index ) =
-            add_to_group_answers_part_1( $group_answers_ref,
-            $PASSENGER_ANSWER, $index );
+        ( $group_answers_ref, $index ) = add_to_group_answers_part_1( $group_answers_ref, $PASSENGER_ANSWER, $index );
     }
     elsif ( $PART == $PART_2 ) {
-        ( $group_answers_ref, $index ) =
-            add_to_group_answers_part_2( $group_answers_ref,
-            $PASSENGER_ANSWER, $index );
+        ( $group_answers_ref, $index ) = add_to_group_answers_part_2( $group_answers_ref, $PASSENGER_ANSWER, $index );
     }
     else {
         return;
@@ -180,9 +170,7 @@ sub get_group_answers {
 
     foreach (@GROUP_ANSWERS_LIST) {
         Readonly my $PASSENGER_ANSWER => $_;
-        ( $group_answers_ref, $index ) =
-            add_to_group_answers( $group_answers_ref, $PASSENGER_ANSWER,
-            $index, $PART );
+        ( $group_answers_ref, $index ) = add_to_group_answers( $group_answers_ref, $PASSENGER_ANSWER, $index, $PART );
     }
 
     return $group_answers_ref;
@@ -191,10 +179,9 @@ sub get_group_answers {
 sub get_group_count_part_1 {
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_1            => 1;
-    Readonly my $GROUP_ANSWERS_REF =>
-        get_group_answers( $ANSWERS_LIST_REF, $PART_1 );
-    Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
-    Readonly my $START_SUM   => 0;
+    Readonly my $GROUP_ANSWERS_REF => get_group_answers( $ANSWERS_LIST_REF, $PART_1 );
+    Readonly my $GROUP_COUNT       => scalar keys %{$GROUP_ANSWERS_REF};
+    Readonly my $START_SUM         => 0;
     my $sum = $START_SUM;
 
     for ( 0 .. $GROUP_COUNT ) {
@@ -223,15 +210,12 @@ sub get_group_count_part_2_helper {
     Readonly my $GROUP_ANSWERS_REF => shift;
     Readonly my $GROUP             => shift;
     Readonly my $INPUT_SUM         => shift;
-    Readonly my $MEMBER_COUNT      =>
-        get_group_member_count( $GROUP_ANSWERS_REF, $GROUP );
-    Readonly my @QUESTIONS =>
-        keys %{ $GROUP_ANSWERS_REF->{$GROUP}->{'questions'} };
+    Readonly my $MEMBER_COUNT      => get_group_member_count( $GROUP_ANSWERS_REF, $GROUP );
+    Readonly my @QUESTIONS         => keys %{ $GROUP_ANSWERS_REF->{$GROUP}->{'questions'} };
     my $sum = $INPUT_SUM;
 
     foreach my $question (@QUESTIONS) {
-        Readonly my $QUESTION_COUNT =>
-            get_question_count( $GROUP_ANSWERS_REF, $GROUP, $question );
+        Readonly my $QUESTION_COUNT => get_question_count( $GROUP_ANSWERS_REF, $GROUP, $question );
 
         if ( $QUESTION_COUNT == $MEMBER_COUNT ) {
             $sum++;
@@ -247,17 +231,15 @@ sub get_group_count_part_2_helper {
 sub get_group_count_part_2 {
     Readonly my $ANSWERS_LIST_REF  => shift;
     Readonly my $PART_2            => 2;
-    Readonly my $GROUP_ANSWERS_REF =>
-        get_group_answers( $ANSWERS_LIST_REF, $PART_2 );
-    Readonly my $GROUP_COUNT => scalar keys %{$GROUP_ANSWERS_REF};
-    Readonly my $START_INDEX => 0;
-    Readonly my $START_SUM   => 0;
+    Readonly my $GROUP_ANSWERS_REF => get_group_answers( $ANSWERS_LIST_REF, $PART_2 );
+    Readonly my $GROUP_COUNT       => scalar keys %{$GROUP_ANSWERS_REF};
+    Readonly my $START_INDEX       => 0;
+    Readonly my $START_SUM         => 0;
     my $sum = $START_SUM;
 
     for ( $START_INDEX .. $GROUP_COUNT ) {
         Readonly my $GROUP => $_;
-        $sum =
-            get_group_count_part_2_helper( $GROUP_ANSWERS_REF, $GROUP, $sum );
+        $sum = get_group_count_part_2_helper( $GROUP_ANSWERS_REF, $GROUP, $sum );
     }
 
     return $sum;

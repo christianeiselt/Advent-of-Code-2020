@@ -18,17 +18,12 @@ Readonly my $SLOPES_REF    => {
     'slope_e' => { 'right' => 1, 'down' => 2 },
 };
 Readonly my $PUZZLE_FILE      => './day03_input';
-Readonly my $PUZZLE_INPUT_REF =>
-    AdventOfCode::Common->get_file_content($PUZZLE_FILE);
+Readonly my $PUZZLE_INPUT_REF => AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
 Readonly my $SOLUTION_PART_ONE =>
-    AdventOfCode::Day03->get_tree_count_for_slope( $PUZZLE_INPUT_REF,
-    $SLOPES_REF->{'slope_b'},
-    $START_POS_REF );
+    AdventOfCode::Day03->get_tree_count_for_slope( $PUZZLE_INPUT_REF, $SLOPES_REF->{'slope_b'}, $START_POS_REF );
 Readonly my $SOLUTION_PART_TWO =>
-    AdventOfCode::Day03->get_product_of_tree_counts( $PUZZLE_INPUT_REF,
-    $SLOPES_REF, $START_POS_REF );
+    AdventOfCode::Day03->get_product_of_tree_counts( $PUZZLE_INPUT_REF, $SLOPES_REF, $START_POS_REF );
 
-print "Advent of Code 2020 - Day 03 Solutions: Part One: $SOLUTION_PART_ONE"
-    . " / Part Two: $SOLUTION_PART_TWO\n"
+print "Advent of Code 2020 - Day 03 Solutions: Part One: $SOLUTION_PART_ONE" . " / Part Two: $SOLUTION_PART_TWO\n"
     or croak 'no output available';

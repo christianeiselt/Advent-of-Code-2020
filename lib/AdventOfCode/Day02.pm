@@ -13,8 +13,7 @@ sub solve_part_1 {
     Readonly my $SELF      => shift;
     Readonly my $INPUT_REF => shift;
     Readonly my $PART      => 1;
-    Readonly my $RESULT    =>
-        get_valid_password_count_for_part( $PART, $INPUT_REF );
+    Readonly my $RESULT    => get_valid_password_count_for_part( $PART, $INPUT_REF );
 
     return $RESULT;
 }
@@ -23,8 +22,7 @@ sub solve_part_2 {
     Readonly my $SELF      => shift;
     Readonly my $INPUT_REF => shift;
     Readonly my $PART      => 2;
-    Readonly my $RESULT    =>
-        get_valid_password_count_for_part( $PART, $INPUT_REF );
+    Readonly my $RESULT    => get_valid_password_count_for_part( $PART, $INPUT_REF );
 
     return $RESULT;
 }
@@ -36,8 +34,7 @@ sub get_valid_password_count_for_part {
     my $count = 0;
 
     for my $entry (@PASSWORD_ENTRIES) {
-        $count =
-            increment_if_valid_password_for_part( $PART, $entry, $count );
+        $count = increment_if_valid_password_for_part( $PART, $entry, $count );
     }
 
     return $count;
@@ -53,38 +50,32 @@ sub get_password_entry_components {
 
 sub get_password {
     Readonly my $PASSWORD_ENTRY     => shift;
-    Readonly my $PASSWORD_COMPONENT =>
-        ( get_password_entry_components($PASSWORD_ENTRY) )[1];
-    Readonly my $PASSWORD => trim($PASSWORD_COMPONENT);
+    Readonly my $PASSWORD_COMPONENT => ( get_password_entry_components($PASSWORD_ENTRY) )[1];
+    Readonly my $PASSWORD           => trim($PASSWORD_COMPONENT);
 
     return $PASSWORD;
 }
 
 sub get_letter {
     Readonly my $PASSWORD_ENTRY   => shift;
-    Readonly my $POLICY_COMPONENT =>
-        ( get_password_entry_components($PASSWORD_ENTRY) )[0];
-    Readonly my $LETTER => ( get_policy_components($POLICY_COMPONENT) )[0];
+    Readonly my $POLICY_COMPONENT => ( get_password_entry_components($PASSWORD_ENTRY) )[0];
+    Readonly my $LETTER           => ( get_policy_components($POLICY_COMPONENT) )[0];
 
     return $LETTER;
 }
 
 sub get_first_number {
     Readonly my $PASSWORD_ENTRY   => shift;
-    Readonly my $POLICY_COMPONENT =>
-        ( get_password_entry_components($PASSWORD_ENTRY) )[0];
-    Readonly my $FIRST_NUMBER =>
-        ( get_policy_components($POLICY_COMPONENT) )[1];
+    Readonly my $POLICY_COMPONENT => ( get_password_entry_components($PASSWORD_ENTRY) )[0];
+    Readonly my $FIRST_NUMBER     => ( get_policy_components($POLICY_COMPONENT) )[1];
 
     return $FIRST_NUMBER;
 }
 
 sub get_second_number {
     Readonly my $PASSWORD_ENTRY   => shift;
-    Readonly my $POLICY_COMPONENT =>
-        ( get_password_entry_components($PASSWORD_ENTRY) )[0];
-    Readonly my $SECOND_NUMBER =>
-        ( get_policy_components($POLICY_COMPONENT) )[2];
+    Readonly my $POLICY_COMPONENT => ( get_password_entry_components($PASSWORD_ENTRY) )[0];
+    Readonly my $SECOND_NUMBER    => ( get_policy_components($POLICY_COMPONENT) )[2];
 
     return $SECOND_NUMBER;
 }
@@ -133,8 +124,7 @@ sub get_count_for_letter {
     my $letter_count = 0;
 
     for my $l (@LETTERS) {
-        $letter_count =
-            increment_count_if_letter( $l, $LETTER, $letter_count );
+        $letter_count = increment_count_if_letter( $l, $LETTER, $letter_count );
     }
 
     return $letter_count;
@@ -208,14 +198,10 @@ sub increment_if_valid_password_for_part {
     my $count = $INPUT_COUNT;
 
     if ( $PART == $PART_ONE ) {
-        $count =
-            increment_if_valid_password_for_part_one( $PASSWORD_ENTRY,
-            $count );
+        $count = increment_if_valid_password_for_part_one( $PASSWORD_ENTRY, $count );
     }
     elsif ( $PART == $PART_TWO ) {
-        $count =
-            increment_if_valid_password_for_part_two( $PASSWORD_ENTRY,
-            $count );
+        $count = increment_if_valid_password_for_part_two( $PASSWORD_ENTRY, $count );
     }
 
     return $count;
@@ -244,10 +230,8 @@ sub letter_is_exactly_on_one_position_of {
     Readonly my $LETTER         => get_letter($PASSWORD_ENTRY);
     Readonly my $POS_1          => get_first_number($PASSWORD_ENTRY);
     Readonly my $POS_2          => get_second_number($PASSWORD_ENTRY);
-    Readonly my $IS_ON_POS_1    =>
-        letter_is_on_position( $PASSWORD, $LETTER, $POS_1 );
-    Readonly my $IS_ON_POS_2 =>
-        letter_is_on_position( $PASSWORD, $LETTER, $POS_2 );
+    Readonly my $IS_ON_POS_1    => letter_is_on_position( $PASSWORD, $LETTER, $POS_1 );
+    Readonly my $IS_ON_POS_2    => letter_is_on_position( $PASSWORD, $LETTER, $POS_2 );
 
     if ( $IS_ON_POS_1 && $IS_ON_POS_2 ) {
         return 0;
@@ -262,8 +246,7 @@ sub letter_is_exactly_on_one_position_of {
 
 sub is_valid_password_b {
     Readonly my $PASSWORD_ENTRY => shift;
-    Readonly my $IS_VALID       =>
-        letter_is_exactly_on_one_position_of($PASSWORD_ENTRY);
+    Readonly my $IS_VALID       => letter_is_exactly_on_one_position_of($PASSWORD_ENTRY);
 
     return $IS_VALID;
 }

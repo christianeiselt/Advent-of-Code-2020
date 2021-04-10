@@ -18,8 +18,7 @@ sub solve_part_1 {
 sub solve_part_2 {
     Readonly my $SELF                   => shift;
     Readonly my $INSTRUCTIONS_REF       => shift;
-    Readonly my $TERMINATING_RUN_RESULT =>
-        get_terminating_run_result($INSTRUCTIONS_REF);
+    Readonly my $TERMINATING_RUN_RESULT => get_terminating_run_result($INSTRUCTIONS_REF);
 
     return $TERMINATING_RUN_RESULT;
 }
@@ -142,9 +141,8 @@ sub get_run_result {
     Readonly my @INSTRUCTIONS      => @{$INSTRUCTIONS_REF};
     Readonly my $INSTRUCTION_COUNT => get_list_count( \@INSTRUCTIONS );
     Readonly my $ZERO              => 0;
-    Readonly my $FIXED_LIST_REF    =>
-        get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
-    Readonly my $FIXED_LIST_COUNT => get_list_count($FIXED_LIST_REF);
+    Readonly my $FIXED_LIST_REF    => get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
+    Readonly my $FIXED_LIST_COUNT  => get_list_count($FIXED_LIST_REF);
     my @execution_list = @{$FIXED_LIST_REF};
     my $acc_value      = $ZERO;
     my $i              = $ZERO;
@@ -154,8 +152,7 @@ sub get_run_result {
         && $i < $FIXED_LIST_COUNT )
     {
         Readonly my $INSTRUCTION          => $INSTRUCTIONS[$i];
-        Readonly my $EXECUTION_RESULT_REF =>
-            get_i_acc_value( $INSTRUCTION, $acc_value, $i );
+        Readonly my $EXECUTION_RESULT_REF => get_i_acc_value( $INSTRUCTION, $acc_value, $i );
         $execution_list[$i] = set_executed();
         $i                  = get_iterator($EXECUTION_RESULT_REF);
         $acc_value          = get_acc_value($EXECUTION_RESULT_REF);
@@ -197,7 +194,7 @@ sub get_jmp_nop {
 sub replace_action_with {
     Readonly my $INPUT_INSTRUCTION => shift;
     Readonly my $REPLACING_ACTION  => shift;
-    Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
+    Readonly my $ACTION            => get_instruction_action($INPUT_INSTRUCTION);
     my $replaced_instruction = $INPUT_INSTRUCTION;
     $replaced_instruction =~ s/$ACTION/$REPLACING_ACTION/xms;
 
@@ -208,12 +205,11 @@ sub switch_action {
     Readonly my $INPUT_INSTRUCTION   => shift;
     Readonly my $ACTION_JUMP         => get_jmp_action();
     Readonly my $ACTION_NO_OPERATION => get_nop_action();
-    Readonly my $ACTION => get_instruction_action($INPUT_INSTRUCTION);
+    Readonly my $ACTION              => get_instruction_action($INPUT_INSTRUCTION);
     my $instruction = $INPUT_INSTRUCTION;
 
     if ( $ACTION eq $ACTION_JUMP ) {
-        $instruction =
-            replace_action_with( $instruction, $ACTION_NO_OPERATION );
+        $instruction = replace_action_with( $instruction, $ACTION_NO_OPERATION );
     }
     elsif ( $ACTION eq $ACTION_NO_OPERATION ) {
         $instruction = replace_action_with( $instruction, $ACTION_JUMP );

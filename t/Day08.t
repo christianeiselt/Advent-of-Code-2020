@@ -17,10 +17,8 @@ Readonly my $PART_ONE_PUZZLE_SOLUTION  => 2_034;
 Readonly my $PART_TWO_EXAMPLE_SOLUTION => 8;
 Readonly my $PART_TWO_PUZZLE_SOLUTION  => 672;
 
-Readonly my $EXAMPLE_INPUT_REF =>
-  AdventOfCode::Common->get_file_content($EXAMPLE_FILE);
-Readonly my $PUZZLE_INPUT_REF =>
-  AdventOfCode::Common->get_file_content($PUZZLE_FILE);
+Readonly my $EXAMPLE_INPUT_REF => AdventOfCode::Common->get_file_content($EXAMPLE_FILE);
+Readonly my $PUZZLE_INPUT_REF  => AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
 is( AdventOfCode::Day08->solve_part_1($EXAMPLE_INPUT_REF),
     $PART_ONE_EXAMPLE_SOLUTION, 'Example solution of Part One is correct.' );

@@ -20,7 +20,7 @@ sub solve_part_2 {
     Readonly my $SELF       => shift;
     Readonly my $INPUT_REF  => shift;
     Readonly my $TARGET_SUM => shift;
-    Readonly my $RESULT => get_encryption_weakness( $INPUT_REF, $TARGET_SUM );
+    Readonly my $RESULT     => get_encryption_weakness( $INPUT_REF, $TARGET_SUM );
 
     return $RESULT;
 }
@@ -47,10 +47,8 @@ sub contains_two_numbers_adding_to_sum {
 
     foreach my $number_1 (@INPUT) {
         Readonly my $TARGET_NUMBER => $TARGET_SUM - $number_1;
-        if (AdventOfCode::Common->list_contains_number( $INPUT_REF,
-                $TARGET_NUMBER )
-            && $number_1 != $TARGET_NUMBER
-            )
+        if ( AdventOfCode::Common->list_contains_number( $INPUT_REF, $TARGET_NUMBER )
+            && $number_1 != $TARGET_NUMBER )
         {
             return 1;
         }
@@ -77,8 +75,7 @@ sub get_invalid_number {
                 push @batch, $DATA[$j];
             }
 
-            if ( !contains_two_numbers_adding_to_sum( \@batch, $target_sum ) )
-            {
+            if ( !contains_two_numbers_adding_to_sum( \@batch, $target_sum ) ) {
                 return $DATA[$i];
             }
             else {
@@ -107,6 +104,7 @@ sub get_sum_of_min_and_max {
 
     return $SUM;
 }
+
 sub get_encryption_weakness {
     Readonly my $DATA_REF   => shift;
     Readonly my $TARGET_SUM => shift;
