@@ -135,6 +135,7 @@ sub add_difference_for_builtin_adapter {
 }
 
 sub prepare_counter {
+    Readonly my $SELF         => shift;
     Readonly my $DIFFERENCE_1 => 1;
     Readonly my $DIFFERENCE_3 => 3;
     Readonly my $COUNTER_REF  => {
@@ -150,7 +151,7 @@ sub get_difference_counters {
     Readonly my $LIST_REF    => shift;
     Readonly my @LIST        => @{$LIST_REF};
     Readonly my $LIST_LENGTH => scalar @LIST;
-    my $counter_ref = prepare_counter();
+    my $counter_ref = AdventOfCode::Day10->prepare_counter();
     $counter_ref = add_difference_for_builtin_adapter($counter_ref);
 
     for my $i ( 0 .. $LIST_LENGTH ) {
