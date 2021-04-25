@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Readonly;
 use version; our $VERSION = qv('1.0.3');
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -43,5 +43,24 @@ subtest 'prepare_counter' => sub {
         $DIFFERENCE_3 => 0,
     };
     Readonly my $COUNTER_REF => AdventOfCode::Day10->prepare_counter();
-    is_deeply($COUNTER_REF, $EXPECTED_REF, 'ok');
+    is_deeply( $COUNTER_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'add_difference_for_builtin_adapter' => sub {
+    plan tests => 1;
+
+    Readonly my $DIFFERENCE_1 => 1;
+    Readonly my $DIFFERENCE_3 => 3;
+    Readonly my $COUNTER_REF  => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 0,
+    };
+    Readonly my $EXPECTED_REF => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 1,
+    };
+    Readonly my $RESULT_REF => AdventOfCode::Day10->add_difference_for_builtin_adapter($COUNTER_REF);
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
 };
