@@ -29,6 +29,7 @@ sub solve {
 }
 
 sub set_occupied {
+    Readonly my $SELF => shift;
     return 1;
 }
 
@@ -37,7 +38,7 @@ sub get_marked_list {
     my @list;
 
     foreach my $number ( @{$list_ref} ) {
-        $list[$number] = set_occupied();
+        $list[$number] = AdventOfCode::Day10->set_occupied();
     }
 
     return \@list;
