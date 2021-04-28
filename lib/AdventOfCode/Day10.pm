@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.2');
+use version; our $VERSION = qv('0.1.3');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -29,6 +29,7 @@ sub solve {
 }
 
 sub set_occupied {
+    Readonly my $SELF => shift;
     return 1;
 }
 
@@ -37,13 +38,14 @@ sub get_marked_list {
     my @list;
 
     foreach my $number ( @{$list_ref} ) {
-        $list[$number] = set_occupied();
+        $list[$number] = AdventOfCode::Day10->set_occupied();
     }
 
     return \@list;
 }
 
 sub set_zero {
+    Readonly my $SELF => shift;
     return 0;
 }
 
@@ -51,7 +53,7 @@ sub reset_count {
     Readonly my $INPUT_COUNTER_REF => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
 
-    $counter_ref->{'count'} = set_zero();
+    $counter_ref->{'count'} = AdventOfCode::Day10->set_zero();
 
     return $counter_ref;
 }

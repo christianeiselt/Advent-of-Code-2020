@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.4');
-use Test::More tests => 7;
+use version; our $VERSION = qv('0.1.5');
+use Test::More tests => 9;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -66,10 +66,28 @@ subtest 'add_difference_for_builtin_adapter' => sub {
 };
 
 subtest 'increment_count' => sub {
-    plan tests => 1;
+    plan tests                => 1;
     Readonly my $COUNTER_REF  => { 'count' => -1, };
     Readonly my $EXPECTED_REF => { 'count' => 0, };
     Readonly my $RESULT_REF   => AdventOfCode::Day10->increment_count($COUNTER_REF);
 
     is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'set_occupied' => sub {
+    plan tests => 1;
+
+    Readonly my $EXPECTED => 1;
+    Readonly my $RESULT   => AdventOfCode::Day10->set_occupied();
+
+    is( $EXPECTED, $RESULT, 'ok' );
+};
+
+subtest 'set_zero' => sub {
+    plan tests => 1;
+
+    Readonly my $EXPECTED => 0;
+    Readonly my $RESULT   => AdventOfCode::Day10->set_zero();
+
+    is( $EXPECTED, $RESULT, 'ok' );
 };
