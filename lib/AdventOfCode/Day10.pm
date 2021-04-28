@@ -45,6 +45,7 @@ sub get_marked_list {
 }
 
 sub set_zero {
+    Readonly my $SELF => shift;
     return 0;
 }
 
@@ -52,7 +53,7 @@ sub reset_count {
     Readonly my $INPUT_COUNTER_REF => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
 
-    $counter_ref->{'count'} = set_zero();
+    $counter_ref->{'count'} = AdventOfCode::Day10->set_zero();
 
     return $counter_ref;
 }

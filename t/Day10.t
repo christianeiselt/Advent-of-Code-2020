@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Readonly;
 use version; our $VERSION = qv('0.1.4');
-use Test::More tests => 8;
+use Test::More tests => 9;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -79,6 +79,15 @@ subtest 'set_occupied' => sub {
 
     Readonly my $EXPECTED => 1;
     Readonly my $RESULT   => AdventOfCode::Day10->set_occupied();
+
+    is( $EXPECTED, $RESULT, 'ok' );
+};
+
+subtest 'set_zero' => sub {
+    plan tests => 1;
+
+    Readonly my $EXPECTED => 0;
+    Readonly my $RESULT   => AdventOfCode::Day10->set_zero();
 
     is( $EXPECTED, $RESULT, 'ok' );
 };
