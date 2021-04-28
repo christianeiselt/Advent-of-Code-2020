@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.4');
+use version; our $VERSION = qv('0.1.5');
 use Test::More tests => 9;
 
 use lib '../lib/';
