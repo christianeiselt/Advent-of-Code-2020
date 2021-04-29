@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.4');
+use version; our $VERSION = qv('0.1.5');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -34,6 +34,7 @@ sub set_occupied {
 }
 
 sub get_marked_list {
+    Readonly my $SELF => shift;
     my $list_ref = shift;
     my @list;
 
@@ -168,7 +169,7 @@ sub get_difference_counters {
 
 sub get_differences_product {
     Readonly my $INPUT_REF       => shift;
-    Readonly my $NUMBER_LIST_REF => get_marked_list($INPUT_REF);
+    Readonly my $NUMBER_LIST_REF => AdventOfCode::Day10->get_marked_list($INPUT_REF);
     Readonly my $COUNTERS_REF    => get_difference_counters($NUMBER_LIST_REF);
     Readonly my $DIFFERENCE_1    => 1;
     Readonly my $DIFFERENCE_3    => 3;
