@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.3');
+use version; our $VERSION = qv('0.1.4');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -50,6 +50,7 @@ sub set_zero {
 }
 
 sub reset_count {
+    Readonly my $SELF              => shift;
     Readonly my $INPUT_COUNTER_REF => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
 
@@ -86,11 +87,11 @@ sub set_difference_count {
     my $counter_ref = $INPUT_COUNTER_REF;
 
     if ( $COUNT == $DIFFERENCE_1 ) {
-        $counter_ref = reset_count($counter_ref);
+        $counter_ref = AdventOfCode::Day10->reset_count($counter_ref);
         $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_1 );
     }
     elsif ( $COUNT == $DIFFERENCE_3 ) {
-        $counter_ref = reset_count($counter_ref);
+        $counter_ref = AdventOfCode::Day10->reset_count($counter_ref);
         $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_3 );
     }
     else {

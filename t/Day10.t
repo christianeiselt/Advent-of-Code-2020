@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.5');
-use Test::More tests => 9;
+use version; our $VERSION = qv('0.1.6');
+use Test::More tests => 10;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -90,4 +90,14 @@ subtest 'set_zero' => sub {
     Readonly my $RESULT   => AdventOfCode::Day10->set_zero();
 
     is( $EXPECTED, $RESULT, 'ok' );
+};
+
+subtest 'reset_count' => sub {
+    plan tests => 1;
+
+    Readonly my $COUNTER_REF => { 'count' => -1, };
+    Readonly my $EXPECTED    => { 'count' => 0, };
+    Readonly my $RESULT      => AdventOfCode::Day10->reset_count($COUNTER_REF);
+
+    is_deeply( $EXPECTED, $RESULT, 'ok' );
 };
