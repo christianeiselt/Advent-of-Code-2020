@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.7');
-use Test::More tests => 11;
+use version; our $VERSION = qv('0.1.8');
+use Test::More tests => 12;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -108,6 +108,27 @@ subtest 'get_marked_list' => sub {
     Readonly my $LIST_REF     => [ 1,     2 ];
     Readonly my $EXPECTED_REF => [ undef, 1, 1 ];
     Readonly my $RESULT_REF   => AdventOfCode::Day10->get_marked_list($LIST_REF);
+
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'increment_difference_count' => sub {
+    plan tests => 1;
+
+    Readonly my $DIFFERENCE_1 => 1;
+    Readonly my $DIFFERENCE_3 => 3;
+    Readonly my $COUNTER_REF  => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 0,
+    };
+    Readonly my $EXPECTED_REF => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 1,
+    };
+    Readonly my $DIFFERENCE => 3;
+    Readonly my $RESULT_REF => AdventOfCode::Day10->increment_difference_count( $COUNTER_REF, $DIFFERENCE_3 );
 
     is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
 };
