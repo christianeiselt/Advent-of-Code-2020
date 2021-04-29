@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.6');
+use version; our $VERSION = qv('0.1.7');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -34,11 +34,11 @@ sub set_occupied {
 }
 
 sub get_marked_list {
-    Readonly my $SELF => shift;
-    my $list_ref = shift;
+    Readonly my $SELF           => shift;
+    Readonly my $INPUT_LIST_REF => shift;
     my @list;
 
-    foreach my $number ( @{$list_ref} ) {
+    foreach my $number ( @{$INPUT_LIST_REF} ) {
         $list[$number] = AdventOfCode::Day10->set_occupied();
     }
 
