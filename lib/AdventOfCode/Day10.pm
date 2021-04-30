@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.3');
+use version; our $VERSION = qv('0.1.7');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -34,10 +34,11 @@ sub set_occupied {
 }
 
 sub get_marked_list {
-    my $list_ref = shift;
+    Readonly my $SELF           => shift;
+    Readonly my $INPUT_LIST_REF => shift;
     my @list;
 
-    foreach my $number ( @{$list_ref} ) {
+    foreach my $number ( @{$INPUT_LIST_REF} ) {
         $list[$number] = AdventOfCode::Day10->set_occupied();
     }
 
@@ -50,6 +51,7 @@ sub set_zero {
 }
 
 sub reset_count {
+    Readonly my $SELF              => shift;
     Readonly my $INPUT_COUNTER_REF => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
 
@@ -59,6 +61,7 @@ sub reset_count {
 }
 
 sub increment_difference_count {
+    Readonly my $SELF              => shift;
     Readonly my $INPUT_COUNTER_REF => shift;
     Readonly my $DIFFERENCE        => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
@@ -86,12 +89,12 @@ sub set_difference_count {
     my $counter_ref = $INPUT_COUNTER_REF;
 
     if ( $COUNT == $DIFFERENCE_1 ) {
-        $counter_ref = reset_count($counter_ref);
-        $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_1 );
+        $counter_ref = AdventOfCode::Day10->reset_count($counter_ref);
+        $counter_ref = AdventOfCode::Day10->increment_difference_count( $counter_ref, $DIFFERENCE_1 );
     }
     elsif ( $COUNT == $DIFFERENCE_3 ) {
-        $counter_ref = reset_count($counter_ref);
-        $counter_ref = increment_difference_count( $counter_ref, $DIFFERENCE_3 );
+        $counter_ref = AdventOfCode::Day10->reset_count($counter_ref);
+        $counter_ref = AdventOfCode::Day10->increment_difference_count( $counter_ref, $DIFFERENCE_3 );
     }
     else {
         #
@@ -167,7 +170,7 @@ sub get_difference_counters {
 
 sub get_differences_product {
     Readonly my $INPUT_REF       => shift;
-    Readonly my $NUMBER_LIST_REF => get_marked_list($INPUT_REF);
+    Readonly my $NUMBER_LIST_REF => AdventOfCode::Day10->get_marked_list($INPUT_REF);
     Readonly my $COUNTERS_REF    => get_difference_counters($NUMBER_LIST_REF);
     Readonly my $DIFFERENCE_1    => 1;
     Readonly my $DIFFERENCE_3    => 3;

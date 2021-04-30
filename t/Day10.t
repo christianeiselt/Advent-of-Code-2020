@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.5');
-use Test::More tests => 9;
+use version; our $VERSION = qv('0.1.8');
+use Test::More tests => 12;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -42,8 +42,8 @@ subtest 'prepare_counter' => sub {
         $DIFFERENCE_1 => 0,
         $DIFFERENCE_3 => 0,
     };
-    Readonly my $COUNTER_REF => AdventOfCode::Day10->prepare_counter();
-    is_deeply( $COUNTER_REF, $EXPECTED_REF, 'ok' );
+    Readonly my $RESULT_REF => AdventOfCode::Day10->prepare_counter();
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
 };
 
 subtest 'add_difference_for_builtin_adapter' => sub {
@@ -80,7 +80,7 @@ subtest 'set_occupied' => sub {
     Readonly my $EXPECTED => 1;
     Readonly my $RESULT   => AdventOfCode::Day10->set_occupied();
 
-    is( $EXPECTED, $RESULT, 'ok' );
+    is( $RESULT, $EXPECTED, 'ok' );
 };
 
 subtest 'set_zero' => sub {
@@ -90,4 +90,45 @@ subtest 'set_zero' => sub {
     Readonly my $RESULT   => AdventOfCode::Day10->set_zero();
 
     is( $EXPECTED, $RESULT, 'ok' );
+};
+
+subtest 'reset_count' => sub {
+    plan tests => 1;
+
+    Readonly my $COUNTER_REF  => { 'count' => -1, };
+    Readonly my $EXPECTED_REF => { 'count' => 0, };
+    Readonly my $RESULT_REF   => AdventOfCode::Day10->reset_count($COUNTER_REF);
+
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'get_marked_list' => sub {
+    plan tests => 1;
+
+    Readonly my $LIST_REF     => [ 1,     2 ];
+    Readonly my $EXPECTED_REF => [ undef, 1, 1 ];
+    Readonly my $RESULT_REF   => AdventOfCode::Day10->get_marked_list($LIST_REF);
+
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'increment_difference_count' => sub {
+    plan tests => 1;
+
+    Readonly my $DIFFERENCE_1 => 1;
+    Readonly my $DIFFERENCE_3 => 3;
+    Readonly my $COUNTER_REF  => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 0,
+    };
+    Readonly my $EXPECTED_REF => {
+        'count'       => -1,
+        $DIFFERENCE_1 => 0,
+        $DIFFERENCE_3 => 1,
+    };
+    Readonly my $DIFFERENCE => 3;
+    Readonly my $RESULT_REF => AdventOfCode::Day10->increment_difference_count( $COUNTER_REF, $DIFFERENCE_3 );
+
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
 };
