@@ -1,0 +1,21 @@
+name: Tests
+on:
+   push: null
+   pull_request:
+      branches:
+      - '*'
+      tags-ignore:
+      - '*'
+jobs:
+   perl-job:
+      runs-on: ubuntu-latest
+      steps:
+      -  name: GitVersion
+         id: gitversion
+         uses: nmcc/actions/gitversion@v1
+         with:
+            path-to-gitversion: packages/GitVersion.CommandLine/tools/GitVersion.exe
+      -  name: Create Release
+         uses: actions/create-release@v1
+         with:
+            tag_name: ${{ steps.gitversion.outputs.SemVer }}
