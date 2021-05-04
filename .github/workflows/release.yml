@@ -4,7 +4,8 @@ on:
       types:
       - published
 jobs:
-   perl-job:
+   build:
+
       runs-on: ubuntu-latest
       steps:
       -  name: Install GitVersion
