@@ -1,59 +1,56 @@
 name: Tests
-
 on:
-  push:
-    branches:
+   push:
+      branches:
       - '*'
-    tags-ignore:
+      tags-ignore:
       - '*'
-  pull_request:
-
+   pull_request: null
 jobs:
-  perl-job:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Platform check
-        run: uname -a
-
-      - name: perl info
-        run: |
-          perl --version
-
-      - name: setup locallib
-        run: |
-          PERL_LOCAL_LIB_ROOT="$HOME/perl5"
-          >>"$GITHUB_ENV" echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT"
-          >>"$GITHUB_ENV" echo "PERL5LIB=$PERL_LOCAL_LIB_ROOT/lib/perl5"
-          >>"$GITHUB_ENV" echo "PERL_MB_OPT=--install_base \"$PERL_LOCAL_LIB_ROOT/\""
-          >>"$GITHUB_ENV" echo "PERL_MM_OPT=INSTALL_BASE=$PERL_LOCAL_LIB_ROOT"
-          >>"$GITHUB_ENV" echo "PATH=$PERL_LOCAL_LIB_ROOT/bin:$PATH"
-
-      - name: install cpanm
-        run: cpan App::cpanminus
-
-      - name: test cpanm
-        run: cpanm -v Path::Tiny
-
-      - name: install modules
-        run: |
-          cpanm --notest Readonly List::MoreUtils
-          cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov
-
-      - name: Show content of log files on Linux
-        if: ${{ failure() }}
-        run: cat /home/runner/.cpanm/work/*/build.log
-
-      - name: Run Tests
-        run: prove -lv t
-
-      - name: Run Coverage
-        run: |
-          perl Makefile.PL
-          cover -test
-          cover -report html
-      - uses: codecov/codecov-action@v1
-        with:
-          files: Advent-of-Code-2020/cover_db/coverage.html
+   perl-job:
+      runs-on: ubuntu-latest
+      steps:
+      -  uses: actions/checkout@v2
+      -  name: Platform check
+         run: uname -a
+      -  name: perl info
+         run: |
+            perl --version
+      -  name: setup locallib
+         run: |
+            PERL_LOCAL_LIB_ROOT="$HOME/perl5"
+            >>"$GITHUB_ENV" echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT"
+            >>"$GITHUB_ENV" echo "PERL5LIB=$PERL_LOCAL_LIB_ROOT/lib/perl5"
+            >>"$GITHUB_ENV" echo "PERL_MB_OPT=--install_base \"$PERL_LOCAL_LIB_ROOT/\""
+            >>"$GITHUB_ENV" echo "PERL_MM_OPT=INSTALL_BASE=$PERL_LOCAL_LIB_ROOT"
+            >>"$GITHUB_ENV" echo "PATH=$PERL_LOCAL_LIB_ROOT/bin:$PATH"
+      -  name: install cpanm
+         run: cpan App::cpanminus
+      -  name: test cpanm
+         run: cpanm -v Path::Tiny
+      -  name: install modules
+         run: |
+            cpanm --notest Readonly List::MoreUtils
+            cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov
+      -  name: Show content of log files on Linux
+         if: ${{ failure() }}
+         run: cat /home/runner/.cpanm/work/*/build.log
+      -  name: Run Tests
+         run: prove -lv t
+      -  name: Run Coverage
+         run: |
+            perl Makefile.PL
+            cover -test
+            cover -report html
+      -  uses: codecov/codecov-action@v1
+         with:
+            files: Advent-of-Code-2020/cover_db/coverage.html
+      -  name: GitVersion
+         id: gitversion
+         uses: nmcc/actions/gitversion@v1
+         with:
+            path-to-gitversion: packages/GitVersion.CommandLine/tools/GitVersion.exe
+      -  name: Create Release
+         uses: actions/create-release@v1
+         with:
+            tag_name: ${{ steps.gitversion.outputs.SemVer }}
