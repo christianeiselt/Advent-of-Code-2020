@@ -1,0 +1,17 @@
+name: release
+on:
+   release:
+      types:
+      - published
+jobs:
+   perl-job:
+      runs-on: ubuntu-latest
+      steps:
+      -  name: Install GitVersion
+         uses: gittools/actions/gitversion/setup@v0.9.7
+         with:
+            versionSpec: 5.x
+      -  name: Create Release
+         uses: actions/create-release@v1
+         with:
+            tag_name: ${{ steps.gitversion.outputs.SemVer }}
