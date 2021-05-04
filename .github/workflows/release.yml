@@ -9,8 +9,6 @@ jobs:
       steps:
       -  name: GitTools
          uses: GitTools/actions@v0.9.9
-         with:
-            versionSpec: 5.x
       -  name: Checkout
          uses: actions/checkout@v2
          with:
