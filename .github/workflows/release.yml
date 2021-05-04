@@ -1,5 +1,8 @@
 name: release
 on:
+   push:
+      branches:
+      - dev
    pull_request:
       branches:
       - main
@@ -7,12 +10,12 @@ jobs:
    build:
       runs-on: ubuntu-latest
       steps:
-      -  name: GitTools
-         uses: gittools/actions@v0.9.9
       -  name: Checkout
          uses: actions/checkout@v2
          with:
             fetch-depth: 0
+      -  name: GitTools
+         uses: gittools/actions@v0.9.9
       -  name: Display GitVersion config
          uses: gittools/actions/gitversion/execute@v0.9.9
          with:
@@ -22,7 +25,3 @@ jobs:
       -  name: Display SemVer
          run: |
             echo "SemVer: $GITVERSION_SEMVER"
-      -  name: Create Release
-         uses: actions/create-release@v1
-         with:
-            tag_name: ${{ steps.gitversion.outputs.SemVer }}
