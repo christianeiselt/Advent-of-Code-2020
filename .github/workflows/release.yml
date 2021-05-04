@@ -1,17 +1,29 @@
 name: release
 on:
-   release:
-      types:
-      - published
+   pull_request:
+      branches:
+      - main
 jobs:
    build:
-
       runs-on: ubuntu-latest
       steps:
-      -  name: Install GitVersion
-         uses: gittools/actions/gitversion/setup@v0.9.7
+      -  name: GitTools
+         uses: GitTools/actions@v0.9.9
          with:
             versionSpec: 5.x
+      -  name: Checkout
+         uses: actions/checkout@v2
+         with:
+            fetch-depth: 0
+      -  name: Display GitVersion config
+         uses: gittools/actions/gitversion/execute@v0.9.9
+         with:
+            additionalArguments: /showConfig
+      -  name: Determine Version
+         uses: gittools/actions/gitversion/execute@v0.9.9
+      -  name: Display SemVer
+         run: |
+            echo "SemVer: $GITVERSION_SEMVER"
       -  name: Create Release
          uses: actions/create-release@v1
          with:
