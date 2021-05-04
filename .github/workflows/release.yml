@@ -18,16 +18,16 @@ jobs:
          run: |
             tree /home/runner/work/
       -  name: GitTools
-         uses: GitTools/actions@v0.9.9
+         uses: GitTools/actions@v0.9.8
       -  name: Display tree
          run: |
             tree /home/runner/work/
       -  name: Display GitVersion config
-         uses: gittools/actions/gitversion/execute@v0.9.9
+         uses: gittools/actions/gitversion/execute@v0.9.8
          with:
             additionalArguments: /showConfig
       -  name: Determine Version
-         uses: gittools/actions/gitversion/execute@v0.9.9
+         uses: gittools/actions/gitversion/execute@v0.9.8
       -  name: Display SemVer
          run: |
             echo "SemVer: $GITVERSION_SEMVER"
