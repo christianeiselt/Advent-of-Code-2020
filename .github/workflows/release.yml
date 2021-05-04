@@ -15,7 +15,7 @@ jobs:
          with:
             fetch-depth: 0
       -  name: GitTools
-         uses: gittools/actions@v0.9.9
+         uses: GitTools/actions@v0.9.9
       -  name: Display GitVersion config
          uses: gittools/actions/gitversion/execute@v0.9.9
          with:
