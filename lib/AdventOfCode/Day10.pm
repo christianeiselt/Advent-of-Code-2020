@@ -104,6 +104,7 @@ sub set_difference_count {
 }
 
 sub get_counter_for_defined {
+    Readonly my $SELF              => shift;
     Readonly my $INPUT_COUNTER_REF => shift;
     my $counter_ref = $INPUT_COUNTER_REF;
 
@@ -121,7 +122,7 @@ sub get_counter {
     my @list        = @{$LIST_REF};
 
     if ( defined $list[$ITERATOR] ) {
-        $counter_ref = get_counter_for_defined($counter_ref);
+        $counter_ref = AdventOfCode::Day10->get_counter_for_defined($counter_ref);
     }
     else {
         $counter_ref->{'count'}++;
