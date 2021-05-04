@@ -24,7 +24,7 @@ jobs:
          uses: GitTools/actions@v0.9.9
       -  name: Display tree
          run: |
-            tree
+            tree /home/runner/work/
       -  name: Display GitVersion config
          uses: gittools/actions/gitversion/execute@v0.9.9
          with:
