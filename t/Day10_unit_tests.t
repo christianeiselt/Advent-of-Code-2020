@@ -4,21 +4,10 @@ use warnings;
 use strict;
 use Readonly;
 use version; our $VERSION = qv('0.1.11');
-use Test::More tests => 17;
+use Test::More tests => 18;
 
 use lib '../lib/';
-use AdventOfCode::Common;
 use AdventOfCode::Day10;
-
-Readonly my $EXAMPLE_FILE              => './day10_example';
-Readonly my $PUZZLE_FILE               => './day10_input';
-Readonly my $PART_ONE_EXAMPLE_SOLUTION => 220;
-Readonly my $PART_ONE_PUZZLE_SOLUTION  => 2_176;
-Readonly my $PART_TWO_EXAMPLE_SOLUTION => 1;
-Readonly my $PART_TWO_PUZZLE_SOLUTION  => 1;
-
-Readonly my $EXAMPLE_INPUT_REF => AdventOfCode::Common->get_file_content($EXAMPLE_FILE);
-Readonly my $PUZZLE_INPUT_REF  => AdventOfCode::Common->get_file_content($PUZZLE_FILE);
 
 subtest 'prepare_counter' => sub {
     plan tests => 1;
@@ -285,6 +274,7 @@ subtest 'get_counter' => sub {
     plan tests => 1;
 
     Readonly my $ITERATOR     => 3;
+    Readonly my $INPUT_REF    => [ 0, 1, 2, 3 ];
     Readonly my $DIFFERENCE_1 => 1;
     Readonly my $DIFFERENCE_3 => 3;
     Readonly my $COUNTER_REF  => {
@@ -297,7 +287,23 @@ subtest 'get_counter' => sub {
         $DIFFERENCE_1 => 1,
         $DIFFERENCE_3 => 2,
     };
-    Readonly my $RESULT_REF => AdventOfCode::Day10->get_counter( $EXAMPLE_INPUT_REF, $ITERATOR, $COUNTER_REF );
+    Readonly my $RESULT_REF => AdventOfCode::Day10->get_counter( $INPUT_REF, $ITERATOR, $COUNTER_REF );
+
+    is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'get_difference_counters' => sub {
+    plan tests => 1;
+
+    Readonly my $INPUT_REF    => [ 0, 1, 2, 3 ];
+    Readonly my $DIFFERENCE_1 => 1;
+    Readonly my $DIFFERENCE_3 => 3;
+    Readonly my $EXPECTED_REF => {
+        'count'       => 1,
+        $DIFFERENCE_1 => 3,
+        $DIFFERENCE_3 => 1,
+    };
+    Readonly my $RESULT_REF => AdventOfCode::Day10->get_difference_counters($INPUT_REF);
 
     is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
 };
