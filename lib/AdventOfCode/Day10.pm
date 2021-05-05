@@ -5,7 +5,7 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.8');
+use version; our $VERSION = qv('0.1.9');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
@@ -116,6 +116,7 @@ sub get_counter_for_defined {
 }
 
 sub get_counter {
+    Readonly my $SELF              => shift;
     Readonly my $LIST_REF          => shift;
     Readonly my $ITERATOR          => shift;
     Readonly my $INPUT_COUNTER_REF => shift;
@@ -164,7 +165,7 @@ sub get_difference_counters {
     $counter_ref = AdventOfCode::Day10->add_difference_for_builtin_adapter($counter_ref);
 
     for my $i ( 0 .. $LIST_LENGTH ) {
-        $counter_ref = get_counter( $LIST_REF, $i, $counter_ref );
+        $counter_ref = AdventOfCode::Day10->get_counter( $LIST_REF, $i, $counter_ref );
     }
 
     return $counter_ref;
