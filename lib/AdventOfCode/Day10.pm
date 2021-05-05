@@ -158,6 +158,7 @@ sub prepare_counter {
 }
 
 sub get_difference_counters {
+    Readonly my $SELF         => shift;
     Readonly my $LIST_REF    => shift;
     Readonly my @LIST        => @{$LIST_REF};
     Readonly my $LIST_LENGTH => scalar @LIST;
@@ -174,7 +175,7 @@ sub get_difference_counters {
 sub get_differences_product {
     Readonly my $INPUT_REF       => shift;
     Readonly my $NUMBER_LIST_REF => AdventOfCode::Day10->get_marked_list($INPUT_REF);
-    Readonly my $COUNTERS_REF    => get_difference_counters($NUMBER_LIST_REF);
+    Readonly my $COUNTERS_REF    => AdventOfCode::Day10->get_difference_counters($NUMBER_LIST_REF);
     Readonly my $DIFFERENCE_1    => 1;
     Readonly my $DIFFERENCE_3    => 3;
     return $COUNTERS_REF->{$DIFFERENCE_1} * $COUNTERS_REF->{$DIFFERENCE_3};
