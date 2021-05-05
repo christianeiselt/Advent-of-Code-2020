@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.10');
-use Test::More tests => 21;
+use version; our $VERSION = qv('0.1.11');
+use Test::More tests => 17;
 
 use lib '../lib/';
 use AdventOfCode::Common;
@@ -19,18 +19,6 @@ Readonly my $PART_TWO_PUZZLE_SOLUTION  => 1;
 
 Readonly my $EXAMPLE_INPUT_REF => AdventOfCode::Common->get_file_content($EXAMPLE_FILE);
 Readonly my $PUZZLE_INPUT_REF  => AdventOfCode::Common->get_file_content($PUZZLE_FILE);
-
-is( AdventOfCode::Day10->solve_part_1($EXAMPLE_INPUT_REF),
-    $PART_ONE_EXAMPLE_SOLUTION, 'Example solution of Part One is correct.' );
-
-is( AdventOfCode::Day10->solve_part_1($PUZZLE_INPUT_REF),
-    $PART_ONE_PUZZLE_SOLUTION, 'Puzzle solution of Part One is correct.' );
-
-is( AdventOfCode::Day10->solve_part_2( $EXAMPLE_INPUT_REF, $PART_ONE_EXAMPLE_SOLUTION ),
-    $PART_TWO_EXAMPLE_SOLUTION, 'Example solution of Part Two is correct.' );
-
-is( AdventOfCode::Day10->solve_part_2( $PUZZLE_INPUT_REF, $PART_ONE_PUZZLE_SOLUTION ),
-    $PART_TWO_PUZZLE_SOLUTION, 'Puzzle solution of Part Two is correct.' );
 
 subtest 'prepare_counter' => sub {
     plan tests => 1;
