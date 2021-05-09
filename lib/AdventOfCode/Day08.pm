@@ -5,7 +5,7 @@ package AdventOfCode::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.7');
+use version; our $VERSION = qv('1.0.8');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -56,6 +56,7 @@ sub get_acc_action {
 }
 
 sub get_jmp_action {
+    Readonly my $SELF => shift;
     Readonly my $JUMP => 'jmp';
 
     return $JUMP;
@@ -81,10 +82,11 @@ sub get_i_acc_value {
     Readonly my $ITERATOR        => shift;
     Readonly my $ACTION          => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
     Readonly my $VALUE           => AdventOfCode::Day08->get_instruction_value($INSTRUCTION);
+    Readonly my $ACTION_JUMP     => AdventOfCode::Day08->get_jmp_action();
     my $i         = $ITERATOR;
     my $acc_value = $INPUT_ACC_VALUE;
 
-    if ( $ACTION eq get_jmp_action() ) {
+    if ( $ACTION eq $ACTION_JUMP ) {
         $i = increment_by_value( $i, $VALUE );
     }
     elsif ( $ACTION eq get_acc_action() ) {
@@ -175,7 +177,7 @@ sub get_run_result {
 
 sub get_jmp_nop {
     Readonly my $INSTRUCTIONS_REF    => shift;
-    Readonly my $ACTION_JUMP         => get_jmp_action();
+    Readonly my $ACTION_JUMP         => AdventOfCode::Day08->get_jmp_action();
     Readonly my $ACTION_NO_OPERATION => get_nop_action();
     Readonly my $LOOP_END            => AdventOfCode::Day08->get_list_count($INSTRUCTIONS_REF) - 1;
     Readonly my @INSTRUCTIONS        => @{$INSTRUCTIONS_REF};
@@ -208,7 +210,7 @@ sub replace_action_with {
 
 sub switch_action {
     Readonly my $INPUT_INSTRUCTION   => shift;
-    Readonly my $ACTION_JUMP         => get_jmp_action();
+    Readonly my $ACTION_JUMP         => AdventOfCode::Day08->get_jmp_action();
     Readonly my $ACTION_NO_OPERATION => get_nop_action();
     Readonly my $ACTION              => AdventOfCode::Day08->get_instruction_action($INPUT_INSTRUCTION);
     my $instruction = $INPUT_INSTRUCTION;
