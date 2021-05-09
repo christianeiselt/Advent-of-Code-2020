@@ -33,6 +33,7 @@ sub get_instruction_action {
 }
 
 sub get_instruction_value {
+    Readonly my $SELF        => shift;
     Readonly my $INSTRUCTION => shift;
     Readonly my $SPACE       => q{\s};
     Readonly my $VALUE       => ( split /$SPACE/xms, $INSTRUCTION )[1];
@@ -79,7 +80,7 @@ sub get_i_acc_value {
     Readonly my $INPUT_ACC_VALUE => shift;
     Readonly my $ITERATOR        => shift;
     Readonly my $ACTION          => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
-    Readonly my $VALUE           => get_instruction_value($INSTRUCTION);
+    Readonly my $VALUE           => AdventOfCode::Day08->get_instruction_value($INSTRUCTION);
     my $i         = $ITERATOR;
     my $acc_value = $INPUT_ACC_VALUE;
 

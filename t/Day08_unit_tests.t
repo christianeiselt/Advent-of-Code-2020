@@ -3,8 +3,8 @@
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.0.3');
-use Test::More tests => 4;
+use version; our $VERSION = qv('0.0.5');
+use Test::More tests => 5;
 
 use lib '../lib/';
 use AdventOfCode::Day08;
@@ -47,3 +47,13 @@ subtest 'get_instruction_action' => sub {
     Readonly my $RESULT      => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
     is( $RESULT, $EXPECTED, 'ok' );
 };
+
+subtest 'get_instruction_value' => sub {
+    plan tests => 1;
+
+    Readonly my $INSTRUCTION => 'acc -99';
+    Readonly my $EXPECTED    => '-99';
+    Readonly my $RESULT      => AdventOfCode::Day08->get_instruction_value($INSTRUCTION);
+    is( $RESULT, $EXPECTED, 'ok' );
+};
+
