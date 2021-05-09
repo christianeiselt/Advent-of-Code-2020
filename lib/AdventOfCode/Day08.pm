@@ -143,7 +143,7 @@ sub get_run_result {
     Readonly my $INSTRUCTION_COUNT => AdventOfCode::Day08->get_list_count( \@INSTRUCTIONS );
     Readonly my $ZERO              => 0;
     Readonly my $FIXED_LIST_REF    => get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
-    Readonly my $FIXED_LIST_COUNT  => get_list_count($FIXED_LIST_REF);
+    Readonly my $FIXED_LIST_COUNT  => AdventOfCode::Day08->get_list_count($FIXED_LIST_REF);
     my @execution_list = @{$FIXED_LIST_REF};
     my $acc_value      = $ZERO;
     my $i              = $ZERO;
@@ -173,7 +173,7 @@ sub get_jmp_nop {
     Readonly my $INSTRUCTIONS_REF    => shift;
     Readonly my $ACTION_JUMP         => get_jmp_action();
     Readonly my $ACTION_NO_OPERATION => get_nop_action();
-    Readonly my $LOOP_END            => get_list_count($INSTRUCTIONS_REF) - 1;
+    Readonly my $LOOP_END            => AdventOfCode::Day08->get_list_count($INSTRUCTIONS_REF) - 1;
     Readonly my @INSTRUCTIONS        => @{$INSTRUCTIONS_REF};
     my $jmp_nop_ref = {};
 
