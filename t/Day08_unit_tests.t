@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Readonly;
 use version; our $VERSION = qv('0.0.3');
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 use lib '../lib/';
 use AdventOfCode::Day08;
@@ -37,4 +37,13 @@ subtest 'get_i_acc_value' => sub {
     Readonly my $EXPECTED_REF => { 'iterator' => 2, 'acc_value' => $ACC_VALUE };
     Readonly my $RESULT_REF   => AdventOfCode::Day08->get_i_acc_value( $INSTRUCTION, $ACC_VALUE, $ITERATOR );
     is_deeply( $RESULT_REF, $EXPECTED_REF, 'ok' );
+};
+
+subtest 'get_instruction_action' => sub {
+    plan tests => 1;
+
+    Readonly my $INSTRUCTION => 'nop +0';
+    Readonly my $EXPECTED    => 'nop';
+    Readonly my $RESULT      => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
+    is( $RESULT, $EXPECTED, 'ok' );
 };

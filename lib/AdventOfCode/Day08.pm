@@ -5,7 +5,7 @@ package AdventOfCode::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.6');
+use version; our $VERSION = qv('1.0.7');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -24,6 +24,7 @@ sub solve_part_2 {
 }
 
 sub get_instruction_action {
+    Readonly my $SELF        => shift;
     Readonly my $INSTRUCTION => shift;
     Readonly my $SPACE       => q{\s};
     Readonly my $ACTION      => ( split /$SPACE/xms, $INSTRUCTION )[0];
@@ -77,7 +78,7 @@ sub get_i_acc_value {
     Readonly my $INSTRUCTION     => shift;
     Readonly my $INPUT_ACC_VALUE => shift;
     Readonly my $ITERATOR        => shift;
-    Readonly my $ACTION          => get_instruction_action($INSTRUCTION);
+    Readonly my $ACTION          => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
     Readonly my $VALUE           => get_instruction_value($INSTRUCTION);
     my $i         = $ITERATOR;
     my $acc_value = $INPUT_ACC_VALUE;
@@ -155,8 +156,7 @@ sub get_run_result {
         && $i < $FIXED_LIST_COUNT )
     {
         Readonly my $INSTRUCTION          => $INSTRUCTIONS[$i];
-        Readonly my $EXECUTION_RESULT_REF => AdventOfCode::Day08->get_i_acc_value( $INSTRUCTION, $acc_value, $i )
-            ;
+        Readonly my $EXECUTION_RESULT_REF => AdventOfCode::Day08->get_i_acc_value( $INSTRUCTION, $acc_value, $i );
         $execution_list[$i] = set_executed();
         $i                  = get_iterator($EXECUTION_RESULT_REF);
         $acc_value          = get_acc_value($EXECUTION_RESULT_REF);
@@ -181,7 +181,7 @@ sub get_jmp_nop {
     my $jmp_nop_ref = {};
 
     for my $i ( 0 .. $LOOP_END ) {
-        Readonly my $ACTION => get_instruction_action( $INSTRUCTIONS[$i] );
+        Readonly my $ACTION => AdventOfCode::Day08->get_instruction_action( $INSTRUCTIONS[$i] );
         if ( $ACTION eq $ACTION_JUMP ) {
             $jmp_nop_ref->{$i} = $ACTION_NO_OPERATION;
         }
@@ -198,7 +198,7 @@ sub get_jmp_nop {
 sub replace_action_with {
     Readonly my $INPUT_INSTRUCTION => shift;
     Readonly my $REPLACING_ACTION  => shift;
-    Readonly my $ACTION            => get_instruction_action($INPUT_INSTRUCTION);
+    Readonly my $ACTION            => AdventOfCode::Day08->get_instruction_action($INPUT_INSTRUCTION);
     my $replaced_instruction = $INPUT_INSTRUCTION;
     $replaced_instruction =~ s/$ACTION/$REPLACING_ACTION/xms;
 
@@ -209,7 +209,7 @@ sub switch_action {
     Readonly my $INPUT_INSTRUCTION   => shift;
     Readonly my $ACTION_JUMP         => get_jmp_action();
     Readonly my $ACTION_NO_OPERATION => get_nop_action();
-    Readonly my $ACTION              => get_instruction_action($INPUT_INSTRUCTION);
+    Readonly my $ACTION              => AdventOfCode::Day08->get_instruction_action($INPUT_INSTRUCTION);
     my $instruction = $INPUT_INSTRUCTION;
 
     if ( $ACTION eq $ACTION_JUMP ) {
