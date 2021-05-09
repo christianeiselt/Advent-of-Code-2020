@@ -5,12 +5,12 @@ package AdventOfCode::Day10;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('0.1.9');
+use version; our $VERSION = qv('0.1.10');
 
 sub solve_part_1 {
     Readonly my $SELF      => shift;
     Readonly my $INPUT_REF => shift;
-    Readonly my $RESULT    => get_differences_product($INPUT_REF);
+    Readonly my $RESULT    => AdventOfCode::Day10->get_differences_product($INPUT_REF);
 
     return $RESULT;
 }
@@ -173,6 +173,7 @@ sub get_difference_counters {
 }
 
 sub get_differences_product {
+    Readonly my $SELF => shift;
     Readonly my $INPUT_REF       => shift;
     Readonly my $NUMBER_LIST_REF => AdventOfCode::Day10->get_marked_list($INPUT_REF);
     Readonly my $COUNTERS_REF    => AdventOfCode::Day10->get_difference_counters($NUMBER_LIST_REF);
