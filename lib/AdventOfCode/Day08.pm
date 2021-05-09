@@ -5,7 +5,7 @@ package AdventOfCode::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.5');
+use version; our $VERSION = qv('1.0.6');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -73,6 +73,7 @@ sub increment {
 }
 
 sub get_i_acc_value {
+    Readonly my $SELF            => shift;
     Readonly my $INSTRUCTION     => shift;
     Readonly my $INPUT_ACC_VALUE => shift;
     Readonly my $ITERATOR        => shift;
@@ -143,8 +144,8 @@ sub get_run_result {
     Readonly my @INSTRUCTIONS      => @{$INSTRUCTIONS_REF};
     Readonly my $INSTRUCTION_COUNT => AdventOfCode::Day08->get_list_count( \@INSTRUCTIONS );
     Readonly my $ZERO              => 0;
-    Readonly my $FIXED_LIST_REF => AdventOfCode::Day08->get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
-    Readonly my $FIXED_LIST_COUNT => AdventOfCode::Day08->get_list_count($FIXED_LIST_REF);
+    Readonly my $FIXED_LIST_REF    => AdventOfCode::Day08->get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
+    Readonly my $FIXED_LIST_COUNT  => AdventOfCode::Day08->get_list_count($FIXED_LIST_REF);
     my @execution_list = @{$FIXED_LIST_REF};
     my $acc_value      = $ZERO;
     my $i              = $ZERO;
@@ -154,7 +155,8 @@ sub get_run_result {
         && $i < $FIXED_LIST_COUNT )
     {
         Readonly my $INSTRUCTION          => $INSTRUCTIONS[$i];
-        Readonly my $EXECUTION_RESULT_REF => get_i_acc_value( $INSTRUCTION, $acc_value, $i );
+        Readonly my $EXECUTION_RESULT_REF => AdventOfCode::Day08->get_i_acc_value( $INSTRUCTION, $acc_value, $i )
+            ;
         $execution_list[$i] = set_executed();
         $i                  = get_iterator($EXECUTION_RESULT_REF);
         $acc_value          = get_acc_value($EXECUTION_RESULT_REF);
