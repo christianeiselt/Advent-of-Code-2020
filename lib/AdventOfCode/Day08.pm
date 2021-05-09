@@ -5,7 +5,7 @@ package AdventOfCode::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.4');
+use version; our $VERSION = qv('1.0.5');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -116,6 +116,7 @@ sub get_list_count {
 }
 
 sub get_filled_fixed_list {
+    Readonly my $SELF   => shift;
     Readonly my $FILL   => shift;
     Readonly my $LENGTH => shift;
     Readonly my @LIST   => ($FILL) x $LENGTH;
@@ -142,8 +143,8 @@ sub get_run_result {
     Readonly my @INSTRUCTIONS      => @{$INSTRUCTIONS_REF};
     Readonly my $INSTRUCTION_COUNT => AdventOfCode::Day08->get_list_count( \@INSTRUCTIONS );
     Readonly my $ZERO              => 0;
-    Readonly my $FIXED_LIST_REF    => get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
-    Readonly my $FIXED_LIST_COUNT  => AdventOfCode::Day08->get_list_count($FIXED_LIST_REF);
+    Readonly my $FIXED_LIST_REF => AdventOfCode::Day08->get_filled_fixed_list( $ZERO, $INSTRUCTION_COUNT );
+    Readonly my $FIXED_LIST_COUNT => AdventOfCode::Day08->get_list_count($FIXED_LIST_REF);
     my @execution_list = @{$FIXED_LIST_REF};
     my $acc_value      = $ZERO;
     my $i              = $ZERO;
