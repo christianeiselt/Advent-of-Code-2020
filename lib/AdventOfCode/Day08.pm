@@ -5,7 +5,7 @@ package AdventOfCode::Day08;
 use warnings;
 use strict;
 use Readonly;
-use version; our $VERSION = qv('1.0.8');
+use version; our $VERSION = qv('1.0.9');
 
 sub solve_part_1 {
     Readonly my $SELF                 => shift;
@@ -50,6 +50,7 @@ sub increment_by_value {
 }
 
 sub get_acc_action {
+    Readonly my $SELF => shift;
     Readonly my $ACCUMULATOR => 'acc';
 
     return $ACCUMULATOR;
@@ -76,20 +77,21 @@ sub increment {
 }
 
 sub get_i_acc_value {
-    Readonly my $SELF            => shift;
-    Readonly my $INSTRUCTION     => shift;
-    Readonly my $INPUT_ACC_VALUE => shift;
-    Readonly my $ITERATOR        => shift;
-    Readonly my $ACTION          => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
-    Readonly my $VALUE           => AdventOfCode::Day08->get_instruction_value($INSTRUCTION);
-    Readonly my $ACTION_JUMP     => AdventOfCode::Day08->get_jmp_action();
+    Readonly my $SELF              => shift;
+    Readonly my $INSTRUCTION       => shift;
+    Readonly my $INPUT_ACC_VALUE   => shift;
+    Readonly my $ITERATOR          => shift;
+    Readonly my $ACTION            => AdventOfCode::Day08->get_instruction_action($INSTRUCTION);
+    Readonly my $VALUE             => AdventOfCode::Day08->get_instruction_value($INSTRUCTION);
+    Readonly my $ACTION_JUMP       => AdventOfCode::Day08->get_jmp_action();
+    Readonly my $ACTION_ACCUMULATE => AdventOfCode::Day08->get_acc_action();
     my $i         = $ITERATOR;
     my $acc_value = $INPUT_ACC_VALUE;
 
     if ( $ACTION eq $ACTION_JUMP ) {
         $i = increment_by_value( $i, $VALUE );
     }
-    elsif ( $ACTION eq get_acc_action() ) {
+    elsif ( $ACTION eq $ACTION_ACCUMULATE ) {
         $acc_value = increment_by_value( $acc_value, $VALUE );
         $i         = increment($i);
     }
